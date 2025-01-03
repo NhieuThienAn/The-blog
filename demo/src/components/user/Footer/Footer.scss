@@ -1,0 +1,92 @@
+<<<<<<< HEAD
+// src/components/Footer/Footer.scss
+
+.footer {
+    background-color: var(--primary);
+    /* Màu nền */
+    color: #fff;
+    /* Màu chữ */
+    padding: 2rem 0;
+    /* Khoảng cách trên và dưới */
+    text-align: center;
+    /* Canh giữa nội dung */
+    font-size: 0.9rem;
+    /* Kích thước chữ */
+}
+
+.footer p {
+    margin: 0;
+    /* Bỏ margin cho các đoạn văn */
+}
+
+.footer .social-media-links {
+    list-style: none;
+    /* Bỏ dấu đầu dòng */
+    padding: 0;
+    /* Bỏ padding */
+    margin: 1rem 0;
+    /* Khoảng cách phía trên và dưới */
+}
+
+.footer .social-media-links li {
+    display: inline;
+    /* Hiển thị các mục trên cùng một hàng */
+    margin: 0 1rem;
+    /* Khoảng cách giữa các biểu tượng */
+}
+
+.footer .social-media-links li a {
+    color: #fff;
+    /* Màu chữ cho các liên kết */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+    font-size: 1.2rem;
+    /* Kích thước biểu tượng */
+}
+
+.footer .social-media-links li a:hover {
+    color: #007bff;
+    /* Màu khi hover */
+}
+
+.footer .footer-links p {
+    margin: 0.5rem 0;
+    /* Khoảng cách giữa các đoạn văn */
+}
+
+.footer .footer-links a {
+    color: #fff;
+    /* Màu chữ cho các liên kết */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+    transition: color 0.3s;
+    /* Hiệu ứng chuyển màu */
+}
+
+.footer .footer-links a:hover {
+    color: #007bff;
+    /* Màu khi hover */
+}
+
+.footer .footer-links a:not(:last-child)::after {
+    content: "|";
+    /* Dấu phân cách giữa các liên kết */
+    margin: 0 0.5rem;
+    /* Khoảng cách giữa dấu phân cách và liên kết */
+=======
+/* src/components/Footer/Footer.scss */
+
+.footer {
+    background-color: #f0f2f5; /* Light background */
+    padding: 20px 0;
+}
+
+.footer a {
+    color: #1890ff; /* Ant Design primary color */
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #40a9ff; /* Slightly darker on hover */
+>>>>>>> 086163e (74% done)
+}

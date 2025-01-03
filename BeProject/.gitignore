@@ -1,0 +1,4 @@
+.env
+node_modules
+BE_PROJECT.drawio
+.$BE_PROJECT.drawio.bkp

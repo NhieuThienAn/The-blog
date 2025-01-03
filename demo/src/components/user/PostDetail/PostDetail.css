@@ -1,0 +1,149 @@
+<<<<<<< HEAD
+.post-detail-page {
+    margin: 20px 30px;
+    background-color: #f4f7f9;
+=======
+/* src/components/PostDetail/PostDetail.css */
+
+.post-detail-page {
+    margin: 20px 100px;
+    background-color: #f4f7f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+>>>>>>> 086163e (74% done)
+}
+
+.post-detail-content {
+    display: flex;
+<<<<<<< HEAD
+=======
+    /* Use flexbox layout */
+    justify-content: space-between;
+    /* Distribute space between items */
+    align-items: flex-start;
+    /* Align items at the top */
+>>>>>>> 086163e (74% done)
+}
+
+.post-detail-text {
+    flex: 1;
+<<<<<<< HEAD
+    border-right: 2px solid var(--black);
+}
+
+.post-detail-img {
+    width: 400px;
+    height: 350px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.post-detail-img:hover {
+    transform: scale(1.02);
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s, box-shadow 0.2s;
+}
+
+.post-detail-title {
+    font-size: 40px;
+    color: #333;
+    margin: 35px 0 0 0;
+    justify-self: center;
+}
+
+.post-detail-text {
+    color: var(--black);
+    line-height: 20px;
+    font-size: 17px;
+    margin: 10px 30px;
+}
+
+.post-detail strong {
+    color: #000;
+    /* Màu chữ cho các phần in đậm */
+}
+
+.post-detail h3 {
+    font-size: 1.5rem;
+    /* Kích thước tiêu đề cho phần bình luận */
+    margin-top: 20px;
+    /* Khoảng cách trên cho tiêu đề bình luận */
+    margin-bottom: 10px;
+    /* Khoảng cách dưới cho tiêu đề bình luận */
+    color: #333;
+    /* Màu chữ tiêu đề */
+}
+
+.post-detail ul {
+    list-style: none;
+    /* Xóa dấu chấm đầu dòng */
+    padding: 0;
+    /* Xóa padding */
+}
+
+.post-detail li {
+    background-color: #f9f9f9;
+    /* Nền nhẹ cho mỗi bình luận */
+    border-radius: 5px;
+    /* Bo góc cho bình luận */
+    padding: 10px;
+    /* Khoảng cách bên trong cho bình luận */
+    margin: 5px 0;
+    /* Khoảng cách giữa các bình luận */
+}
+
+.post-detail-author {
+    color: orange;
+    font-size: 24px;
+    font-weight: bolder;
+    margin: 10px 0;
+}
+
+.post-detail-content {
+    width: 95%;
+    line-height: 1.56;
+    word-spacing: 1.5px;
+    font-size: 18px;
+    margin: 10px 0;
+=======
+    margin-right: 20px;
+}
+
+.post-detail-img {
+    width: 30%;
+    /* Set width of the image */
+    max-width: 400px;
+    /* Set a maximum width for the image */
+    border-radius: 10px;
+    object-fit: cover;
+    /* Maintain aspect ratio */
+}
+
+.post-detail-title {
+    font-size: 200%;
+    color: #333;
+    margin: 20px 0 15px;
+    text-align: left;
+    /* Align title to the left */
+>>>>>>> 086163e (74% done)
+}
+
+.comment-container {
+    background-color: rgba(1, 1, 1, 0.05);
+<<<<<<< HEAD
+    width: 90%;
+    margin: 20px 0;
+    padding: 10px;
+}
+
+li {
+    list-style: none;
+=======
+    width: 50%;
+    margin: 20px 100px;
+    /* Center the comment container */
+    padding: 10px;
+    border-radius: 5px;
+>>>>>>> 086163e (74% done)
+}

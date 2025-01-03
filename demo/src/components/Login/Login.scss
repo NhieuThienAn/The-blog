@@ -1,0 +1,205 @@
+<<<<<<< HEAD
+.login-page {
+    margin: 10vh auto;
+    align-content: center;
+    width: 60vw;
+    background-color: var(--bg);
+    border-radius: var(--small); // Bo góc cho phần đăng nhập
+    border: 1.6px solid var(--text);
+    box-shadow: 0 4px 10px 5px rgba(0, 0, 0, 0.2);
+
+    .login-form {
+        margin-left: 10px;
+        padding: 20px; // Thêm padding cho nội dung
+        background-color: #f9f9f9; // Màu nền cho phần đăng nhập
+        border-radius: 8px; // Bo góc cho phần đăng nhập
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 1rem; // Khoảng cách dưới tiêu đề
+            font-size: 320%;
+            font-weight: 400;
+            letter-spacing: -0.1rem;
+=======
+    // .login-page {
+    //     margin: 10vh auto;
+    //     align-content: center;
+    //     width: 60vw;
+    //     background-color: var(--bg);
+    //     border-radius: var(--small); // Bo góc cho phần đăng nhập
+    //     border: 1.6px solid var(--text);
+    //     box-shadow: 0 4px 10px 5px rgba(0, 0, 0, 0.2);
+
+    //     .login-form {
+    //         margin-left: 10px;
+    //         padding: 20px; // Thêm padding cho nội dung
+    //         background-color: #f9f9f9; // Màu nền cho phần đăng nhập
+    //         border-radius: 8px; // Bo góc cho phần đăng nhập
+
+    //         .login-title {
+    //             text-align: center;
+    //             margin-bottom: 1rem; // Khoảng cách dưới tiêu đề
+    //             font-size: 320%;
+    //             font-weight: 400;
+    //             letter-spacing: -0.1rem;
+    //         }
+
+    //         .login-welcome {
+    //             text-align: center;
+    //             opacity: 0.65;
+    //             margin-bottom: 2rem; // Khoảng cách dưới tiêu đề
+    //             font-size: 16px;
+    //             font-weight: 100;
+    //             letter-spacing: 1px;
+    //             line-height: 1.7rem;
+    //         }
+
+    //         .login-input {
+    //             margin: 10px 24%; // Khoảng cách giữa các input
+    //             padding: 10px; // Padding cho các input
+    //             width: 50%;
+    //             display: block;
+    //             border-radius: 4px; // Bo góc cho input
+    //             font-size: 19px; // Kích thước chữ cho input
+    //             outline: none;
+    //             border: none;
+    //             border-bottom: 3px solid var(--text);
+    //             background-color: rgba(0, 0, 0, 0.01);
+    //         }
+
+    //         .login-toregister {
+    //             color: #333333;
+    //             font-size: 88%;
+    //             margin: 10px 24%;
+    //             opacity: 0.8;
+    //         }
+
+    //         #submit-btn {
+    //             font-size: 115%;
+    //             font-weight: 400;
+    //             border-radius: 20px;
+    //             border: none; // Không có đường viền
+    //             padding: 1.2rem 1rem; // Padding cho nút
+    //             cursor: pointer; // Hiển thị con trỏ khi hover
+    //             margin: 20px 42%;
+    //             transition: 0.3s ease-out;
+    //         }
+
+    //     }
+    // }
+
+
+
+
+
+
+
+
+
+
+    // Login.scss
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5; // Màu nền nhẹ nhàng
+
+    .login-form {
+        background: #ffffff;
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        width: 400px; // Chiều rộng của form
+
+        .login-title {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 16px;
+>>>>>>> 086163e (74% done)
+        }
+
+        .login-welcome {
+            text-align: center;
+<<<<<<< HEAD
+            opacity: 0.65;
+            margin-bottom: 2rem; // Khoảng cách dưới tiêu đề
+            font-size: 16px;
+            font-weight: 100;
+            letter-spacing: 1px;
+            line-height: 1.7rem;
+        }
+
+        .login-input {
+            margin: 10px 24%; // Khoảng cách giữa các input
+            padding: 10px; // Padding cho các input
+            width: 50%;
+            display: block;
+            border-radius: 4px; // Bo góc cho input
+            font-size: 19px; // Kích thước chữ cho input
+            outline: none;
+            border: none;
+            border-bottom: 3px solid var(--text);
+            background-color: rgba(0, 0, 0, 0.01);
+        }
+
+        .login-toregister {
+            color: #333333;
+            font-size: 88%;
+            margin: 10px 24%;
+            opacity: 0.8;
+        }
+
+        #submit-btn {
+            font-size: 115%;
+            font-weight: 400;
+            border-radius: 20px;
+            border: none; // Không có đường viền
+            padding: 1.2rem 1rem; // Padding cho nút
+            cursor: pointer; // Hiển thị con trỏ khi hover
+            margin: 20px 42%;
+            transition: 0.3s ease-out;
+        }
+
+=======
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .login-toregister {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            color: #1890ff; // Màu xanh cho liên kết
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline; // Gạch chân khi hover
+            }
+        }
+
+        #submit-btn {
+            margin-top: 16px;
+        }
+
+        // Modal cho quên mật khẩu
+        .ant-modal {
+            .ant-modal-title {
+                text-align: center;
+                font-size: 20px;
+            }
+
+            .ant-form-item {
+                margin-bottom: 16px;
+            }
+
+            .ant-btn {
+                width: 100%;
+            }
+        }
+>>>>>>> 086163e (74% done)
+    }
+}
