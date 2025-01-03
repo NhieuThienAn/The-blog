@@ -1,37 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Footer.scss';
-
-const Footer = () => {
-    return (
-        <footer className="footer">
-            <p>© 2021 My Website. All rights reserved.</p>
-
-            <ul className="social-media-links">
-                <li><Link to="#"><i className="fab fa-facebook-f"></i></Link></li>
-                <li><Link to="#"><i className="fab fa-twitter"></i></Link></li>
-                <li><Link to="#"><i className="fab fa-instagram"></i></Link></li>
-                <li><Link to="#"><i className="fab fa-linkedin-in"></i></Link></li>
-            </ul>
-
-            <div className="footer-links">
-                <p><Link to="/privacy">Privacy Policy</Link> | <Link to="/terms">Terms of Service</Link></p>
-                <p>
-                    <Link to="/contact">Contact Us</Link> |
-                    <Link to="/about">About Us</Link> |
-                    <Link to="/faq">FAQ</Link> |
-                    <Link to="/blog">Blog</Link>
-                </p>
-            </div>
-        </footer>
-    );
-};
-
-export default Footer;
-=======
-// src/components/Footer/Footer.js
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Row, Col, Typography, Space } from 'antd';
@@ -90,4 +56,3 @@ const FooterComponent = () => {
 };
 
 export default FooterComponent;
->>>>>>> 086163e (74% done)

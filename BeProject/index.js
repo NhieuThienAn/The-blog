@@ -24,7 +24,7 @@ const io = new Server(server);
 
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3002',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,

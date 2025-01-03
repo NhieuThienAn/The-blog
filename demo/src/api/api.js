@@ -6,10 +6,7 @@ const API_URL = 'http://localhost:3001/api';
 export const createUser = (userData) => axios.post(`${API_URL}/register`, userData);
 export const loginUser = (loginData) => axios.post(`${API_URL}/login`, loginData);
 export const getUsersById = (userId) => axios.get(`${API_URL}/users/${userId}`);
-<<<<<<< HEAD
-=======
 export const getTopUsersByLikes = () => axios.get(`${API_URL}/users/top-likes`);
->>>>>>> 086163e (74% done)
 export const getAllUsers = () => {
   const token = localStorage.getItem('token');
   return axios.get(`${API_URL}/users`, {
@@ -40,8 +37,6 @@ export const unlockUser = (userId, token) => {
   });
 };
 
-<<<<<<< HEAD
-=======
 // Password Reset API
 export const requestPasswordReset = (email) => {
   return axios.post(`${API_URL}/forgot-password`, { email });
@@ -55,7 +50,6 @@ export const resetPassword = async ({ verificationCode, newPassword }) => {
 };
 
 // api.js
->>>>>>> 086163e (74% done)
 // Post API
 export const createPost = async (postData, token) => {
   const response = await axios.post(`${API_URL}/posts`, postData, {

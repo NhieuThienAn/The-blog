@@ -18,16 +18,13 @@ $input-border-color: #ccc;
     }
 
     .all-post-search-input {
-<<<<<<< HEAD
         width: 100%;
         max-width: 600px;
         padding: 10px;
         margin: 0 auto 20px; // Center the input
-=======
         max-width: 500px;
         padding: 10px;
         margin: 0 20px 0 16vw; // Center the input
->>>>>>> 086163e (74% done)
         border: 1px solid $input-border-color;
         border-radius: 4px;
         font-size: 16px;

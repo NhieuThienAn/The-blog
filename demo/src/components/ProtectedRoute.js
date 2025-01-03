@@ -8,11 +8,7 @@ const ProtectedRoute = ({ element, allowedRoles }) => {
   if (allowedRoles.includes(role)) {
     return element; // Render the requested component if allowed
   }
-<<<<<<< HEAD
-
-=======
   
->>>>>>> 086163e (74% done)
   return <Navigate to="/login" />; // Redirect to login if not authorized
 };
 
