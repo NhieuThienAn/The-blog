@@ -2,10 +2,6 @@ import React from 'react';
 import './Represent.scss';
 
 const Represent = () => {
-<<<<<<< HEAD
-
-=======
->>>>>>> 086163e (74% done)
     return (
         <div className='Represent-container'>
             <h1 className='Represent-title'>TheHours</h1>

@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { Modal, Input, Button, Select } from 'antd';
-import { getUsersById, createPost, getAllCategories, getAllTags, getPostsByUserId } from '../../../api/api';
-=======
 import { Modal, Input, Button, Select, Typography, message } from 'antd';
 import { getUsersById, createPost, updateUser, getAllCategories, getAllTags, getPostsByUserId } from '../../../api/api';
->>>>>>> 086163e (74% done)
 import Loading from '../Loading/Loading';
 import './Profile.scss';
 
@@ -17,25 +12,13 @@ const UserProfile = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
-<<<<<<< HEAD
-=======
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
->>>>>>> 086163e (74% done)
     const [posts, setPosts] = useState([]);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
     const [imageFile, setImageFile] = useState(null);
-<<<<<<< HEAD
-    const [categories, setCategories] = useState([]);
-    const [allTags, setAllTags] = useState([]);
-    const [showDrafts, setShowDrafts] = useState(false); // State to control visibility of drafts
-
-    const userId = localStorage.getItem('user_id');
-    const avatar_url = localStorage.getItem('avatar_url');
-    const username = localStorage.getItem('username');
-=======
     const [avatarFile, setAvatarFile] = useState(null);
     const [categories, setCategories] = useState([]);
     const [allTags, setAllTags] = useState([]);
@@ -45,7 +28,6 @@ const UserProfile = () => {
     const role = localStorage.getItem('role');
     const userId = localStorage.getItem('user_id');
     const token = localStorage.getItem('token');
->>>>>>> 086163e (74% done)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -60,15 +42,12 @@ const UserProfile = () => {
                 setPosts(postsResponse.data);
                 setCategories(categoriesResponse.data);
                 setAllTags(tagsResponse.data);
-<<<<<<< HEAD
-=======
                 setEditUserData({
                     name: userResponse.data.username,
                     email: userResponse.data.email,
                     phone: userResponse.data.phone,
                     bio: userResponse.data.bio || '',
                 });
->>>>>>> 086163e (74% done)
             } catch (err) {
                 setError('Failed to load data');
             } finally {
@@ -80,20 +59,6 @@ const UserProfile = () => {
     }, [userId]);
 
     const openModal = () => setIsModalVisible(true);
-<<<<<<< HEAD
-    const closeModal = () => {
-        setIsModalVisible(false);
-        resetForm();
-    };
-
-    const resetForm = () => {
-        setTitle('');
-        setContent('');
-        setCategory('');
-        setSelectedTags([]);
-        setImageFile(null);
-    };
-=======
     const closeModal = () => setIsModalVisible(false);
 
     const openEditModal = () => {
@@ -107,7 +72,6 @@ const UserProfile = () => {
     };
 
     const closeEditModal = () => setIsEditModalVisible(false);
->>>>>>> 086163e (74% done)
 
     const handleTagChange = (value) => {
         setSelectedTags(value);
@@ -120,9 +84,6 @@ const UserProfile = () => {
         }
     };
 
-<<<<<<< HEAD
-    const handleSubmit = async () => {
-=======
     const handleAvatarChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -163,7 +124,6 @@ const UserProfile = () => {
             return;
         }
 
->>>>>>> 086163e (74% done)
         const postData = new FormData();
         postData.append('title', title.trim());
         postData.append('content', content.trim());
@@ -179,23 +139,14 @@ const UserProfile = () => {
         }
 
         try {
-<<<<<<< HEAD
-            const token = localStorage.getItem('token');
-            const response = await createPost(postData, token);
-            setPosts((prevPosts) => [...prevPosts, response.data]);
-=======
             const response = await createPost(postData, token);
             setPosts(prevPosts => [...prevPosts, response.data]);
             message.success('Đăng bài viết thành công!');
->>>>>>> 086163e (74% done)
             closeModal();
         } catch (error) {
             setError("Failed to create post. Please try again later.");
             console.error("Error creating post:", error);
-<<<<<<< HEAD
-=======
             message.error('Đăng bài viết thất bại.');
->>>>>>> 086163e (74% done)
         }
         window.location.reload();
     };
@@ -211,19 +162,12 @@ const UserProfile = () => {
             <div className="user-profile-section">
                 {user && (
                     <div className="user-profile-details-container">
-<<<<<<< HEAD
-                        <img className="user-profile-avatar-image" src={`http://localhost:3001/${avatar_url}`} alt="Avatar" />
-                        <div className='user-profile-info'>
-                            <p><strong>Name:</strong> {user.username}</p>
-                            <p><strong>Email:</strong> {user.email}</p>
-=======
                         <img className="user-profile-avatar-image" src={`http://localhost:3001/${user.avatar_url}`} alt="Avatar" />
                         <div className='user-profile-info'>
                             <p><strong>Name:</strong> {user.username}</p>
                             <p><strong>Email:</strong> {user.email}</p>
                             <p><strong>Bio:</strong> {user.bio || 'Chưa có thông tin'}</p>
                             <Button type="primary" onClick={openEditModal}>Chỉnh sửa thông tin</Button>
->>>>>>> 086163e (74% done)
                         </div>
                     </div>
                 )}
@@ -231,28 +175,6 @@ const UserProfile = () => {
 
             <div className="user-posts-section">
                 <div className='user-posts-content'>
-<<<<<<< HEAD
-                <h2 className="user-posts-heading">Bài viết của {username}</h2>
-                <Button type="primary" onClick={openModal} className="user-create-post-button">Đăng bài</Button>
-
-                <Button
-                    type={showDrafts ? "default" : "dashed"}
-                    onClick={() => { setShowDrafts(false); }}
-                    className="user-create-post-button-toggle-button"
-                >
-                    Hiện Bài Viết Đã Xuất Bản
-                </Button>
-
-                <Button
-                    type={showDrafts ? "dashed" : "default"}
-                    onClick={() => { setShowDrafts(true); }}
-                    className="user-create-post-button-toggle-button"
-                >
-                    Hiện Bài Viết Draft
-                </Button>
-
-                {/* Hiển thị bài viết dựa trên trạng thái của showDrafts */}
-=======
                     <h2 className="user-posts-heading">Bài viết của {user.username}</h2>
                     <Button type="primary" onClick={openModal} className="user-create-post-button">Đăng bài</Button>
 
@@ -272,7 +194,6 @@ const UserProfile = () => {
                         Hiện Bài Viết Draft
                     </Button>
 
->>>>>>> 086163e (74% done)
                     <h3>{showDrafts ? "Bài Viết Draft" : "Bài Viết Đã Xuất Bản"}</h3>
                     <ul className="user-posts-list">
                         {(showDrafts ? draftPosts : publishedPosts).length === 0 ? (
@@ -287,11 +208,7 @@ const UserProfile = () => {
                                         alt="user-post Thumbnail"
                                         className="user-post-thumbnail-image"
                                     />
-<<<<<<< HEAD
-                                    <a href={`/posts/${post._id}`} className="user-post-title-link">{post.title}</a>
-=======
                                     <a href={`/posts/${post._id}/edit`} className="user-post-title-link">{post.title}</a>
->>>>>>> 086163e (74% done)
                                     <p className="user-post-content-summary">
                                         {post.content.length > 100 ? `${post.content.substring(0, 170)}...` : post.content}
                                     </p>
@@ -302,16 +219,10 @@ const UserProfile = () => {
                 </div>
             </div>
 
-<<<<<<< HEAD
-            <Modal
-                title="Tạo Bài Viết Mới"
-                visible={isModalVisible}
-=======
             {/* Modal for creating a new post */}
             <Modal
                 title="Tạo Bài Viết Mới"
                 open={isModalVisible}
->>>>>>> 086163e (74% done)
                 onOk={handleSubmit}
                 onCancel={closeModal}
                 centered
@@ -365,8 +276,6 @@ const UserProfile = () => {
                     style={{ width: '100%' }}
                 />
             </Modal>
-<<<<<<< HEAD
-=======
 
             {/* Modal for editing user information */}
             <Modal
@@ -405,13 +314,8 @@ const UserProfile = () => {
                     style={{ width: '100%' }}
                 />
             </Modal>
->>>>>>> 086163e (74% done)
         </div>
     );
 };
 
-<<<<<<< HEAD
 export default UserProfile;
-=======
-export default UserProfile;
->>>>>>> 086163e (74% done)

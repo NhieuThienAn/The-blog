@@ -15,11 +15,7 @@ const App = () => {
                 clearInterval(interval);
                 navigate('/posts'); // Chuyển hướng đến trang khác
             }
-<<<<<<< HEAD
-        }, 600); // Tăng mỗi 100ms
-=======
         }, 1000); // Tăng mỗi 100ms
->>>>>>> 086163e (74% done)
 
         return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
     }, [navigate, progress]);
