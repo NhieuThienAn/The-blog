@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPostById, getCommentsByPostId, likePost, unlikePost } from '../../../api/api';
+import { getPostById, getCommentsByPostId, likePost, unlikePost, deleteComment, updateComment } from '../../../api/api';
 import CommentForm from '../CommentForm/CommentForm';
-import Loading from '../Loading/Loading';
-import { Typography, Button, List, Avatar, Spin, Alert, Image } from 'antd';
+import { Typography, Button, List, Avatar, Spin, Alert, Image, Modal, Input } from 'antd';
 import './PostDetail.css';
 
 const { Title, Paragraph } = Typography;
@@ -15,17 +14,19 @@ const PostDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [liked, setLiked] = useState(false);
+    const [editingComment, setEditingComment] = useState(null);
+    const [newCommentContent, setNewCommentContent] = useState('');
 
     useEffect(() => {
         const fetchPostAndComments = async () => {
             try {
                 const postResponse = await getPostById(postId);
                 setPost(postResponse.data);
+
                 const userId = localStorage.getItem('userId');
                 setLiked(postResponse.data.likedBy.includes(userId));
 
-                const commentsResponse = await getCommentsByPostId(postId);
-                setComments(commentsResponse.data || []);
+                await fetchComments();
             } catch (postError) {
                 console.error("Error fetching post:", postError);
                 setError("Failed to load post. Please try again later.");
@@ -34,11 +35,56 @@ const PostDetail = () => {
             }
         };
 
+        const fetchComments = async () => {
+            try {
+                const commentsResponse = await getCommentsByPostId(postId);
+                setComments(commentsResponse.data || []);
+            } catch (error) {
+                console.error("Error fetching comments:", error);
+            }
+        };
+
         fetchPostAndComments();
+
+        const interval = setInterval(fetchComments, 1000);
+        return () => clearInterval(interval);
     }, [postId]);
 
     const handleCommentAdded = (newComment) => {
-        setComments((prevComments) => [...prevComments, newComment]);
+        if (newComment && newComment.id) {
+            setComments((prevComments) => [...prevComments, newComment]);
+        } else {
+            console.error("New comment is not valid:", newComment);
+        }
+    };
+
+    const handleDeleteComment = async (commentId) => {
+        const token = localStorage.getItem('token');
+        try {
+            await deleteComment(commentId, token);
+            setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
+        } catch (error) {
+            console.error("Error deleting comment:", error);
+        }
+    };
+
+    const handleEditComment = async () => {
+        const token = localStorage.getItem('token');
+        try {
+            const updatedComment = await updateComment(editingComment.id, newCommentContent, token);
+            setComments((prevComments) =>
+                prevComments.map(comment => (comment.id === updatedComment.id ? updatedComment : comment))
+            );
+            setEditingComment(null);
+            setNewCommentContent('');
+        } catch (error) {
+            console.error("Error updating comment:", error);
+        }
+    };
+
+    const openEditModal = (comment) => {
+        setEditingComment(comment);
+        setNewCommentContent(comment.content);
     };
 
     const handleLike = async () => {
@@ -88,7 +134,7 @@ const PostDetail = () => {
                             type={liked ? 'default' : 'primary'}
                             className='like-button'
                         >
-                            {liked ? 'Unlike' : 'Like'}
+                            {liked ? 'Unlike' : `${post.likes} Like`}
                         </Button>
                     </div>
                     <Image className='post-detail-img' src={`http://localhost:3001/${post.image_url}`} alt={post.title + " Hình nền"} />
@@ -101,14 +147,17 @@ const PostDetail = () => {
                         <List
                             dataSource={comments}
                             renderItem={comment => {
+                                if (!comment) return null;
                                 const username = comment.user_id ? comment.user_id.username : 'Unknown User';
                                 return (
-                                    <List.Item>
+                                    <List.Item key={comment.id}>
                                         <List.Item.Meta
                                             avatar={<Avatar>{username.charAt(0)}</Avatar>}
                                             title={username}
                                             description={comment.content}
                                         />
+                                        <Button onClick={() => openEditModal(comment)} type="link">Edit</Button>
+                                        <Button onClick={() => handleDeleteComment(comment.id)} type="link" danger>Delete</Button>
                                     </List.Item>
                                 );
                             }}
@@ -119,6 +168,17 @@ const PostDetail = () => {
                 )}
             </div>
             <CommentForm postId={postId} onCommentAdded={handleCommentAdded} />
+            <Modal
+                title="Edit Comment"
+                visible={!!editingComment}
+                onOk={handleEditComment}
+                onCancel={() => setEditingComment(null)}
+            >
+                <Input
+                    value={newCommentContent}
+                    onChange={(e) => setNewCommentContent(e.target.value)}
+                />
+            </Modal>
         </>
     );
 };

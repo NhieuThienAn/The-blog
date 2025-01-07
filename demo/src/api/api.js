@@ -117,13 +117,34 @@ export const deletePost = (postId, token) => {
 // Comment API
 export const createComment = async ({ post_id, content }, token) => {
   const response = await axios.post(`${API_URL}/comments`, { post_id, content }, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
   });
   return response.data;
 };
+
 export const getCommentsByPostId = (postId) => axios.get(`${API_URL}/posts/${postId}/comments`);
+
+// Delete a comment
+export const deleteComment = async (commentId, token) => {
+  const response = await axios.delete(`${API_URL}/comments/${commentId}`, {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
+  });
+  return response.data;
+};
+
+// Update a comment
+export const updateComment = async (commentId, updatedContent, token) => {
+  const response = await axios.put(`${API_URL}/comments/${commentId}`, { content: updatedContent }, {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
+  });
+  return response.data;
+};
 
 // Category API
 export const createCategory = (categoryData) => axios.post(`${API_URL}/categories`, categoryData);

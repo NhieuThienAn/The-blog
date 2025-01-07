@@ -168,7 +168,6 @@ export const sendEmail = async (email, subject, text) => {
 };
 
 // Request password reset
-// Thay đổi hàm yêu cầu đặt lại mật khẩu
 export const requestPasswordReset = async (req, res) => {
     const { email } = req.body;
 
@@ -287,6 +286,6 @@ export const getTopUsersByLikes = async (req, res) => {
         res.json(posts);
     } catch (error) {
         console.error('Error fetching top users:', error);
-        res.status(500).json({ error: error.message });
+        res.status(SERVER_ERROR).json({ error: error.message });
     }
 };

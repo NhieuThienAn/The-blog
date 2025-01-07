@@ -18,8 +18,8 @@
             padding: 0; // Đảm bảo không có padding
             padding-right: 20px;
             font-weight: 1000;
-            font-size: 140px; // Kích thước chữ có thể điều chỉnh
             position: relative;
+            font-size: calc(8vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
 
             &::after {
                 content: '';
@@ -42,7 +42,7 @@
 
         // Tạo một khối chứa cho các span
         .span-container {
-            margin-top: 54px;
+            margin-top: 5.3vw;
             display: flex; // Sử dụng Flexbox cho các span
             flex-direction: column; // Đặt hướng thành cột
             align-items: flex-start; // Căn chỉnh các span về bên phải
@@ -50,7 +50,7 @@
 
         @media (max-width: 900px) {
             .Represent-title {
-                font-size: 70px; // Giảm kích thước chữ cho màn hình nhỏ
+                font-size: calc(12vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
             }
 
             .Represent-title-sub {
@@ -58,13 +58,13 @@
             }
 
             .span-container {
-                margin-top: 24px; // Giảm khoảng cách cho màn hình nhỏ
+                margin-top: 7vw; // Giảm khoảng cách cho màn hình nhỏ
             }
         }
 
         @media (max-width: 768px) {
             .Represent-title {
-                font-size: 70px; // Giảm kích thước chữ cho màn hình nhỏ
+                font-size: calc(8vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
             }
 
             .Represent-title-sub {
@@ -72,13 +72,13 @@
             }
 
             .span-container {
-                margin-top: 24px; // Giảm khoảng cách cho màn hình nhỏ
+                margin-top: 6vw; // Giảm khoảng cách cho màn hình nhỏ
             }
         }
 
         @media (max-width: 480px) {
             .Represent-title {
-                font-size: 60px; // Giảm kích thước chữ hơn nữa cho điện thoại
+                font-size: calc(8vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
             }
 
             .Represent-title-sub {
@@ -86,7 +86,7 @@
             }
 
             .span-container {
-                margin-top: 20px; // Giảm khoảng cách cho điện thoại
+                margin-top: 6vw; // Giảm khoảng cách cho màn hình nhỏ
             }
         }
     }

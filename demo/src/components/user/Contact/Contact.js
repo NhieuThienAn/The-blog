@@ -9,7 +9,7 @@ const { Content } = Layout;
 const Contact = () => {
     const onFinish = async (values) => {
         try {
-            const response = await fetch('http://localhost:5000/send-email', {
+            const response = await fetch('http://localhost:3001/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
