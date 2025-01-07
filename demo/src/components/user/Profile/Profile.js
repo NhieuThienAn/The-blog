@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Input, Button, Select, Typography, message } from 'antd';
+import { Modal, Input, Button, Select, Typography, message,Image } from 'antd';
 import { getUsersById, createPost, updateUser, getAllCategories, getAllTags, getPostsByUserId } from '../../../api/api';
 import Loading from '../Loading/Loading';
 import './Profile.scss';

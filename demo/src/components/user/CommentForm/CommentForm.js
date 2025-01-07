@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { createComment } from '../../../api/api';
 import { Input, Button, notification } from 'antd';
-import './CommentForm.css'; // Import the CSS file
+import './CommentForm.css';
 
 const { TextArea } = Input;
 
@@ -30,8 +29,9 @@ const CommentForm = ({ postId, onCommentAdded }) => {
             const newComment = await createComment({ post_id: postId, content }, token);
             setContent('');
 
+            // Gọi hàm để cập nhật bình luận mới
             if (onCommentAdded) {
-                onCommentAdded(newComment.data); // Update parent component
+                onCommentAdded(newComment.data);
             }
 
             openNotification('success', 'Bình luận đã được gửi thành công!');
@@ -43,7 +43,7 @@ const CommentForm = ({ postId, onCommentAdded }) => {
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             handleSubmit(e);
-            e.preventDefault(); // Prevent default behavior of Enter key
+            e.preventDefault(); // Ngăn chặn hành vi mặc định của phím Enter
         }
     };
 
@@ -55,13 +55,13 @@ const CommentForm = ({ postId, onCommentAdded }) => {
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Write a comment..."
                 required
-                onKeyDown={handleKeyDown} // Add key down event
+                onKeyDown={handleKeyDown}
             />
-            <Button 
-                type="primary" 
-                htmlType="submit" 
+            <Button
+                type="primary"
+                htmlType="submit"
                 className="comment-button"
-                style={{ marginTop: '10px' }} // Add margin for spacing
+                style={{ marginTop: '10px' }}
             >
                 Submit Comment
             </Button>
