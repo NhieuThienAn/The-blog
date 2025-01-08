@@ -8,9 +8,7 @@ const { Header, Content, Footer } = Layout;
 const PrivacyPolicy = () => {
     return (
         <Layout>
-            <Header style={{}}>
-                <Title level={1} style={{ color: '#333', margin: 0, textAlign: 'center' }}>Chính Sách Quyền Riêng Tư</Title>
-            </Header>
+            <Title level={1} style={{ color: '#333', margin: 0, textAlign: 'center' }}>Chính Sách Quyền Riêng Tư</Title>
             <Content style={{ padding: '80px 20px 20px', background: '#f0f2f5' }}>
                 <div className="privacy-container">
                     <Title level={3}>1. Giới thiệu</Title>
