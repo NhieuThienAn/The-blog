@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { createComment } from '../../../api/api';
-import { Input, Button, notification } from 'antd';
-import './CommentForm.css';
+import { Input, Button, notification, Card, Form } from 'antd';
 
 const { TextArea } = Input;
 
@@ -16,9 +15,7 @@ const CommentForm = ({ postId, onCommentAdded }) => {
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
+    const handleSubmit = async (values) => {
         if (!postId) {
             openNotification('error', 'Không tìm thấy bài viết. Vui lòng thử lại.');
             return;
@@ -26,7 +23,7 @@ const CommentForm = ({ postId, onCommentAdded }) => {
 
         const token = localStorage.getItem('token');
         try {
-            const newComment = await createComment({ post_id: postId, content }, token);
+            const newComment = await createComment({ post_id: postId, content: values.content }, token);
             setContent('');
 
             // Gọi hàm để cập nhật bình luận mới
@@ -42,30 +39,36 @@ const CommentForm = ({ postId, onCommentAdded }) => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
-            handleSubmit(e);
             e.preventDefault(); // Ngăn chặn hành vi mặc định của phím Enter
         }
     };
 
     return (
-        <form className="comment-form" onSubmit={handleSubmit}>
-            <TextArea
-                rows={4}
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Write a comment..."
-                required
-                onKeyDown={handleKeyDown}
-            />
-            <Button
-                type="primary"
-                htmlType="submit"
-                className="comment-button"
-                style={{ marginTop: '10px' }}
-            >
-                Submit Comment
-            </Button>
-        </form>
+        <Card style={{ marginBottom: '20px' }} title="Thêm bình luận">
+            <Form onFinish={handleSubmit}>
+                <Form.Item
+                    name="content"
+                    rules={[{ required: true, message: 'Vui lòng nhập bình luận của bạn!' }]}
+                >
+                    <TextArea
+                        rows={4}
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        placeholder="Viết bình luận..."
+                        onKeyDown={handleKeyDown}
+                    />
+                </Form.Item>
+                <Form.Item>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        style={{ width: '100%' }}
+                    >
+                        Gửi bình luận
+                    </Button>
+                </Form.Item>
+            </Form>
+        </Card>
     );
 };
 
