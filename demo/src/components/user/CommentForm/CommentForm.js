@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createComment } from '../../../api/api';
 import { Input, Button, notification, Card, Form } from 'antd';
+import Cookies from 'js-cookie'; // Import thư viện js-cookie
 
 const { TextArea } = Input;
 
@@ -21,7 +22,7 @@ const CommentForm = ({ postId, onCommentAdded }) => {
             return;
         }
 
-        const token = localStorage.getItem('token');
+        const token = Cookies.get('token'); // Lấy token từ cookie
         try {
             const newComment = await createComment({ post_id: postId, content: values.content }, token);
             setContent('');

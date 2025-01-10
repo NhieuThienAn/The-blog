@@ -11,8 +11,8 @@ const PostManagement = () => {
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const role = localStorage.getItem('role');  // Lấy quyền người dùng từ local storage
-    const token = localStorage.getItem('token');
+    const role = Cookies.get('role');  // Lấy quyền người dùng từ local storage
+    const token = Cookies.get('token');
 
     if (role === 'user') {
         setError("lỗi quyền hạn");

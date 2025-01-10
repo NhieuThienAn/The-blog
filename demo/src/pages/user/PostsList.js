@@ -4,12 +4,13 @@ import PostList from '../../components/user/PostList/PostList';
 import Header from '../../components/user/Header/Header';
 import Footer from '../../components/user/Footer/Footer';
 import RecommendPost from '../../components/user/RecommendPost/RecommendPost';
-import TopUsers from '../../components/user/TopUsers/TopUsers';
+import Cookies from 'js-cookie'; // Import thư viện js-cookie
+
 const Posts = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = Cookies.get('token');
         if (!token) {
             navigate('/login');
         }
@@ -22,7 +23,6 @@ const Posts = () => {
             <Header />
             <PostList />
             <RecommendPost />
-            <TopUsers />
             <Footer />
         </div>
     );

@@ -5,6 +5,7 @@ import { getPostById, updatePost, deletePost } from '../../../api/api';
 import { Modal, Input, Button, Select } from 'antd';
 import './PostDetail.scss';
 import Loading from '../Loading/Loading';
+import Cookies from 'js-cookie'; // Import thư viện js-cookie
 
 const PostDetail = () => {
     const { postId } = useParams();
@@ -51,7 +52,7 @@ const PostDetail = () => {
             console.log("Payload:", updatedPost);
 
             try {
-                const token = localStorage.getItem('token');
+                const token = Cookies.get('token');
                 const response = await updatePost(postId, updatedPost, token);
                 console.log("Update Response:", response);
                 // Gọi lại API để lấy dữ liệu mới sau khi cập nhật
@@ -71,7 +72,7 @@ const PostDetail = () => {
 
     const handleDelete = async () => {
         try {
-            await deletePost(postId, localStorage.getItem('token'));
+            await deletePost(postId, Cookies.get('token'));
             navigate('/admin/posts'); // Quay lại danh sách bài viết
         } catch (error) {
             console.error("Error deleting post:", error);
