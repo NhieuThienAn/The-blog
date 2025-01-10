@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../admin/Sidebar/Sidebar';
 import { Modal, Table, Button } from 'antd';
 import './UserManagement.scss';
+import Cookies from 'js-cookie'; // Import thư viện js-cookie
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
@@ -12,7 +13,7 @@ const UserManagement = () => {
     const [currentUserId, setCurrentUserId] = useState(null);
     const [actionType, setActionType] = useState('');
     const navigate = useNavigate();
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('token');
 
     useEffect(() => {
         const fetchUsers = async () => {

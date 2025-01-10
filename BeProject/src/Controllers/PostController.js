@@ -240,7 +240,7 @@ export const unlikePost = async (req, res) => {
     }
 };
 
-// Get posts by user ID
+/// Get posts by user ID
 export const getPostsByUserId = async (req, res) => {
     const { user_id } = req.params; // Lấy user_id từ tham số URL
 
@@ -256,11 +256,8 @@ export const getPostsByUserId = async (req, res) => {
                 select: 'username'
             });
 
-        if (!posts || posts.length === 0) {
-            return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'No posts found for this user.' });
-        }
-
-        res.status(HttpStatusCode.OK).json(posts);
+        // Nếu không có bài viết, trả về mảng rỗng
+        res.status(HttpStatusCode.OK).json(posts || []);
     } catch (error) {
         res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
     }
@@ -321,6 +318,27 @@ export const getPostsByCategory = async (req, res) => {
         res.status(HttpStatusCode.OK).json(posts);
     } catch (error) {
         console.error("Error in getPostsByCategory:", error);
+        res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
+    }
+};
+
+// Check if user has liked a post
+export const hasUserLikedPost = async (req, res) => {
+    const { post_id } = req.params; // Lấy post_id từ tham số URL
+    const userId = req.user.id; // Lấy user_id từ thông tin người dùng đã xác thực
+
+    try {
+        const post = await Post.findById(post_id);
+
+        if (!post) {
+            return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found.' });
+        }
+
+        const hasLiked = post.likedBy.includes(userId); // Kiểm tra xem user_id có trong likedBy hay không
+
+        res.status(HttpStatusCode.OK).json({ hasLiked });
+    } catch (error) {
+        console.error('Error checking like status:', error);
         res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
     }
 };

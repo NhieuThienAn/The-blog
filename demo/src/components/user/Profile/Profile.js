@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Input, Button, Select, Typography, message,Image } from 'antd';
+import { Modal, Input, Button, Select, Typography, message, Image } from 'antd';
 import { getUsersById, createPost, updateUser, getAllCategories, getAllTags, getPostsByUserId } from '../../../api/api';
 import Loading from '../Loading/Loading';
+import Cookies from 'js-cookie'; // Import thư viện js-cookie
+
 import './Profile.scss';
 
 const { TextArea } = Input;
@@ -25,9 +27,9 @@ const UserProfile = () => {
     const [showDrafts, setShowDrafts] = useState(false);
     const [editUserData, setEditUserData] = useState({ name: '', email: '', phone: '', bio: '' });
 
-    const role = localStorage.getItem('role');
-    const userId = localStorage.getItem('user_id');
-    const token = localStorage.getItem('token');
+    const role = Cookies.get('role');
+    const userId = Cookies.get('user_id');
+    const token = Cookies.get('token');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,7 +41,13 @@ const UserProfile = () => {
                     getAllTags(),
                 ]);
                 setUser(userResponse.data);
-                setPosts(postsResponse.data);
+                // Kiểm tra nếu không có bài viết nào
+                if (postsResponse.data && postsResponse.data.length > 0) {
+                    setPosts(postsResponse.data);
+                } else {
+                    setPosts([]); // Set posts thành mảng rỗng nếu không có bài viết
+                    message.info("Bạn chưa có bài viết nào.");
+                }
                 setCategories(categoriesResponse.data);
                 setAllTags(tagsResponse.data);
                 setEditUserData({

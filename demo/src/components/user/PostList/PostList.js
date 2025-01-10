@@ -16,7 +16,6 @@ const PostList = () => {
       setLoading(true);
       try {
         const response = await getAllPosts();
-        // Sort posts by likes in descending order
         const sortedPosts = response.data.sort((a, b) => b.likes - a.likes);
         setPosts(sortedPosts);
       } catch (error) {

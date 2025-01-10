@@ -5,6 +5,7 @@ import {
     getCommentsByPostId,
     likePost,
     unlikePost,
+    hasUserLikedPost, // Nhập hàm kiểm tra tình trạng like
     deleteComment,
     updateComment,
 } from '../../../api/api';
@@ -25,6 +26,7 @@ import {
 } from 'antd';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPinterest, FaReddit } from 'react-icons/fa';
 import './PostDetail.css';
+import Cookies from 'js-cookie'; // Import thư viện js-cookie
 
 const { Title, Paragraph } = Typography;
 
@@ -44,8 +46,12 @@ const PostDetail = () => {
             try {
                 const postResponse = await getPostById(postId);
                 setPost(postResponse.data);
-                const userId = localStorage.getItem('userId');
-                setLiked(postResponse.data.likedBy.includes(userId));
+
+                // Kiểm tra xem người dùng đã thích bài viết hay chưa
+                const token = Cookies.get('token');
+                const likeResponse = await hasUserLikedPost(postId, token);
+                setLiked(likeResponse.hasLiked);
+
                 await fetchComments();
             } catch (postError) {
                 console.error("Error fetching post:", postError);
@@ -78,7 +84,7 @@ const PostDetail = () => {
     };
 
     const handleDeleteComment = async (commentId) => {
-        const token = localStorage.getItem('token');
+        const token = Cookies.get('token');
         try {
             await deleteComment(commentId, token);
             setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
@@ -88,7 +94,7 @@ const PostDetail = () => {
     };
 
     const handleEditComment = async () => {
-        const token = localStorage.getItem('token');
+        const token = Cookies.get('token');
         try {
             const updatedComment = await updateComment(editingComment.id, newCommentContent, token);
             setComments((prevComments) =>
@@ -107,22 +113,22 @@ const PostDetail = () => {
     };
 
     const handleLike = async () => {
-        const token = localStorage.getItem('token');
+        const token = Cookies.get('token');
         try {
-            const updatedPost = await likePost(postId, token);
-            setPost(updatedPost);
+            await likePost(postId, token);
             setLiked(true);
+            setPost(prevPost => ({ ...prevPost, likes: prevPost.likes + 1 })); // Cập nhật số lượt like trên bài viết
         } catch (error) {
             console.error('Error liking the post:', error);
         }
     };
 
     const handleUnlike = async () => {
-        const token = localStorage.getItem('token');
+        const token = Cookies.get('token');
         try {
-            const updatedPost = await unlikePost(postId, token);
-            setPost(updatedPost);
+            await unlikePost(postId, token);
             setLiked(false);
+            setPost(prevPost => ({ ...prevPost, likes: prevPost.likes - 1 })); // Cập nhật số lượt like trên bài viết
         } catch (error) {
             console.error('Error unliking the post:', error);
         }
@@ -188,7 +194,7 @@ const PostDetail = () => {
         setShareModalVisible(false);
     };
 
-    if (loading) return <Spin tip="Loading..." />;
+    if (loading) return <Spin style={{width:"97vw", padding:"31vh", marginBottom:"100vh"}} size='large' tip="Loading..." />;
     if (error) return <Alert message={error} type="error" />;
 
     if (!post) {
@@ -200,7 +206,7 @@ const PostDetail = () => {
             <Card bordered={false} style={{ marginBottom: '20px' }}>
                 <Title level={1}>{post.title}</Title>
                 <Image src={`http://localhost:3001/${post.image_url}`} alt={post.title} />
-                <Paragraph style={{ marginTop: '20px' }} >{post.content}</Paragraph>
+                <Paragraph style={{ marginTop: '20px' }}>{post.content}</Paragraph>
                 <Paragraph>
                     <strong>Tác giả:</strong> {post.user_id ? post.user_id.username : 'Unknown User'}
                 </Paragraph>

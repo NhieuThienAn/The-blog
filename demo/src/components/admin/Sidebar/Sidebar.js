@@ -3,6 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { MailOutlined, UserOutlined, CaretLeftOutlined, CaretRightOutlined, LogoutOutlined, TagsOutlined, LinkOutlined } from '@ant-design/icons';
 import { Menu, Modal, message } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie'; // Import thư viện js-cookie
 
 const Sidebar = () => {
     const [current, setCurrent] = useState('');
@@ -61,7 +62,11 @@ const Sidebar = () => {
     };
 
     const handleLogout = () => {
-        localStorage.clear();
+        Cookies.remove('username');
+        Cookies.remove('user_id');
+        Cookies.remove('email');
+        Cookies.remove('avatar_url');
+        Cookies.remove('token'); // Xóa token nếu cần
         navigate('/login');
     };
 
@@ -70,9 +75,9 @@ const Sidebar = () => {
     };
 
     const user = {
-        name: localStorage.getItem('username') || 'Người dùng',
+        name: Cookies.get('username') || 'Người dùng',
         role: 'Quản trị viên',
-        email: localStorage.getItem('email') || 'Chưa có email',
+        email: Cookies.get('email') || 'Chưa có email',
         avatar: 'https://via.placeholder.com/50',
     };
 

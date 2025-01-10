@@ -5,6 +5,7 @@ import { BsPostcard } from "react-icons/bs";
 import { PiPlanetFill } from "react-icons/pi";
 import { getAllPosts, getUsersById } from '../../../api/api';
 import { Button, Modal, message } from 'antd';
+import Cookies from 'js-cookie'; // Import thư viện js-cookie
 import './Header.scss';
 const Header = () => {
     const navigate = useNavigate();
@@ -12,10 +13,10 @@ const Header = () => {
     const [error, setError] = useState(null);
     const [isClicked, setIsClicked] = useState(false);
 
-    const username = localStorage.getItem('username');
-    const user_id = localStorage.getItem('user_id');
-    const email = localStorage.getItem('email');
-    const avatar_url = localStorage.getItem('avatar_url');
+    const username = Cookies.get('username');
+    const user_id = Cookies.get('user_id');
+    const email = Cookies.get('email');
+    const avatar_url = Cookies.get('avatar_url');
 
     const showModal = () => {
         Modal.confirm({
@@ -45,7 +46,11 @@ const Header = () => {
     }, [user_id]);
 
     const handleLogout = () => {
-        localStorage.clear();
+        Cookies.remove('username');
+        Cookies.remove('user_id');
+        Cookies.remove('email');
+        Cookies.remove('avatar_url');
+        Cookies.remove('token'); // Xóa token nếu cần
         navigate('/login');
     };
 

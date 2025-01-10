@@ -1,15 +1,14 @@
-import React from 'react';
 import { Navigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const ProtectedRoute = ({ element, allowedRoles }) => {
-  const role = localStorage.getItem('role');
+  const role = Cookies.get('role');
 
-  // Check if the user's role is allowed
-  if (allowedRoles.includes(role)) {
-    return element; // Render the requested component if allowed
+  if (!role || !allowedRoles.includes(role)) {
+    return <Navigate to="/login" />; // Nếu không có vai trò đúng, quay về đăng nhập
   }
-  
-  return <Navigate to="/login" />; // Redirect to login if not authorized
+
+  return element; // Trả về component nếu đã xác thực
 };
 
 export default ProtectedRoute;

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie'; // Import thư viện js-cookie
 
 const API_URL = 'http://localhost:3001/api';
 
@@ -8,7 +9,7 @@ export const loginUser = (loginData) => axios.post(`${API_URL}/login`, loginData
 export const getUsersById = (userId) => axios.get(`${API_URL}/users/${userId}`);
 export const getTopUsersByLikes = () => axios.get(`${API_URL}/users/top-likes`);
 export const getAllUsers = () => {
-  const token = localStorage.getItem('token');
+  const token = Cookies.get('token');
   return axios.get(`${API_URL}/users`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -35,6 +36,16 @@ export const unlockUser = (userId, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
+};
+
+// Check if user has liked a post
+export const hasUserLikedPost = async (postId, token) => {
+  const response = await axios.get(`${API_URL}/posts/${postId}/has-liked`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data; // Chứa thông tin về việc người dùng đã thích bài viết hay chưa
 };
 
 // Password Reset API
@@ -150,7 +161,7 @@ export const updateComment = async (commentId, updatedContent, token) => {
 export const createCategory = (categoryData) => axios.post(`${API_URL}/categories`, categoryData);
 export const getAllCategories = () => axios.get(`${API_URL}/categories`);
 export const deleteCategory = (categoryId) => {
-  const token = localStorage.getItem('token');
+  const token = Cookies.get('token');
   return axios.delete(`${API_URL}/categories/${categoryId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -160,7 +171,7 @@ export const deleteCategory = (categoryId) => {
 
 // Tag API
 export const createTag = (tagData) => {
-  const token = localStorage.getItem('token');
+  const token = Cookies.get('token');
   return axios.post(`${API_URL}/tags`, tagData, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -169,7 +180,7 @@ export const createTag = (tagData) => {
 };
 export const getAllTags = () => axios.get(`${API_URL}/tags`);
 export const deleteTag = (tagId) => {
-  const token = localStorage.getItem('token');
+  const token = Cookies.get('token');
   return axios.delete(`${API_URL}/tags/${tagId}`, {
     headers: {
       Authorization: `Bearer ${token}`,

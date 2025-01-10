@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getPostById, updatePost, deletePost } from '../../../api/api';
 import { Typography, Input, Button, Spin, Alert, Upload, Card, Image, Modal, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import Cookies from 'js-cookie'; // Import thư viện js-cookie
+
 import './FixPostDetail.scss';
 
 const { Title, Paragraph } = Typography;
@@ -36,7 +38,7 @@ const FixPostDetail = () => {
     }, [postId]);
 
     const handleUpdatePost = async () => {
-        const token = localStorage.getItem('token');
+        const token = Cookies.get('token');
         const formData = new FormData();
         formData.append('title', updatedTitle);
         formData.append('content', updatedContent);
@@ -55,7 +57,7 @@ const FixPostDetail = () => {
     };
 
     const handleDeletePost = async () => {
-        const token = localStorage.getItem('token');
+        const token = Cookies.get('token');
         Modal.confirm({
             title: 'Xóa bài viết',
             content: 'Bạn có chắc chắn muốn xóa bài viết này?',
