@@ -5,8 +5,8 @@ $text-color: #333;
 $font-stack: Arial, sans-serif;
 
 .post-list-container {
-    max-width: 1300px;
-    margin: 0 auto;
+    max-width: 1400px;
+    margin: 0 auto 30px;
     padding: 12px;
     font-family: $font-stack;
     border-radius: 10px;
@@ -164,3 +164,9 @@ $font-stack: Arial, sans-serif;
         transform: translateY(0vh);
     }
 }
+.post-category {
+    font-size: 14px; /* Kích thước chữ */
+    color: #888; /* Màu sắc chữ */
+    margin-top: 5px; /* Khoảng cách trên */
+    font-style: italic; /* Kiểu chữ nghiêng */
+  }

@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema({
     avatar_url: { type: String, default: 'none' },
     role: { type: String, enum: ['admin', 'author', 'user'], default: 'user' },
     locked: { type: Boolean, default: false },
+    subscribed: { type: Boolean, default: false }, 
+
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
     resetPasswordToken: { type: String },

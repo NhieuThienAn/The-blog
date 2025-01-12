@@ -1,0 +1,26 @@
+.newsletter-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    padding: 30px 32px;
+    width: calc(35vw + 1rem);
+    margin: 20px auto;
+    text-align: center;
+
+    h3 {
+        color: #333;
+    }
+
+    .ant-btn {
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    .ant-input {
+        border-radius: 4px;
+    }
+
+    .ant-typography {
+        margin-top: 15px;
+    }
+}

@@ -8,12 +8,11 @@ import http from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
 import { fileURLToPath } from 'url'; // Thêm dòng này
-import { v2 as cloudinary } from 'cloudinary';
-import userRoutes from './src/Routes/userRoutes.js';
-import postRoutes from './src/Routes/postRoutes.js';
-import commentRoutes from './src/Routes/commentRoutes.js';
-import categoryRoutes from './src/Routes/categoryRoutes.js';
-import tagRoutes from './src/Routes/tagRoutes.js';
+import userRoutes from './src/Routes/UserRoutes.js';
+import postRoutes from './src/Routes/PostRoutes.js';
+import commentRoutes from './src/Routes/CommentRoutes.js';
+import categoryRoutes from './src/Routes/CategoryRoutes.js';
+import tagRoutes from './src/Routes/TagRoutes.js';
 import nodemailer from 'nodemailer'; // Giữ lại khai báo này
 
 dotenv.config();

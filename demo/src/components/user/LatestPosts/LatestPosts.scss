@@ -1,0 +1,120 @@
+$background: #f9f9f9;
+$border: #ddd;
+$primary-color: #007bff;
+$text-color: #333;
+$font-stack: Arial, sans-serif;
+
+.latest-posts-container {
+    margin: 30px auto;
+    padding: 20px;
+    background-color: var(--bg);
+    font-family: $font-stack;
+    width: 85%;
+    border-radius: 12px;
+
+    .latest-posts-title {
+        margin-bottom: 20px;
+    }
+
+    .latest-no-posts-message {
+        text-align: center;
+        font-size: 1.2em;
+        color: $text-color;
+        margin-top: 20px;
+    }
+
+    .latest-posts-layout {
+        display: flex;
+        overflow-x: hidden; // Ẩn thanh cuộn ngang
+        padding: 10px 0; // Padding cho khu vực cuộn
+        gap: 40px; // Khoảng cách giữa các bài viết
+        margin: 0 20px;
+        overflow-y: hidden; 
+        .latest-post-item {
+            flex: 0 0 auto; // Không co giãn, giữ kích thước cố định
+            width: 240px; // Chiều rộng cố định cho mỗi bài viết
+            background-color: $background;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+            opacity: 0; // Ẩn bài viết ban đầu
+            transform: translateY(1950px); // Đẩy xuống dưới
+            transition: opacity 1s ease-out, transform 2s ease; // Hiệu ứng chuyển tiếp
+            animation: appearDownToTop 1.9s linear forwards; // Hiệu ứng cho bài viết chính
+            &:nth-child(1) {
+                animation-delay: 1s;
+            }
+
+            &:nth-child(2) {
+                animation-delay: 1.2s;
+            }
+
+            &:nth-child(3) {
+                animation-delay: 1.4s;
+            }
+
+            &:nth-child(4) {
+                animation-delay: 1.5s;
+            }
+
+            &:nth-child(5) {
+                animation-delay: 1.6s;
+            }
+
+
+            &:hover {
+                box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .latest-post-image {
+                width: 100%; // Full width for images
+                height: 240px; // Chiều cao cố định để tạo hình vuông
+                object-fit: cover; // Đảm bảo hình ảnh không bị méo
+            }
+
+            .latest-post-title {
+                padding: 10px;
+                color: $primary-color;
+                text-decoration: none;
+                transition: color 0.3s;
+                font-size: 17px;
+
+                &:hover {
+                    color: darken($primary-color, 10%);
+                }
+            }
+
+            .latest-post-content {
+                padding: 10px;
+                color: $text-color;
+                font-size: 0.9em;
+                line-height: 1.4;
+                margin: 5px 0;
+            }
+        }
+    }
+}
+
+@keyframes appearRightToLeft {
+    from {
+        opacity: 0;
+        transform: translateX(1000px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes appearDownToTop {
+    from {
+        opacity: 0;
+        transform: translateY(100vh);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0vh);
+    }
+}

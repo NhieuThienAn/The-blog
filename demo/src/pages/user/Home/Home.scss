@@ -1,0 +1,18 @@
+.animate-from-left,
+.animate-from-right {
+    transform: translateX(-50%); /* For left */
+    transition: opacity 1s ease, transform 1.5s ease-out; /* Define transition */
+}
+
+.animate-from-right {
+    transform: translateX(50%); /* For right */
+}
+
+.visible {
+    opacity: 1; /* Make visible */
+    transform: translateX(0); /* Move to original position */
+}
+
+body {
+    overflow-x: hidden; /* Hides horizontal scrollbar */
+}

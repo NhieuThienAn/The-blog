@@ -44,4 +44,8 @@ router.post('/posts/:id/unlike', authentication, postController.unlikePost);
 // check if a post has been liked by  user ID
 router.get('/posts/:post_id/has-liked', authentication ,postController.hasUserLikedPost);
 
+
+
+router.get('/admin/post-statistics',authentication, postController.getStatistics);
+
 export default router;

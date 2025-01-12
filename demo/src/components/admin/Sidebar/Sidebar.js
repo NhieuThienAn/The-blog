@@ -1,15 +1,16 @@
 import './Sidebar.scss';
 import React, { useEffect, useState, useMemo } from 'react';
-import { MailOutlined, UserOutlined, CaretLeftOutlined, CaretRightOutlined, LogoutOutlined, TagsOutlined, LinkOutlined } from '@ant-design/icons';
+import { MailOutlined, UserOutlined, CaretLeftOutlined, CaretRightOutlined, LogoutOutlined, TagsOutlined, LinkOutlined, BarChartOutlined } from '@ant-design/icons'; // Thêm BarChartOutlined cho mục thống kê
 import { Menu, Modal, message } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Cookies from 'js-cookie'; // Import thư viện js-cookie
+import Cookies from 'js-cookie';
 
 const Sidebar = () => {
     const [current, setCurrent] = useState('');
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
+
     useEffect(() => {
         const path = location.pathname;
 
@@ -21,6 +22,8 @@ const Sidebar = () => {
             setCurrent('categories');
         } else if (path.includes('/admin/posts')) {
             setCurrent('posts');
+        } else if (path.includes('/admin/statistics')) { // Thêm điều kiện cho thống kê
+            setCurrent('statistics');
         }
     }, [location]);
 
@@ -39,6 +42,9 @@ const Sidebar = () => {
                 break;
             case 'categories':
                 navigate('/admin/categories');
+                break;
+            case 'statistics': // Thêm điều kiện cho thống kê
+                navigate('/admin/statistics');
                 break;
             case 'logout':
                 showModal();
@@ -86,6 +92,7 @@ const Sidebar = () => {
         { key: 'users', label: 'Quản lý Người dùng', icon: <UserOutlined /> },
         { key: 'tags', label: 'Quản lý Thẻ', icon: <TagsOutlined /> },
         { key: 'categories', label: 'Quản lý Danh mục', icon: <LinkOutlined /> },
+        { key: 'statistics', label: 'Thống kê', icon: <BarChartOutlined /> }, // Thêm mục Thống kê
         { key: 'logout', label: 'Đăng xuất', icon: <LogoutOutlined /> },
     ], []);
 
@@ -107,9 +114,6 @@ const Sidebar = () => {
                 mode="inline"
                 items={items}
             />
-            <button className="toggle-button" onClick={toggleSidebar}>
-                {collapsed ? <CaretRightOutlined /> : <CaretLeftOutlined />}
-            </button>
         </div>
     );
 };

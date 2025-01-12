@@ -46,8 +46,8 @@ const PostDetail = () => {
             try {
                 const postResponse = await getPostById(postId);
                 setPost(postResponse.data);
+                console.log(postResponse.data);
 
-                // Kiểm tra xem người dùng đã thích bài viết hay chưa
                 const token = Cookies.get('token');
                 const likeResponse = await hasUserLikedPost(postId, token);
                 setLiked(likeResponse.hasLiked);
@@ -194,7 +194,7 @@ const PostDetail = () => {
         setShareModalVisible(false);
     };
 
-    if (loading) return <Spin style={{width:"97vw", padding:"31vh", marginBottom:"100vh"}} size='large' tip="Loading..." />;
+    if (loading) return <Spin style={{ width: "97vw", padding: "31vh", marginBottom: "100vh" }} size='large' tip="Loading..." />;
     if (error) return <Alert message={error} type="error" />;
 
     if (!post) {
@@ -212,6 +212,10 @@ const PostDetail = () => {
                 </Paragraph>
                 <Paragraph>
                     <strong>Số lượt like:</strong> {post.likes || 0}
+                    
+                </Paragraph>
+                <Paragraph>
+                    <strong>Danh mục:</strong> {post.category_id ? post.category_id.name : 'Chưa có danh mục'}
                 </Paragraph>
                 <Button
                     onClick={liked ? handleUnlike : handleLike}

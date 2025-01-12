@@ -9,7 +9,8 @@ import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { HttpStatusCode } from '../constants/HttpStatusCode.js';
-
+import htmlDocx from 'html-docx-js';
+import { Buffer } from 'buffer';
 const SECRET_KEY = process.env.SECRET_KEY;
 
 // Register
@@ -287,5 +288,115 @@ export const getTopUsersByLikes = async (req, res) => {
     } catch (error) {
         console.error('Error fetching top users:', error);
         res.status(SERVER_ERROR).json({ error: error.message });
+    }
+};
+
+// Hàm gửi email thông báo bài viết mới
+export const sendNewPostNotification = async (post) => {
+    const users = await User.find({ subscribed: true }); // Lấy danh sách người dùng đã đăng ký nhận thông báo
+
+    for (const user of users) {
+        const subject = `Có bài viết mới: ${post.title}`;
+        const text = `Chào bạn, có bài viết mới trên trang của chúng tôi:\n\n Tiêu đề: ${post.title}\n\nXem thêm tại: http://localhost:3000/posts/${post._id}`;
+        await sendEmail(user.email, subject, text); // Gửi email cho từng người dùng
+    }
+};
+
+// Subscribe to newsletter
+// Subscribe to newsletter
+export const subscribeToNewsletter = async (req, res) => {
+    const { email } = req.body;
+
+    // Kiểm tra tính hợp lệ của email
+    if (!email || !email.endsWith('@gmail.com')) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'Email must end with @gmail.com.' });
+    }
+
+    try {
+        // Kiểm tra xem email đã tồn tại trong database chưa
+        let user = await User.findOne({ email });
+        
+        // Nếu chưa tồn tại, tạo mới một người dùng với trạng thái subscribed
+        if (!user) {
+            user = new User({ email, subscribed: true }); // Chỉ cần email và subscribed
+            await user.save();
+        } else {
+            // Nếu đã tồn tại, chỉ cần cập nhật trạng thái subscribed
+            user.subscribed = true;
+            await user.save();
+        }
+
+        res.status(HttpStatusCode.OK).json({ message: 'Successfully subscribed to the newsletter.' });
+    } catch (error) {
+        console.error('Error subscribing to newsletter:', error);
+        res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
+    }
+};
+
+
+
+export const getUserStatistics = async (req, res) => {
+    try {
+        // Tổng số người dùng
+        const totalUsers = await User.countDocuments();
+
+        // Tổng số bài viết
+        const totalPosts = await Post.countDocuments();
+
+        // Số lượng người dùng theo trạng thái đăng ký nhận thông báo
+        const subscribedUsersCount = await User.countDocuments({ subscribed: true });
+
+        // Top 5 người dùng có nhiều bài viết nhất
+        const topUsersByPosts = await Post.aggregate([
+            { $group: { _id: '$user_id', postCount: { $sum: 1 } } },
+            { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'userInfo' } },
+            { $unwind: { path: '$userInfo', preserveNullAndEmptyArrays: true } },
+            { $project: { username: '$userInfo.username', postCount: '$postCount' } },
+            { $sort: { postCount: -1 } },
+            { $limit: 5 }
+        ]);
+
+        // Gộp thông tin thống kê
+        const statistics = {
+            totalUsers,
+            totalPosts,
+            subscribedUsersCount,
+            topUsersByPosts
+        };
+
+        res.status(HttpStatusCode.OK).json(statistics);
+    } catch (error) {
+        console.error('Error fetching user statistics:', error);
+        res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
+    }
+};
+
+
+// Get top users by posts
+export const getTopUsersByPosts = async (req, res) => {
+    try {
+        console.log("Fetching top users by posts...");
+
+        const topUsers = await Post.aggregate([
+            { $group: { _id: '$user_id', postCount: { $sum: 1 } } },
+            { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'userInfo' } },
+            { $unwind: { path: '$userInfo', preserveNullAndEmptyArrays: true } },
+            { $project: { 
+                _id: 0, 
+                user_id: '$_id', 
+                username: '$userInfo.username', 
+                email: '$userInfo.email', 
+                avatar_url: '$userInfo.avatar_url', 
+                postCount: '$postCount' 
+            }},
+            { $sort: { postCount: -1 } },
+            { $limit: 5 } // Adjust limit as needed
+        ]);
+
+        console.log("Top users fetched:", topUsers);
+        res.json(topUsers);
+    } catch (error) {
+        console.error('Error fetching top users:', error);
+        res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
     }
 };
