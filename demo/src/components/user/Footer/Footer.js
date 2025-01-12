@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Layout, Row, Col, Typography, Space } from 'antd';
 import { FacebookOutlined, TwitterOutlined, InstagramOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons';
 import './Footer.scss';
-
 const { Text } = Typography;
 const { Footer } = Layout;
 
@@ -16,6 +15,8 @@ const FooterComponent = () => {
     return (
         <Footer style={{ backgroundColor: '#f0f2f5', padding: '20px 0' }}>
             <Row justify="space-between" align="middle">
+                <Col span={24} style={{ textAlign: 'center', marginBottom: '20px' }}>
+                    </Col>
                 <Col span={24} style={{ textAlign: 'center', marginBottom: '20px' }}>
                     <Text>© 2021 My Website. All rights reserved.</Text>
                 </Col>

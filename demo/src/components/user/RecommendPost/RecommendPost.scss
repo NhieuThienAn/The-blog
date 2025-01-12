@@ -9,8 +9,8 @@ $new-font-stack: Arial, sans-serif;
     padding: 20px;
     background-color: var(--bg);
     font-family: $new-font-stack;
-    width: 85%;
-
+    width: 85%;     
+    border-radius: 12px;
     .new-post-list-title {
         margin-bottom: 20px;
     }

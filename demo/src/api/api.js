@@ -187,3 +187,37 @@ export const deleteTag = (tagId) => {
     },
   });
 };
+
+
+
+// subscribe for new posts
+export const subscribeToNewsletter = (email) => {
+  return axios.post(`${API_URL}/subscribe`, { email });
+};
+
+
+// statistics for posts
+export const getPostStatistics = async (token) => {
+  const response = await axios.get(`${API_URL}/admin/post-statistics`, {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
+  });
+  return response.data; // Trả về dữ liệu thống kê bài viết
+};
+
+// statistics for user
+export const getUserStatistics = async (token) => {
+  const response = await axios.get(`${API_URL}/admin/user-statistics`, {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
+  });
+  return response.data; // Trả về dữ liệu thống kê người dùng
+};
+
+
+// Get top users by posts
+export const getTopUsersByPosts = () => {
+  return axios.get(`${API_URL}/top-users-by-posts`);
+};

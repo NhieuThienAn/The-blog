@@ -38,6 +38,14 @@ router.patch('/users/:id/lock', authentication, userController.lockUser); // Rou
 router.patch('/users/:id/unlock', authentication, userController.unlockUser); // Route để mở khóa người dùng
 
 // Get top users by likes
-router.get('/users/top-likes', userController.getTopUsersByLikes);
+//router.get('/users/top-likes', userController.getTopUsersByLikes);
+
+// subscribe for new posts
+router.post('/subscribe', userController.subscribeToNewsletter);
+
+router.get('/admin/user-statistics',authentication, userController.getUserStatistics);
+
+router.get('/top-users-by-posts', userController.getTopUsersByPosts);
+
 
 export default router;

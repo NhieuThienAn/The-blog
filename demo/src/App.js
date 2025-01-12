@@ -7,9 +7,10 @@ const PostManagement = lazy(() => import('./pages/admin/PostManagement'));
 const UserManagement = lazy(() => import('./pages/admin/UserManagement'));
 const TagManagement = lazy(() => import('./pages/admin/TagManagement'));
 const AdminPostDetail = lazy(() => import('./components/admin/PostManagement/PostDetail'));
+const StatisticsManagement = lazy(() => import('./components/admin/StatisticsManagement/StatisticsManagement'));
 
 // Lazy load User Pages
-const Posts = lazy(() => import('./pages/user/PostsList'));
+const Posts = lazy(() => import('./pages/user/Home/Home'));
 const Loading = lazy(() => import('./pages/user/Loading'));
 const Profile = lazy(() => import('./pages/user/Profile'));
 const Register = lazy(() => import('./pages/user/Register'));
@@ -58,6 +59,7 @@ const App = () => {
           <Route path="/admin/categories" element={<ProtectedRoute element={<CategoriesManagement />} allowedRoles={['admin']} />} />
           <Route path="/admin/tags" element={<ProtectedRoute element={<TagManagement />} allowedRoles={['admin']} />} />
           <Route path="/admin/posts/:postId" element={<ProtectedRoute element={<AdminPostDetail />} allowedRoles={['admin']} />} />
+          <Route path="/admin/statistics" element={<ProtectedRoute element={<StatisticsManagement />} allowedRoles={['admin']} />} />
 
           {/* Redirect to login by default */}
           <Route path="/" element={<Navigate to="/login" />} />

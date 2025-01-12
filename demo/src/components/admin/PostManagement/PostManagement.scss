@@ -8,8 +8,8 @@ $columns: 4; // Biến số cột, bạn có thể thay đổi giá trị này
 
 .post-management-container {
     display: flex;
-    margin-left: 270px; // Khoảng cách cho sidebar
-    width: calc(99vw - 270px);
+    margin-left: 260px; // Khoảng cách cho sidebar
+    width: calc(99vw - 260px);
 
     .content {
         flex-grow: 1;

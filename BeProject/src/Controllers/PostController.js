@@ -2,7 +2,7 @@ import Post from '../Models/Post.js';
 import { HttpStatusCode } from '../constants/HttpStatusCode.js';
 import Tag from '../Models/Tag.js';
 import mongoose from 'mongoose'; // Ensure you import mongoose at the top of your file
-
+import { sendNewPostNotification } from './UserController.js';
 // Create a new post
 export const createPost = async (req, res) => {
     const { category_id, title, content, slug, status, tags = [], user_id } = req.body;
@@ -27,9 +27,10 @@ export const createPost = async (req, res) => {
             })
         );
         const validTagIds = tagIds.filter(id => id !== null);
-
+        
         const post = new Post({ user_id, category_id, title, content, slug, image_url, status, tags: validTagIds });
         await post.save();
+        //await sendNewPostNotification(post); // Gọi hàm gửi email thông báo
         res.status(HttpStatusCode.OK).json(post);
     } catch (error) {
         console.error("Error creating post:", error);
@@ -90,7 +91,6 @@ export const getAllPostsForAdmin = async (req, res) => {
 //get posts by id
 export const getPostById = async (req, res) => {
     const { post_id } = req.params; // Sửa thành post_id
-    console.log(post_id); // Kiểm tra giá trị
     try {
         const post = await Post.findById(post_id).populate('tags')
             .populate({
@@ -117,19 +117,19 @@ export const updatePost = async (req, res) => {
     const user_id = req.user.id;
 
     try {
-        // Kiểm tra xem bài viết có tồn tại không
+        // Check if the post exists
         const foundPost = await Post.findById(postId);
         if (!foundPost) {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found.' });
         }
 
-        // Kiểm tra quyền truy cập
+        // Check access permissions
         if (req.user.role !== 'admin' && user_id !== foundPost.user_id.toString()) {
             return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
         }
 
-        // Đảm bảo tags là một mảng và xử lý
-        const processedTags = Array.isArray(tags)
+        // Ensure tags is an array and process them
+        const processedTags = Array.isArray(tags) 
             ? tags.map(tag => {
                 if (mongoose.Types.ObjectId.isValid(tag)) {
                     return new mongoose.Types.ObjectId(tag);
@@ -138,7 +138,7 @@ export const updatePost = async (req, res) => {
             })
             : [];
 
-        // Cập nhật bài viết
+        // Update the post
         const updatedPost = await Post.findByIdAndUpdate(
             postId,
             {
@@ -156,9 +156,13 @@ export const updatePost = async (req, res) => {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found or not updated.' });
         }
 
-        console.log("Updated Post from Database:", updatedPost); // Log phản hồi từ cơ sở dữ liệu
-        res.status(HttpStatusCode.OK).json(updatedPost);
+        // Send notification if the post is published
+        if (status === 'published' && foundPost.status !== 'published') {
+            await sendNewPostNotification(updatedPost);
+        }
 
+        console.log("Updated Post from Database:", updatedPost);
+        res.status(HttpStatusCode.OK).json(updatedPost);
     } catch (error) {
         console.error("Error updating post:", error);
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message || 'An error occurred while updating the post.' });
@@ -339,6 +343,53 @@ export const hasUserLikedPost = async (req, res) => {
         res.status(HttpStatusCode.OK).json({ hasLiked });
     } catch (error) {
         console.error('Error checking like status:', error);
+        res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
+    }
+};
+
+
+// Get statistics for admin
+export const getStatistics = async (req, res) => {
+    try {
+        // Tổng số bài viết
+        const totalPosts = await Post.countDocuments();
+
+        // Tổng số bài viết đã xuất bản
+        const totalPublishedPosts = await Post.countDocuments({ status: 'published' });
+
+        // Số lượng bài viết theo trạng thái
+        const postsByStatus = await Post.aggregate([
+            { $group: { _id: "$status", count: { $sum: 1 } } }
+        ]);
+
+        // Số lượng bài viết theo từng tác giả
+        const postsByAuthor = await Post.aggregate([
+            { $group: { _id: "$user_id", count: { $sum: 1 } } },
+            { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'authorInfo' } },
+            { $unwind: '$authorInfo' },
+            { $project: { username: '$authorInfo.username', count: 1 } }
+        ]);
+
+        // Số lượng bài viết theo danh mục
+        const postsByCategory = await Post.aggregate([
+            { $group: { _id: "$category_id", count: { $sum: 1 } } },
+            { $lookup: { from: 'categories', localField: '_id', foreignField: '_id', as: 'categoryInfo' } },
+            { $unwind: '$categoryInfo' },
+            { $project: { categoryName: '$categoryInfo.name', count: 1 } }
+        ]);
+
+        // Gộp tất cả thông tin thống kê
+        const statistics = {
+            totalPosts,
+            totalPublishedPosts,
+            postsByStatus,
+            postsByAuthor,
+            postsByCategory
+        };
+
+        res.status(HttpStatusCode.OK).json(statistics);
+    } catch (error) {
+        console.error('Error fetching statistics:', error);
         res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
     }
 };
