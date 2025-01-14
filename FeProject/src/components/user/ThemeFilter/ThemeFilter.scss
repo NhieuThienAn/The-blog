@@ -1,0 +1,44 @@
+.theme-filter-container {
+    display: flex; /* Sử dụng flexbox để căn giữa */
+    flex-direction: column; /* Đặt chiều dọc cho các phần tử */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    padding: 20px;
+    text-align: center;
+    margin: 0 12vw ;
+    h1 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .post-list {
+        display: flex;
+        flex-wrap: wrap; /* Cho phép các bài viết xuống dòng khi hết không gian */
+        justify-content: center; /* Căn giữa các bài viết */
+
+        .post-item {
+            background-color: #f9f9f9; /* Màu nền */
+            border: 1px solid #e0e0e0; /* Viền nhẹ */
+            border-radius: 8px; /* Bo góc */
+            padding: 15px; /* Khoảng cách bên trong */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Bóng nhẹ */
+            margin: 10px; /* Khoảng cách giữa các bài viết */
+            width: 300px; /* Chiều rộng cố định cho các bài viết */
+            text-align: left; /* Căn trái cho văn bản */
+            transition: transform 0.2s;
+
+            &:hover {
+                transform: scale(1.02); /* Hiệu ứng phóng to khi hover */
+            }
+
+            h3 {
+                margin: 10px 0;
+                font-size: 18px; /* Kích thước tiêu đề */
+            }
+
+            p {
+                color: #666; /* Màu sắc văn bản */
+            }
+        }
+    }
+}

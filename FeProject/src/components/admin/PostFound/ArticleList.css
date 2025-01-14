@@ -1,0 +1,73 @@
+.article-list-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.article-layout {
+    display: flex;
+    /* Sử dụng Flexbox để bố trí */
+    gap: 20px;
+    /* Khoảng cách giữa bài lớn và bài nhỏ */
+}
+
+.article-item {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    /* Chiếm toàn bộ chiều rộng mặc định */
+}
+
+.article-item-large {
+    flex: 1.5;
+    /* Bài lớn chiếm 2 phần */
+}
+
+.small-articles-container {
+    flex: 1;
+    font-size: small;
+    /* Bài nhỏ chiếm 1 phần */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Khoảng cách giữa các bài nhỏ */
+}
+
+.article-item-small {
+    display: flex;
+    /* Sử dụng Flexbox cho bài nhỏ */
+    /* Căn giữa theo chiều dọc */
+}
+
+.article-image-small {
+    width: 130px;
+    height: 100%;
+    /* Chiều rộng hình ảnh */
+    /* Giữ tỷ lệ hình ảnh */
+    border-radius: 8px;
+    margin-right: 15px;
+    /* Khoảng cách giữa hình ảnh và nội dung */
+}
+
+.article-content-container {
+    flex: 1;
+    /* Nội dung chiếm phần còn lại */
+}
+
+.article-title {
+    font-size: 1.5rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.article-image-large {
+    width: 730px;
+    /* Hình ảnh lớn chiếm toàn bộ chiều rộng */
+    height: 200px;
+    /* Giữ tỷ lệ hình ảnh */
+    border-radius: 8px;
+}

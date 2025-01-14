@@ -11,6 +11,7 @@ import jwt from 'jsonwebtoken';
 import { HttpStatusCode } from '../constants/HttpStatusCode.js';
 import htmlDocx from 'html-docx-js';
 import { Buffer } from 'buffer';
+
 const SECRET_KEY = process.env.SECRET_KEY;
 
 // Register
@@ -41,34 +42,74 @@ export const register = async (req, res) => {
 // Login
 export const login = async (req, res) => {
     const { email, password } = req.body;
+
+    // Validate email format
     if (!email.endsWith('@gmail.com')) {
         return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'Email must end with @gmail.com.' });
     }
+
     try {
+        // Find user by email
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'Invalid credentials.' });
         }
 
-        // Kiểm tra trạng thái khóa
+        // Check if the user is locked
         if (user.locked) {
             return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'This user is locked and cannot log in.' });
         }
 
+        // Validate password
         const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) {
             return res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'Invalid credentials.' });
         }
 
+        // Generate JWT token
         const token = jwt.sign(
-            { id: user._id, role: user.role, username: user.username }, // Thêm username vào payload
+            { id: user._id, role: user.role, username: user.username },
             SECRET_KEY,
-            { expiresIn: '2h' }
+            { expiresIn: '30m' }
         );
 
-        res.json({ token, username: user.username, email: user.email, user_id: user.id, role: user.role, avatar_url: user.avatar_url }); // Trả về username
+        // Respond with user data
+        return res.json({
+            token,
+            username: user.username,
+            email: user.email,
+            user_id: user.id,
+            role: user.role,
+            avatar_url: user.avatar_url
+        });
     } catch (error) {
-        res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
+        // Handle unexpected errors
+        return res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message || 'An unexpected error occurred.' });
+    }
+};
+
+// Refresh Token
+export const refreshToken = async (req, res) => {
+    const { token } = req.body;
+
+    if (!token) {
+        return res.status(HttpStatusCode.UNAUTHORIZED).json({ message: 'No token provided.' });
+    }
+
+    try {
+        // Verify the existing token
+        const decoded = jwt.verify(token, SECRET_KEY);
+
+        // Generate a new token
+        const newToken = jwt.sign(
+            { id: decoded.id, role: decoded.role, username: decoded.username },
+            SECRET_KEY,
+            { expiresIn: '30m' } // 30 minutes
+        );
+
+        return res.json({ token: newToken });
+    } catch (error) {
+        return res.status(HttpStatusCode.UNAUTHORIZED).json({ message: 'Invalid or expired token.' });
     }
 };
 
@@ -97,7 +138,6 @@ export const getUsersById = async (req, res) => {
 };
 
 // Update user information
-// Update user information
 export const updateUser = async (req, res) => {
     const { id } = req.params;
     const { username, email, password, bio } = req.body;
@@ -124,6 +164,7 @@ export const updateUser = async (req, res) => {
 
         res.json(user);
     } catch (error) {
+        console.log(error);
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message });
     }
 };
@@ -303,7 +344,6 @@ export const sendNewPostNotification = async (post) => {
 };
 
 // Subscribe to newsletter
-// Subscribe to newsletter
 export const subscribeToNewsletter = async (req, res) => {
     const { email } = req.body;
 
@@ -390,7 +430,7 @@ export const getTopUsersByPosts = async (req, res) => {
                 postCount: '$postCount' 
             }},
             { $sort: { postCount: -1 } },
-            { $limit: 5 } // Adjust limit as needed
+            { $limit: 3 } // Adjust limit as needed
         ]);
 
         console.log("Top users fetched:", topUsers);
@@ -400,3 +440,17 @@ export const getTopUsersByPosts = async (req, res) => {
         res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
     }
 };
+
+
+
+// Hàm để kiểm tra và gửi thông báo về bài viết mới
+const checkAndNotifyNewPosts = async () => {
+    const newPosts = await Post.find({ createdAt: { $gte: new Date(Date.now() - 600000) } }); // Lấy bài viết mới trong 1 phút qua
+
+    for (const post of newPosts) {
+        await sendNewPostNotification(post);
+    }
+};
+
+// Thiết lập interval để gửi thông báo mỗi phút
+setInterval(checkAndNotifyNewPosts, 60000);

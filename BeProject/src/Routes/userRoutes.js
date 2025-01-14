@@ -13,6 +13,9 @@ router.post('/register', upload.single('avatar'), userController.register);
 // Login
 router.post('/login', userController.login);
 
+// Refresh token
+router.post('/refresh-token',userController.refreshToken); // New route for refreshing token
+
 // Get all users
 router.get('/users', userController.getAllUsers);
 
@@ -20,7 +23,7 @@ router.get('/users', userController.getAllUsers);
 router.get('/users/:id', userController.getUsersById);
 
 // Update user information
-router.put('/users/:id', authentication, userController.updateUser);
+router.put('/users/:id', authentication,upload.single('avatar'), userController.updateUser);
 
 // Delete user
 router.delete('/users/:id', authentication, userController.deleteUser);
