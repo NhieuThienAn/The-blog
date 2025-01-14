@@ -1,0 +1,136 @@
+// .register-page {
+//     margin: 10vh auto;
+//     align-content: center;
+//     width: 60vw;
+//     background-color: var(--bg);
+//     border-radius: var(--small); // Bo góc cho phần đăng nhập
+//     border: 1.6px solid var(--text);
+//     box-shadow: 0 4px 10px 5px rgba(0, 0, 0, 0.2);
+
+//     .register-form {
+//         margin-left: 10px;
+//         padding: 20px; // Thêm padding cho nội dung
+//         background-color: #f9f9f9; // Màu nền cho phần đăng nhập
+//         border-radius: 8px; // Bo góc cho phần đăng nhập
+
+//         .register-title {
+//             text-align: center;
+//             margin-bottom: 1rem; // Khoảng cách dưới tiêu đề
+//             font-size: 320%;
+//             font-weight: 400;
+//             margin-top: 2rem;
+//             letter-spacing: -0.1rem;
+//         }
+
+//         .register-welcome {
+//             text-align: center;
+//             opacity: 0.65;
+//             margin-bottom: 2rem; // Khoảng cách dưới tiêu đề
+//             font-size: 16px;
+//             font-weight: 100;
+//             letter-spacing: 1px;
+//             line-height: 1.7rem;
+//         }
+
+//         .register-input {
+//             margin: 0.8rem 24%; // Khoảng cách giữa các input
+//             padding: 10px; // Padding cho các input
+//             width: 50%;
+//             display: block;
+//             border-radius: 4px; // Bo góc cho input
+//             font-size: 19px; // Kích thước chữ cho input
+//             outline: none;
+//             border: none;
+//             border-bottom: 3px solid var(--text);
+//             background-color: rgba(0, 0, 0, 0.04);
+//         }
+
+//         .register-toregister {
+//             color: #333333;
+//             font-size: 88%;
+//             margin: 10px 24%;
+//             opacity: 0.8;
+//         }
+
+//         #submit-btn {
+//             background-color: var(--text); // Màu nền cho nút
+//             color: var(--fff); // Màu chữ
+//             font-size: 115%;
+//             font-weight: 400;
+//             border-radius: 20px;
+//             border: none; // Không có đường viền
+//             padding: 1rem 1rem; // Padding cho nút
+//             cursor: pointer; // Hiển thị con trỏ khi hover
+//             margin: 20px 42%;
+//             transition: 0.3s ease-out;
+
+//             &:hover {
+//                 background-color: var(--primary); // Màu nền khi hover
+//                 color: white; // Màu chữ khi hover
+
+//             }
+//         }
+
+//     }
+// }
+
+
+
+
+
+
+
+
+// Register.scss
+
+.register-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5; // Màu nền nhẹ nhàng
+
+    .register-form {
+        background: #ffffff;
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        width: 400px; // Chiều rộng của form
+
+        .register-title {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .register-welcome {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .register-toregister {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            color: #1890ff; // Màu xanh cho liên kết
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline; // Gạch chân khi hover
+            }
+        }
+
+        .ant-btn {
+            width: 100%; // Đặt chiều rộng nút 100%
+            margin-top: 16px; // Khoảng cách phía trên nút
+        }
+
+        .ant-upload {
+            text-align: center; // Căn giữa nội dung upload
+            margin-bottom: 16px; // Khoảng cách phía dưới
+        }
+    }
+}

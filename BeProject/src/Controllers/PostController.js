@@ -10,7 +10,7 @@ export const createPost = async (req, res) => {
     console.log("Request Body:", req.body); // Log the request body
 
     // Title validation
-    if (title.length > 40) {
+    if (title.length > 100) {
         return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'Title must not exceed 40 characters.' });
     }
 
@@ -43,15 +43,7 @@ export const createPost = async (req, res) => {
 export const getAllPosts = async (req, res) => {
     try {
         const posts = await Post.find({ status: 'published' }) // Lấy các bài viết có trạng thái published
-            .populate('tags') // Lấy thông tin tag
-            .populate({
-                path: 'category_id', // Lấy thông tin danh mục
-                select: 'name' // Chỉ lấy trường name
-            })
-            .populate({
-                path: 'user_id', // Lấy thông tin người dùng
-                select: 'username' // Chỉ lấy trường username
-            });
+            .limit(20); // Giới hạn số lượng bài viết trả về
 
         // Chuyển đổi Mongoose Document thành Object và thêm trường image_url
         const postsWithImages = posts.map(post => ({
@@ -111,7 +103,7 @@ export const getPostById = async (req, res) => {
 };
 
 // Update a post
-export const updatePost = async (req, res) => {
+export const updatePostForAdmin = async (req, res) => {
     const { postId } = req.params;
     const { title, content, slug, image_url, status, tags } = req.body;
     const user_id = req.user.id;
@@ -168,7 +160,65 @@ export const updatePost = async (req, res) => {
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message || 'An error occurred while updating the post.' });
     }
 };
+export const updatePost = async (req, res) => {
+    const { postId } = req.params;
+    const { title, content, slug, status, tags } = req.body;
+    const user_id = req.user.id;
 
+    try {
+        // Check if the post exists
+        const foundPost = await Post.findById(postId);
+        if (!foundPost) {
+            return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found.' });
+        }
+
+        // Check access permissions
+        if (req.user.role !== 'admin' && user_id !== foundPost.user_id.toString()) {
+            return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
+        }
+        const image_url = req.file ? req.file.path : null; // Get image path from multer
+        console.log("Image URL before update:", image_url);
+        // Ensure tags is an array and process them
+        const processedTags = Array.isArray(tags) 
+            ? tags.map(tag => {
+                if (mongoose.Types.ObjectId.isValid(tag)) {
+                    return new mongoose.Types.ObjectId(tag);
+                }
+                throw new Error(`Invalid tag ID: ${tag}`);
+            })
+            : [];
+
+        // Update the post
+        const updatedPost = await Post.findByIdAndUpdate(
+            postId,
+            {
+                title,
+                content,
+                slug,
+                image_url,
+                status,
+                tags: processedTags,
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedPost) {
+            return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found or not updated.' });
+        }
+
+        // Send notification if the post is published
+        if (status === 'published' && foundPost.status !== 'published') {
+            await sendNewPostNotification(updatedPost);
+        }
+
+        console.log("Updated Post from Database:", updatedPost);
+
+        res.status(HttpStatusCode.OK).json(updatedPost);
+    } catch (error) {
+        console.error("Error updating post:", error);
+        res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message || 'An error occurred while updating the post.' });
+    }
+};
 // Delete a post
 export const deletePost = async (req, res) => {
     const { postId } = req.params;
@@ -316,15 +366,16 @@ export const getPostsByCategory = async (req, res) => {
             });
 
         if (!posts || posts.length === 0) {
-            return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'No posts found for this category.' });
+            return res.status(404).json({ message: 'No posts found for this category.' });
         }
 
-        res.status(HttpStatusCode.OK).json(posts);
+        res.status(200).json(posts);
     } catch (error) {
         console.error("Error in getPostsByCategory:", error);
-        res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
 };
+
 
 // Check if user has liked a post
 export const hasUserLikedPost = async (req, res) => {

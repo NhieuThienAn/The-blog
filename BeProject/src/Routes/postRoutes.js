@@ -22,14 +22,17 @@ router.get('/admin/posts', authentication, postController.getAllPostsForAdmin);
 router.get('/posts/:post_id', postController.getPostById);
 
 // Get posts by category ID
-router.get('/category/:category_id', postController.getPostsByCategory); // Thêm dòng này
+router.get('/posts/category/:category_id', postController.getPostsByCategory); // Thêm dòng này
 
 
 // Get posts by user ID
 router.get('/posts/user/:user_id', postController.getPostsByUserId);
 
 // Change a post by ID
-router.put('/posts/:postId', authentication, postController.updatePost);
+router.put('/posts/:postId', authentication , upload.single('image'), postController.updatePost);
+
+// Change a post by ID for admin
+router.put('/posts/admin/:postId', authentication , postController.updatePostForAdmin);
 
 // Delete a post by ID
 router.delete('/posts/:postId', authentication, postController.deletePost);
@@ -43,7 +46,6 @@ router.post('/posts/:id/unlike', authentication, postController.unlikePost);
 
 // check if a post has been liked by  user ID
 router.get('/posts/:post_id/has-liked', authentication ,postController.hasUserLikedPost);
-
 
 
 router.get('/admin/post-statistics',authentication, postController.getStatistics);

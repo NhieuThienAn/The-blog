@@ -1,0 +1,122 @@
+$post-management-bg-color: #f4f4f4;
+$post-item-bg-color: #fff;
+$post-item-border-color: #ddd;
+$post-item-hover-bg: #f9f9f9;
+$error-color: #d9534f;
+
+$columns: 4; // Biến số cột, bạn có thể thay đổi giá trị này
+
+.post-management-container {
+    display: flex;
+    margin-left: 260px; // Khoảng cách cho sidebar
+    width: calc(97vw - 250px);
+
+    .content {
+        flex-grow: 1;
+        padding: 20px;
+        background: $post-management-bg-color;
+
+        .post-management-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-input {
+            width: calc(100% - 65vw);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+
+            &:focus {
+                border-color: #007bff;
+                outline: none;
+            }
+        }
+
+        .post-list {
+            display: grid;
+            grid-template-columns: repeat($columns, 1fr); // Sử dụng biến $columns
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+
+            .post-item {
+                background: $post-item-bg-color;
+                border: 1px solid $post-item-border-color;
+                border-radius: 8px;
+                padding: 15px;
+                transition: background 0.3s;
+
+                &:hover {
+                    background: $post-item-hover-bg;
+                }
+
+                .post-image {
+                    width: 100%;
+                    aspect-ratio: 1 / 1;
+                    /* Tạo hình vuông */
+                    object-fit: cover;
+                    border-radius: 4px;
+                    margin-bottom: 10px;
+                }
+
+                .post-title {
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #007bff;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+
+                .post-content {
+                    margin: 10px 0;
+                    color: #555;
+                }
+
+                .post-category,
+                .post-author,
+                .post-tags,
+                .post-likes {
+                    color: #777;
+                    margin: 5px 0;
+
+                    strong {
+                        color: #333;
+                    }
+                }
+
+                button {
+                    margin-top: 10px;
+                    background-color: #007bff;
+                    color: white;
+
+                    &:hover {
+                        background-color: #0056b3;
+                    }
+                }
+            }
+        }
+
+        .error-message {
+            color: $error-color;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    }
+}
+
+.modal-input {
+    margin-bottom: 15px;
+
+    input,
+    textarea {
+        width: 100%;
+    }
+}

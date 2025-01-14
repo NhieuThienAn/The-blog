@@ -1,0 +1,59 @@
+// PostDetail.scss
+
+$post-bg-color: #f9f9f9;
+$primary-color: #1890ff;
+$error-color: #ff4d4f;
+
+.post-detail-container {
+    margin-left: 270px; // Đặt lề trái cho container
+    background-color: $post-bg-color;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-detail-title {
+    font-size: 24px;
+    color: $primary-color;
+    margin-bottom: 10px;
+}
+
+.post-detail-content {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.post-detail-image {
+    max-width: 40vw;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.post-detail-error-message {
+    color: $error-color;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.post-detail-loading {
+    font-size: 16px;
+    color: $primary-color;
+}
+
+.post-detail-buttons {
+    margin-top: 20px;
+}
+
+.post-detail-edit-button,
+.post-detail-delete-button {
+    margin-right: 10px;
+}
+
+.post-detail-modal-input {
+    margin-bottom: 15px;
+}
+
+.post-detail-delete-confirmation {
+    text-align: center;
+}

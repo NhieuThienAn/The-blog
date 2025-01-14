@@ -1,0 +1,31 @@
+.input-img {
+    display: none; /* Ẩn input file gốc */
+}
+
+.input-label {
+    margin: 20px 0 0;
+    display: inline-block;
+    padding: 8px 10px;
+    color: #1890ff; /* Màu chữ */
+    width: 7vw;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+    border: 1px solid #1890ff;
+    margin-right: 20px;
+}
+
+.input-label:hover {
+    background-color: #40a9ff; /* Màu nền khi hover */
+    color: var(--fff);
+}
+
+.input-preview {
+    border-radius: 12px;
+    aspect-ratio: 1/1;
+}
+
+.fix-current-image{
+    margin-top: 40px;
+}

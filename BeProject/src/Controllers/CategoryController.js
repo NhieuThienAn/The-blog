@@ -3,15 +3,16 @@ import Category from '../Models/Category.js';
 
 // Create a new category
 export const createCategory = async (req, res) => {
-    const { name, description } = req.body;
+    const { name } = req.body;
     if (req.user.role !== 'admin') {
         return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
     }
     try {
-        const category = new Category({ name, description });
+        const category = new Category({ name });
         await category.save();
-        res.status(HttpStatusCode.OK).json(category);
+        res.status(HttpStatusCode.OK).json(category); // Trả về status 201 Created
     } catch (error) {
+        console.log(error);
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message });
     }
 };
@@ -26,20 +27,45 @@ export const getAllCategories = async (req, res) => {
     }
 };
 
-export const DeleteCategory = async (req, res) => {
+// Update a category
+export const updateCategory = async (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    if (req.user.role !== 'admin') {
+        return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
+    }
+
+    try {
+        const category = await Category.findById(id);
+        if (!category) {
+            return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'No category found.' });
+        }
+
+        // Cập nhật thông tin danh mục
+        category.name = name || category.name;
+
+        await category.save();
+        res.status(HttpStatusCode.OK).json(category);
+    } catch (error) {
+        res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
+    }
+};
+
+// Delete a category
+export const deleteCategory = async (req, res) => {
     const { id } = req.params;
     if (req.user.role !== 'admin') {
         return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
     }
     try {
-        const categories = await Category.findById(id);
-        if (!categories) {
-            return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'No categories found.' });
+        const category = await Category.findById(id);
+        if (!category) {
+            return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'No category found.' });
         }
         await Category.findByIdAndDelete(id);
-        res.status(HttpStatusCode.OK).send(); 
-    }
-    catch (error) {
+        res.status(HttpStatusCode.NO_CONTENT).send(); // Trả về status 204 No Content
+    } catch (error) {
         res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
     }
 };

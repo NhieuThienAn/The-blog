@@ -1,0 +1,94 @@
+@media (max-width: 3000px) {
+    .Represent-container {
+        display: flex; // Sử dụng Flexbox để bố trí
+        justify-content: flex-start;
+        align-items: flex-start; // Căn chỉnh các item theo chiều dọc
+        margin: 0px 30px 0px 9vw; // Thêm margin cho container nếu cần
+        color: var(--primary);
+        filter: brightness(0.45);
+        position: relative;
+        pointer-events: none;
+        user-select: none;
+        animation: appearDownToTop 0.7s ease-out forwards; // Hiệu ứng cho mỗi bài viết
+
+        .Represent-title {
+            margin: 0; // Đảm bảo không có khoảng cách
+            margin-right: 20px;
+            letter-spacing: 0px;
+            padding: 0; // Đảm bảo không có padding
+            padding-right: 20px;
+            font-weight: 1000;
+            position: relative;
+            font-size: calc(8vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
+
+            &::after {
+                content: '';
+                position: absolute;
+                height: 46%;
+                width: 1.3%;
+                background-color: var(--primary);
+                bottom: 20%;
+                right: -1%;
+            }
+
+        }
+
+        .Represent-title-sub {
+            margin: -1px; // Thêm khoảng cách giữa các span
+            padding: 0; // Đảm bảo không có padding 
+            font-size: 24px; // Kích thước chữ có thể điều chỉnh
+            font-weight: 1000;
+        }
+
+        // Tạo một khối chứa cho các span
+        .span-container {
+            margin-top: 4.2vw;
+            display: flex; // Sử dụng Flexbox cho các span
+            flex-direction: column; // Đặt hướng thành cột
+            align-items: flex-start; // Căn chỉnh các span về bên phải
+        }
+
+        @media (max-width: 900px) {
+            .Represent-title {
+                font-size: calc(12vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
+            }
+
+            .Represent-title-sub {
+                font-size: 16px; // Giảm kích thước chữ cho màn hình nhỏ
+            }
+
+            .span-container {
+                margin-top: 7vw; // Giảm khoảng cách cho màn hình nhỏ
+            }
+        }
+
+        @media (max-width: 768px) {
+            .Represent-title {
+                font-size: calc(8vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
+            }
+
+            .Represent-title-sub {
+                font-size: 16px; // Giảm kích thước chữ cho màn hình nhỏ
+            }
+
+            .span-container {
+                margin-top: 6vw; // Giảm khoảng cách cho màn hình nhỏ
+            }
+        }
+
+        @media (max-width: 480px) {
+            .Represent-title {
+                font-size: calc(8vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
+            }
+
+            .Represent-title-sub {
+                font-size: 12px; // Giảm kích thước chữ cho điện thoại
+            }
+
+            .span-container {
+                margin-top: 6vw; // Giảm khoảng cách cho màn hình nhỏ
+            }
+        }
+    }
+
+}

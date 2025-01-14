@@ -1,0 +1,53 @@
+/* src/components/PostDetail/PostDetail.css */
+
+.post-detail-page {
+    margin: 20px 20vw;
+    background-color: #f4f7f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    
+}
+
+.post-detail-content {
+    display: flex;
+    /* Use flexbox layout */
+    justify-content: space-between;
+    /* Distribute space between items */
+    align-items: flex-start;
+    /* Align items at the top */
+}
+.post-detail-img {
+    width: 1000px;
+    height: 40vh;
+    margin: 0 2vw 0 10vw;
+}
+.post-detail-text {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.post-detail-content {
+    display: flex;
+    flex-direction: row-reverse;
+    border-radius: 10px;
+    object-fit: cover;
+    /* Maintain aspect ratio */
+}
+
+.post-detail-title {
+    font-size: 200%;
+    color: #333;
+    margin: 20px 0 15px;
+    text-align: left;
+    /* Align title to the left */
+}
+
+.comment-container {
+    background-color: rgba(1, 1, 1, 0.05);
+    width: 50%;
+    margin: 20px 100px;
+    /* Center the comment container */
+    padding: 10px;
+    border-radius: 5px;
+}

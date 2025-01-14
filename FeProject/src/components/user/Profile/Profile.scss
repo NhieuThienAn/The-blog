@@ -1,0 +1,161 @@
+:root {
+    --bg: #f5f5f5;
+    /* Màu nền chung */
+    --post-columns: 4;
+    /* Biến cho số cột mặc định */
+}
+
+@media (max-width: 768px) {
+    :root {
+        --post-columns: 1;
+        /* Đặt số cột thành 1 cho thiết bị nhỏ */
+    }
+}
+
+.user-profile-layout {
+    display: flex;
+    margin: 20px 30px 20px;
+    background-color: white;
+}
+
+.user-profile-section {
+    padding: 30px;
+    height: 73vh;
+    border-radius: 12px;
+    position: fixed;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary);
+    filter: brightness(1.11);
+}
+
+.user-profile-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    width: 240px;
+    margin-bottom: 20px;
+    &-img{
+        width: 250px;
+        aspect-ratio: 1/1;
+    }
+}
+
+.user-profile-avatar-image {
+    width: 200px;
+    aspect-ratio: 1 / 1;
+    border-radius: 4%;
+    object-fit: cover;
+    margin-right: 20px;
+    filter: brightness(0.9);
+}
+
+.user-profile-info {
+    font-size: 16px;
+}
+
+.user-create-post-button {
+    margin: 0px auto 0px;
+
+    &-toggle-button {
+        margin: 0 12px;
+    }
+}
+
+.user-posts-section {
+    flex: auto;
+    padding: 10px;
+    margin: 0 0 0 300px;
+}
+
+.user-posts-content {
+    border-radius: 12px;
+    padding: 10px 10px;
+}
+
+.user-posts-heading {
+    font-size: 35px;
+    margin: 5px;
+    text-align: center;
+}
+
+.user-posts-list {
+    list-style-type: none;
+    border-radius: 12px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.user-post-thumbnail-image {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
+.user-post-item.draft {
+    opacity: 0.5;
+}
+
+.user-post-item {
+    background-color: #fff;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(100% / var(--post-columns) - 48px);
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        transform: translateY(-4px);
+    }
+
+    /* Tính toán chiều rộng */
+}
+
+.user-post-title-link {
+    font-size: 18px;
+    color: #007bff;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.post-creation-modal {
+    width: 500px;
+    /* Set a width for the modal */
+}
+
+.input-img {
+    display: none; /* Ẩn input file gốc */
+}
+
+.input-label {
+    margin: 20px 0 0;
+    display: inline-block;
+    padding: 8px 10px;
+    color: #1890ff; /* Màu chữ */
+    width: 7vw;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+    border: 1px solid #1890ff;
+    margin-right: 20px;
+}
+
+.input-label:hover {
+    background-color: #40a9ff; /* Màu nền khi hover */
+    color: var(--fff);
+}
+
+.input-preview {
+    border-radius: 12px;
+    aspect-ratio: 1/1;
+}
