@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
 import { PiPlanetFill } from "react-icons/pi";
-import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import { ToastContainer } from 'react-toastify'; 
 import { getUsersById } from '../../../api/api';
 import { stopTokenRefresh } from '../../TokenService';
 import { Button, Modal, message } from 'antd';
 import Cookies from 'js-cookie';
-import Login from '../../Login/Login'; // Import component Login
-import UserForm from '../Register/Register'; // Import component UserForm
+import Login from '../../Login/Login'; 
+import UserForm from '../Register/Register';
 import { startTokenRefresh } from '../../TokenService';
 import './Header.scss';
 
@@ -21,7 +21,7 @@ const Header = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
-    const [isLoginModalVisible, setIsLoginModalVisible] = useState(false); // State for login modal
+    const [isLoginModalVisible, setIsLoginModalVisible] = useState(false); 
 
     const user_id = Cookies.get('user_id');
     const role = Cookies.get('role');

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { startTokenRefresh } from './components/TokenService';
 import Cookies from 'js-cookie';
 
-// Lazy load pages
 const CategoriesManagement = lazy(() => import('./pages/admin/CategoriesManagement'));
 const PostManagement = lazy(() => import('./pages/admin/PostManagement'));
 const UserManagement = lazy(() => import('./pages/admin/UserManagement'));
@@ -34,7 +33,6 @@ const App = () => {
     startTokenRefresh();
   }  
   
-  // Define routes in an array for better scalability and readability
   const userRoutes = [
     { path: '/posts', element: <Posts /> },
     { path: '/posts/:postId', element: <PostDetail /> },
@@ -63,7 +61,6 @@ const App = () => {
     <Router>
       <Suspense fallback={<Loading />}>
         <Routes>
-          {/* Redirect from the root to /posts */}
           <Route path="/" element={<Navigate to="/posts" />} />
 
           {/* User Routes */}

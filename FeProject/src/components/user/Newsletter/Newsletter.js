@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, notification, Typography, Row, Col } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
-import { subscribeToNewsletter } from '../../../api/api'; // Adjust the import based on your file structure
+import { subscribeToNewsletter } from '../../../api/api'; 
 import './Newsletter.scss';
 
 const { Title, Text } = Typography;

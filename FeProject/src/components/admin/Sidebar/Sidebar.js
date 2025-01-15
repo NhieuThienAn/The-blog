@@ -22,7 +22,7 @@ const Sidebar = () => {
             setCurrent('categories');
         } else if (path.includes('/admin/posts')) {
             setCurrent('posts');
-        } else if (path.includes('/admin/statistics')) { // Thêm điều kiện cho thống kê
+        } else if (path.includes('/admin/statistics')) { 
             setCurrent('statistics');
         }
     }, [location]);
@@ -43,7 +43,7 @@ const Sidebar = () => {
             case 'categories':
                 navigate('/admin/categories');
                 break;
-            case 'statistics': // Thêm điều kiện cho thống kê
+            case 'statistics': 
                 navigate('/admin/statistics');
                 break;
             case 'logout':
@@ -72,7 +72,7 @@ const Sidebar = () => {
         Cookies.remove('user_id');
         Cookies.remove('email');
         Cookies.remove('avatar_url');
-        Cookies.remove('token'); // Xóa token nếu cần
+        Cookies.remove('token'); 
         Cookies.remove('role'); 
         navigate('/posts');
     };
@@ -93,7 +93,7 @@ const Sidebar = () => {
         { key: 'users', label: 'Quản lý Người dùng', icon: <UserOutlined /> },
         { key: 'tags', label: 'Quản lý Thẻ', icon: <TagsOutlined /> },
         { key: 'categories', label: 'Quản lý Danh mục', icon: <LinkOutlined /> },
-        { key: 'statistics', label: 'Thống kê', icon: <BarChartOutlined /> }, // Thêm mục Thống kê
+        { key: 'statistics', label: 'Thống kê', icon: <BarChartOutlined /> }, 
         { key: 'logout', label: 'Đăng xuất', icon: <LogoutOutlined /> },
     ], []);
 

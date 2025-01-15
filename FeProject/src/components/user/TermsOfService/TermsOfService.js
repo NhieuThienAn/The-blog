@@ -1,5 +1,3 @@
-// src/components/TermsOfService.js
-
 import React from 'react';
 import { Layout, Typography, Space, Divider } from 'antd';
 

@@ -13,7 +13,7 @@ const UserManagement = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentUserId, setCurrentUserId] = useState(null);
     const [actionType, setActionType] = useState('');
-    const [showLocked, setShowLocked] = useState(false); // State to toggle between locked and unlocked users
+    const [showLocked, setShowLocked] = useState(false); 
     const navigate = useNavigate();
     const token = Cookies.get('token');
 
@@ -23,7 +23,7 @@ const UserManagement = () => {
                 const response = await getAllUsers();
                 const filteredUsers = response.data.filter(user => user.role !== 'admin');
                 setUsers(filteredUsers);
-                setFilteredUsers(filteredUsers); // Set the initial filtered users
+                setFilteredUsers(filteredUsers); 
             } catch (error) {
                 console.error("Error fetching users:", error);
                 setError("Failed to load users. Please try again later.");
@@ -34,7 +34,6 @@ const UserManagement = () => {
     }, []);
 
     useEffect(() => {
-        // Filter users based on whether we want to show locked or unlocked users
         const updatedUsers = users.filter(user => user.locked === showLocked);
         setFilteredUsers(updatedUsers);
     }, [showLocked, users]);

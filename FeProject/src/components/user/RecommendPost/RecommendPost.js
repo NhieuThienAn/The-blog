@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllPosts } from '../../../api/api';
 import Loading from '../Loading/Loading';
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'; // Thêm biểu tượng mũi tên
+import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import './RecommendPost.scss';
 
 const RecommendPost = () => {
@@ -10,7 +10,7 @@ const RecommendPost = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const postLayoutRef = useRef(null); // Tạo ref cho khu vực bài viết
+    const postLayoutRef = useRef(null); 
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -31,12 +31,12 @@ const RecommendPost = () => {
 
     const scrollRight = () => {
         if (postLayoutRef.current) {
-            postLayoutRef.current.scrollBy({ left: 250, behavior: 'smooth' }); // Cuộn 250px về bên phải
+            postLayoutRef.current.scrollBy({ left: 250, behavior: 'smooth' }); 
         }
     };
     const scrollLeft = () => {
         if (postLayoutRef.current) {
-            postLayoutRef.current.scrollBy({ left: -250, behavior: 'smooth' }); // Cuộn 250px về bên phải
+            postLayoutRef.current.scrollBy({ left: -250, behavior: 'smooth' }); 
         }
     };
 
@@ -47,7 +47,6 @@ const RecommendPost = () => {
 
             items.forEach(item => {
                 const rect = item.getBoundingClientRect();
-                // Kiểm tra nếu bài viết nằm trong tầm nhìn
                 if (rect.top < windowHeight && rect.bottom > 0) {
                     item.classList.add('visible');
                 }
@@ -55,7 +54,7 @@ const RecommendPost = () => {
         };
 
         window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Gọi hàm ngay lần đầu để kiểm tra các bài viết đã ở trong tầm nhìn
+        handleScroll(); 
 
         return () => {
             window.removeEventListener('scroll', handleScroll);

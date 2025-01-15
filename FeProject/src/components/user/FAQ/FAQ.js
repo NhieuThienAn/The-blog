@@ -1,5 +1,3 @@
-// src/components/FAQ.js
-
 import React from 'react';
 import { Layout, Typography, Collapse, Space } from 'antd';
 

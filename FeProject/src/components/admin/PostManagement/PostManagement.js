@@ -5,7 +5,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import { Button, Pagination } from 'antd';
 import Loading from '../Loading/Loading';
 import './PostManagement.scss';
-import Cookies from 'js-cookie'; // Import thư viện js-cookie
+import Cookies from 'js-cookie'; 
 
 const PostManagement = () => {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ const PostManagement = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [showDrafts, setShowDrafts] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(8); // Số bài viết hiển thị trên mỗi trang
+    const [postsPerPage] = useState(8); 
     const role = Cookies.get('role');
     const token = Cookies.get('token');
 
@@ -58,12 +58,10 @@ const PostManagement = () => {
         return <Loading />;
     }
 
-    // Filter posts based on the showDrafts state
     const displayedPosts = showDrafts ?
         filteredPosts.filter(post => post.status === 'draft') :
         filteredPosts.filter(post => post.status !== 'draft');
 
-    // Phân trang
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = displayedPosts.slice(indexOfFirstPost, indexOfLastPost);

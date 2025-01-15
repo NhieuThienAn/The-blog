@@ -15,10 +15,9 @@
         scroll-behavior: smooth;
 
         &::-webkit-scrollbar {
-            display: none; // Ẩn thanh cuộn trên trình duyệt WebKit (Chrome, Safari)
+            display: none; 
         }
 
-        // Adjust for smaller screens
         @media (max-width: 1400px) {
             flex-wrap: wrap;
         }
@@ -26,7 +25,6 @@
         @media (max-width: 900px) {
             flex-direction: column;
             align-items: center;
-            // Adjust card width
             .ant-card {
                 width: 100vw;
                 margin: 10px 0;
@@ -40,8 +38,8 @@
         margin-top: 10px;
 
         button {
-            flex: 0.03; // Make buttons responsive
-            margin: 0 5px; // Add some spacing between buttons
+            flex: 0.03; 
+            margin: 0 5px; 
         }
     }
 }

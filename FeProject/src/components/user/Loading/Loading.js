@@ -1,6 +1,6 @@
 import React from 'react';
 import { Spin, Typography } from 'antd';
-import './Loading.scss'; // Thêm stylesheet nếu cần
+import './Loading.scss';
 
 const { Title } = Typography;
 

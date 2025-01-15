@@ -23,7 +23,7 @@ import {
     Card,
 } from 'antd';
 import { FaFacebook, FaTwitter, FaPinterest, FaReddit } from 'react-icons/fa';
-import { toast, ToastContainer } from 'react-toastify'; // Import ToastContainer 
+import { toast, ToastContainer } from 'react-toastify'; 
 import Cookies from 'js-cookie';
 
 import './PostDetail.scss';
@@ -39,7 +39,6 @@ const PostDetail = () => {
     const [liked, setLiked] = useState(false);
     const [isShareModalVisible, setShareModalVisible] = useState(false);
     
-    // Get the current user's ID from cookies
     const userId = Cookies.get('user_id');
 
     useEffect(() => {
@@ -237,7 +236,7 @@ const PostDetail = () => {
                             renderItem={comment => {
                                 if (!comment) return null;
                                 const username = comment.user_id ? comment.user_id.username : 'Unknown User';
-                                const isUserComment = comment.user_id && comment.user_id._id === userId; // Check if the comment belongs to the logged-in user
+                                const isUserComment = comment.user_id && comment.user_id._id === userId;
                                 return (
                                     <List.Item key={comment._id}>
                                         <List.Item.Meta
@@ -245,7 +244,7 @@ const PostDetail = () => {
                                             title={username}
                                             description={comment.content}
                                         />
-                                        {isUserComment && ( // Conditionally render the Delete button
+                                        {isUserComment && ( 
                                             <Button onClick={() => handleDeleteComment(comment._id,comment.content)} type="link" danger>Delete</Button>
                                         )}
                                     </List.Item>

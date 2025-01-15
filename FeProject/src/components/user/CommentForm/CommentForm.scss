@@ -2,36 +2,26 @@
 .comment-form {
     display: flex;
     flex-direction: column;
-    /* Stack elements vertically */
     margin: 20px 100px;
-    /* Add vertical margin */
     width: 50%;
-    /* Full width for the form */
 }
 
 .comment-input {
     resize: none;
-    /* Disable resizing */
     margin-bottom: 10px;
-    /* Space between textarea and button */
 }
 
 .comment-button {
     align-self: flex-end;
-    /* Align button to the right */
     width: auto;
-    /* Auto width for button */
 }
 
-/* Optional: Add responsive styles */
 @media (max-width: 768px) {
     .comment-form {
         width: 100%;
-        /* Full width on smaller screens */
     }
 
     .comment-button {
         width: 100%;
-        /* Make button full width on small screens */
     }
 }

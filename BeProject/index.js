@@ -7,13 +7,13 @@ import dotenv from 'dotenv';
 import http from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
-import { fileURLToPath } from 'url'; // Thêm dòng này
+import { fileURLToPath } from 'url'; 
 import userRoutes from './src/Routes/UserRoutes.js';
 import postRoutes from './src/Routes/PostRoutes.js';
 import commentRoutes from './src/Routes/CommentRoutes.js';
 import categoryRoutes from './src/Routes/CategoryRoutes.js';
 import tagRoutes from './src/Routes/TagRoutes.js';
-import nodemailer from 'nodemailer'; // Giữ lại khai báo này
+import nodemailer from 'nodemailer'; 
 
 dotenv.config();
 
@@ -22,7 +22,6 @@ const server = http.createServer(app);
 const io = new Server(server);
 const PORT = process.env.PORT;
 
-// Cấu hình middleware
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -39,21 +38,17 @@ mongoose.connect(process.env.MONGODB_URL, {
 }).then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-// Sử dụng các route
 app.use('/api', userRoutes);
 app.use('/api', postRoutes);
 app.use('/api', commentRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', tagRoutes);
 
-// Lấy tên file hiện tại
 const __filename = fileURLToPath(import.meta.url);
-// Lấy đường dẫn thư mục
 const __dirname = path.dirname(__filename);
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Socket.io connection
 io.on('connection', (socket) => {
     console.log('A user connected');
 
@@ -67,7 +62,6 @@ io.on('connection', (socket) => {
     });
 });
 
-// Global error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
@@ -76,12 +70,11 @@ app.use((err, req, res, next) => {
 app.post('/send-email', (req, res) => {
     const { name, email, phone, message } = req.body;
 
-    // Tạo transporter
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: '0306221100@caothang.edu.vn',
-            pass: 'grku txoj gxyb qyxy', // Thay thế bằng mật khẩu ứng dụng Gmail của bạn
+            pass: 'grku txoj gxyb qyxy', 
         },
     });
 
@@ -94,7 +87,7 @@ app.post('/send-email', (req, res) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            console.error('Error occurred:', error); // In ra lỗi chi tiết
+            console.error('Error occurred:', error); 
             return res.status(500).send(error.toString());
         }
         res.status(200).send('Email đã được gửi!');

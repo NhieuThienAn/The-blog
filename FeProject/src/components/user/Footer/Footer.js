@@ -9,7 +9,7 @@ const { Footer } = Layout;
 const FooterComponent = () => {
     const facebook = "https://www.facebook.com/people/Nguy%E1%BB%85n-Minh/pfbid02cvE43uioqDwbCKHb2u5uk8YVERaXLkaUQEBfo6nkUJ951bCJ3fPXfkHDt32F7LuZl/";
     const instagram = "https://www.instagram.com/nta09.08/profilecard/?igsh=MW5ocDRtMzh5eWxrYw==";
-    const email = "mailto:hhyu03096@gmail.com"; // Sửa đổi để sử dụng mailto
+    const email = "mailto:hhyu03096@gmail.com"; 
     const linkedin = "https://www.linkedin.com/in/thi%C3%AAn-an-undefined-47a57b342/";
 
     return (

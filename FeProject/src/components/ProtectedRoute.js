@@ -4,14 +4,13 @@ import Cookies from 'js-cookie';
 const ProtectedRoute = ({ element }) => {
   const role = Cookies.get('role');
 
-  // Define allowed roles here or pass them as a prop
-  const allowedRoles = [ 'admin']; // Adjust as necessary
+  const allowedRoles = [ 'admin']; 
 
   if (!role || !allowedRoles.includes(role)) {
     return <Navigate to="/posts" />;
   }
 
-  return element; // Return the element directly
+  return element; 
 };
 
 export default ProtectedRoute;

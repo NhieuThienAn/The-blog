@@ -1,41 +1,41 @@
 .top-users-container {
     width: 100%;
-    margin: 16px; // Adjust as needed
+    margin: 16px;
 
 }
 
 .top-users {
 
     &-title {
-        margin-bottom: 16px; // Adjust spacing as needed
+        margin-bottom: 16px; 
     }
 
     &-loading {
-        text-align: center; // Center the loading spinner
+        text-align: center;
 
     }
 
     &-error {
-        margin: 16px 0; // Spacing for error message
+        margin: 16px 0; 
     }
 
     &-empty {
-        text-align: center; // Center the message
-        color: #888; // Gray color for empty message
+        text-align: center; 
+        color: #888; 
     }
 
     &-avatar {
         display: flex;
-        align-items: center; // Center the avatar vertically
-        justify-content: center; // Center the avatar horizontally    
+        align-items: center;
+        justify-content: center;  
     }
 
     &-item {
-        margin-bottom: 12px; // Spacing between list items
+        margin-bottom: 12px;
     }
 
     &-username {
-        color: #007bff; // Example color for usernames
+        color: #007bff; 
         font-size: large;
     }
 }
@@ -43,13 +43,13 @@
 
 
 .top-users-avatar .ant-avatar {
-    width: 80px; // Set desired width
-    height: 80px; // Set desired height
-    border-radius: 50%; // Make it circular
-    border: 2px solid #007bff; // Optional: border around the avatar
+    width: 80px; 
+    height: 80px; 
+    border-radius: 50%;
+    border: 2px solid #007bff; 
 
     &:hover {
-        border: 3px dotted #007bff; // Optional: border around the avatar
+        border: 3px dotted #007bff; 
     }
 }
 

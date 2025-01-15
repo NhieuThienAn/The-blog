@@ -1,22 +1,22 @@
 .newsletter-container {
     padding: 20px;
     .ant-input {
-        width: 100%; // Input takes full width
+        width: 100%; 
     }
     @media (max-width: 900px) {
         text-align: center;
 
         .ant-form {
-            flex-direction: column; // Stack form fields vertically
+            flex-direction: column;
             align-items: center;
 
             .ant-form-item {
-                width: 100%; // Make the form items full width
-                margin-bottom: 10px; // Add some spacing between items
+                width: 100%; 
+                margin-bottom: 10px; 
             }
 
             .ant-input {
-                width: 100%; // Input takes full width
+                width: 100%; 
             }
         }
     }

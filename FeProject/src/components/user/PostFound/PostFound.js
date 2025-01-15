@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllPosts, getPostsBySearch } from '../../../api/api'; // Thêm hàm tìm kiếm
+import { getAllPosts, getPostsBySearch } from '../../../api/api'; 
 import Loading from '../Loading/Loading';
-import './ArticleList.css'; // Cập nhật tên file CSS
+import './ArticleList.css'; 
 import Search from '../Search/Search';
 
 const ArticleList = () => {
@@ -41,8 +41,8 @@ const ArticleList = () => {
         }
 
         try {
-            const response = await getPostsBySearch(searchTerm); // Gọi API tìm kiếm
-            setArticles(response.data); // Cập nhật danh sách bài viết với kết quả tìm kiếm
+            const response = await getPostsBySearch(searchTerm); 
+            setArticles(response.data); 
         } catch (error) {
             console.error("Error searching posts:", error);
         }

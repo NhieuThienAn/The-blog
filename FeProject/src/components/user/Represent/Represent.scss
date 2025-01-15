@@ -1,25 +1,25 @@
 @media (max-width: 3000px) {
     .Represent-container {
-        display: flex; // Sử dụng Flexbox để bố trí
+        display: flex; 
         justify-content: flex-start;
-        align-items: flex-start; // Căn chỉnh các item theo chiều dọc
-        margin: 0px 30px 0px 9vw; // Thêm margin cho container nếu cần
+        align-items: flex-start; 
+        margin: 0px 30px 0px 9vw; 
         color: var(--primary);
         filter: brightness(0.45);
         position: relative;
         pointer-events: none;
         user-select: none;
-        animation: appearDownToTop 0.7s ease-out forwards; // Hiệu ứng cho mỗi bài viết
+        animation: appearDownToTop 0.7s ease-out forwards; 
 
         .Represent-title {
-            margin: 0; // Đảm bảo không có khoảng cách
+            margin: 0; 
             margin-right: 20px;
             letter-spacing: 0px;
-            padding: 0; // Đảm bảo không có padding
+            padding: 0; 
             padding-right: 20px;
             font-weight: 1000;
             position: relative;
-            font-size: calc(8vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
+            font-size: calc(8vw + 2rem); 
 
             &::after {
                 content: '';
@@ -34,59 +34,58 @@
         }
 
         .Represent-title-sub {
-            margin: -1px; // Thêm khoảng cách giữa các span
-            padding: 0; // Đảm bảo không có padding 
-            font-size: 24px; // Kích thước chữ có thể điều chỉnh
+            margin: -1px; 
+            padding: 0; 
+            font-size: 24px; 
             font-weight: 1000;
         }
 
-        // Tạo một khối chứa cho các span
         .span-container {
             margin-top: 4.2vw;
-            display: flex; // Sử dụng Flexbox cho các span
-            flex-direction: column; // Đặt hướng thành cột
-            align-items: flex-start; // Căn chỉnh các span về bên phải
+            display: flex;
+            flex-direction: column; 
+            align-items: flex-start; 
         }
 
         @media (max-width: 900px) {
             .Represent-title {
-                font-size: calc(12vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
+                font-size: calc(12vw + 2rem); 
             }
 
             .Represent-title-sub {
-                font-size: 16px; // Giảm kích thước chữ cho màn hình nhỏ
+                font-size: 16px; 
             }
 
             .span-container {
-                margin-top: 7vw; // Giảm khoảng cách cho màn hình nhỏ
+                margin-top: 7vw; 
             }
         }
 
         @media (max-width: 768px) {
             .Represent-title {
-                font-size: calc(8vw + 2rem); // Giảm kích thước chữ cho màn hình nhỏ
+                font-size: calc(8vw + 2rem); 
             }
 
             .Represent-title-sub {
-                font-size: 16px; // Giảm kích thước chữ cho màn hình nhỏ
+                font-size: 16px; 
             }
 
             .span-container {
-                margin-top: 6vw; // Giảm khoảng cách cho màn hình nhỏ
+                margin-top: 6vw; 
             }
         }
 
         @media (max-width: 480px) {
             .Represent-title {
-                font-size: calc(7vw + 1.4rem); // Giảm kích thước chữ cho màn hình nhỏ
+                font-size: calc(7vw + 1.4rem);
             }
 
             .Represent-title-sub {
-                font-size: 12px; // Giảm kích thước chữ cho điện thoại
+                font-size: 12px;
             }
 
             .span-container {
-                margin-top: 6vw; // Giảm khoảng cách cho màn hình nhỏ
+                margin-top: 6vw; 
             }
         }
     }

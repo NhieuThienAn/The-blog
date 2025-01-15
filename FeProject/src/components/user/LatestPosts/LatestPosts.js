@@ -10,7 +10,7 @@ const LatestPosts = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const postLayoutRef = useRef(null); // Tạo ref cho khu vực bài viết
+    const postLayoutRef = useRef(null); 
 
     useEffect(() => {
         const fetchLatestPosts = async () => {
@@ -18,7 +18,7 @@ const LatestPosts = () => {
             try {
                 const response = await getAllPosts();
                 const sortedPosts = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                setPosts(sortedPosts.slice(0, 5)); // Lấy 5 bài viết mới nhất
+                setPosts(sortedPosts.slice(0, 5)); 
             } catch (error) {
                 console.error("Error fetching posts:", error);
                 setError("Failed to load posts. Please try again later.");
@@ -36,7 +36,6 @@ const LatestPosts = () => {
 
             items.forEach(item => {
                 const rect = item.getBoundingClientRect();
-                // Kiểm tra nếu bài viết nằm trong tầm nhìn
                 if (rect.top < windowHeight && rect.bottom > 0) {
                     item.classList.add('visible');
                 }
@@ -44,7 +43,7 @@ const LatestPosts = () => {
         };
 
         window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Gọi hàm ngay lần đầu để kiểm tra các bài viết đã ở trong tầm nhìn
+        handleScroll(); 
 
         return () => {
             window.removeEventListener('scroll', handleScroll);

@@ -2,8 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import User from '../Models/User.js';
-import Post from '../Models/Post.js'; // Đảm bảo rằng bạn đã import model Post
-
+import Post from '../Models/Post.js'; 
 import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
@@ -16,9 +15,8 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 // Register
 export const register = async (req, res) => {
-    console.log(req.body); // Log req.body để kiểm tra nội dung
-    const { username, email, password } = req.body; // Lấy thông tin từ req.body
-    const avatar_url = req.file ? req.file.path : null; // Lấy đường dẫn hình ảnh từ multer
+    const { username, email, password } = req.body; 
+    const avatar_url = req.file ? req.file.path : null; 
 
     if (!email || !email.endsWith('@gmail.com')) {
         return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'Email must end with @gmail.com.' });
@@ -30,7 +28,7 @@ export const register = async (req, res) => {
             username,
             email,
             password_hash: hashedPassword,
-            avatar_url // Thêm avatar_url vào đối tượng người dùng
+            avatar_url 
         });
         await user.save();
         res.status(HttpStatusCode.OK).json({ message: 'User created successfully.' });
@@ -43,37 +41,31 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     const { email, password } = req.body;
 
-    // Validate email format
     if (!email.endsWith('@gmail.com')) {
         return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'Email must end with @gmail.com.' });
     }
 
     try {
-        // Find user by email
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'Invalid credentials.' });
         }
 
-        // Check if the user is locked
         if (user.locked) {
             return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'This user is locked and cannot log in.' });
         }
 
-        // Validate password
         const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) {
             return res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'Invalid credentials.' });
         }
 
-        // Generate JWT token
         const token = jwt.sign(
             { id: user._id, role: user.role, username: user.username },
             SECRET_KEY,
             { expiresIn: '30m' }
         );
 
-        // Respond with user data
         return res.json({
             token,
             username: user.username,
@@ -83,7 +75,6 @@ export const login = async (req, res) => {
             avatar_url: user.avatar_url
         });
     } catch (error) {
-        // Handle unexpected errors
         return res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message || 'An unexpected error occurred.' });
     }
 };
@@ -97,14 +88,12 @@ export const refreshToken = async (req, res) => {
     }
 
     try {
-        // Verify the existing token
         const decoded = jwt.verify(token, SECRET_KEY);
 
-        // Generate a new token
         const newToken = jwt.sign(
             { id: decoded.id, role: decoded.role, username: decoded.username },
             SECRET_KEY,
-            { expiresIn: '30m' } // 30 minutes
+            { expiresIn: '30m' } 
         );
 
         return res.json({ token: newToken });
@@ -125,7 +114,7 @@ export const getAllUsers = async (req, res) => {
 
 // Get user by id
 export const getUsersById = async (req, res) => {
-    const { id } = req.params; // Lấy id từ params
+    const { id } = req.params; 
     try {
         const user = await User.findById(id);
         if (!user) {
@@ -141,7 +130,7 @@ export const getUsersById = async (req, res) => {
 export const updateUser = async (req, res) => {
     const { id } = req.params;
     const { username, email, password, bio } = req.body;
-    const avatar_url = req.file ? req.file.path : null; // Lấy đường dẫn hình ảnh từ multer
+    const avatar_url = req.file ? req.file.path : null; 
 
     if (req.user.role !== 'admin' && req.user.id !== id) {
         return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
@@ -150,7 +139,7 @@ export const updateUser = async (req, res) => {
     try {
         const updatedData = { username, email, bio };
         if (avatar_url) {
-            updatedData.avatar_url = avatar_url; // Cập nhật avatar_url nếu có file mới
+            updatedData.avatar_url = avatar_url; 
         }
 
         if (password) {
@@ -192,7 +181,7 @@ export const deleteUser = async (req, res) => {
 // Function to send email
 export const sendEmail = async (email, subject, text) => {
     const transporter = nodemailer.createTransport({
-        service: 'gmail', // or any other email service
+        service: 'gmail',
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS,
@@ -219,7 +208,6 @@ export const requestPasswordReset = async (req, res) => {
             return res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'User not found.' });
         }
 
-        // Tạo mã xác nhận 6 số
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
 
         user.verificationCode = verificationCode;
@@ -227,7 +215,6 @@ export const requestPasswordReset = async (req, res) => {
 
         await user.save();
 
-        // Gửi mã xác nhận qua email
         await sendEmail(email, 'Password Reset Code', `Your verification code is: ${verificationCode}`);
 
         res.status(HttpStatusCode.OK).json({ message: 'Verification code sent to your email.' });
@@ -237,11 +224,9 @@ export const requestPasswordReset = async (req, res) => {
     }
 };
 
-// Cập nhật hàm đặt lại mật khẩu
+// Reset password reset code 
 export const resetPassword = async (req, res) => {
     const { verificationCode, newPassword } = req.body;
-    console.log('Reset Password', newPassword);
-    console.log('Verificationcode', verificationCode);
 
     if (!verificationCode || !newPassword) {
         return res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'Both verification code and new password are required.' });
@@ -313,12 +298,12 @@ export const unlockUser = async (req, res) => {
 
 // Hàm gửi email thông báo bài viết mới
 export const sendNewPostNotification = async (post) => {
-    const users = await User.find({ subscribed: true }); // Lấy danh sách người dùng đã đăng ký nhận thông báo
+    const users = await User.find({ subscribed: true }); 
 
     for (const user of users) {
         const subject = `Có bài viết mới: ${post.title}`;
         const text = `Chào bạn, có bài viết mới trên trang của chúng tôi:\n\n Tiêu đề: ${post.title}\n\nXem thêm tại: http://localhost:3000/posts/${post._id}`;
-        await sendEmail(user.email, subject, text); // Gửi email cho từng người dùng
+        await sendEmail(user.email, subject, text); 
     }
 };
 
@@ -326,21 +311,17 @@ export const sendNewPostNotification = async (post) => {
 export const subscribeToNewsletter = async (req, res) => {
     const { email } = req.body;
 
-    // Kiểm tra tính hợp lệ của email
     if (!email || !email.endsWith('@gmail.com')) {
         return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'Email must end with @gmail.com.' });
     }
 
     try {
-        // Kiểm tra xem email đã tồn tại trong database chưa
         let user = await User.findOne({ email });
         
-        // Nếu chưa tồn tại, tạo mới một người dùng với trạng thái subscribed
         if (!user) {
-            user = new User({ email, subscribed: true }); // Chỉ cần email và subscribed
+            user = new User({ email, subscribed: true }); 
             await user.save();
         } else {
-            // Nếu đã tồn tại, chỉ cần cập nhật trạng thái subscribed
             user.subscribed = true;
             await user.save();
         }
@@ -352,20 +333,12 @@ export const subscribeToNewsletter = async (req, res) => {
     }
 };
 
-
-
 export const getUserStatistics = async (req, res) => {
     try {
-        // Tổng số người dùng
         const totalUsers = await User.countDocuments();
-
-        // Tổng số bài viết
         const totalPosts = await Post.countDocuments();
-
-        // Số lượng người dùng theo trạng thái đăng ký nhận thông báo
         const subscribedUsersCount = await User.countDocuments({ subscribed: true });
 
-        // Top 5 người dùng có nhiều bài viết nhất
         const topUsersByPosts = await Post.aggregate([
             { $group: { _id: '$user_id', postCount: { $sum: 1 } } },
             { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'userInfo' } },
@@ -375,7 +348,6 @@ export const getUserStatistics = async (req, res) => {
             { $limit: 5 }
         ]);
 
-        // Gộp thông tin thống kê
         const statistics = {
             totalUsers,
             totalPosts,
@@ -394,8 +366,6 @@ export const getUserStatistics = async (req, res) => {
 // Get top users by posts
 export const getTopUsersByPosts = async (req, res) => {
     try {
-        console.log("Fetching top users by posts...");
-
         const topUsers = await Post.aggregate([
             { $group: { _id: '$user_id', postCount: { $sum: 1 } } },
             { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'userInfo' } },
@@ -409,7 +379,7 @@ export const getTopUsersByPosts = async (req, res) => {
                 postCount: '$postCount' 
             }},
             { $sort: { postCount: -1 } },
-            { $limit: 3 } // Adjust limit as needed
+            { $limit: 3 } 
         ]);
 
         console.log("Top users fetched:", topUsers);
@@ -422,14 +392,14 @@ export const getTopUsersByPosts = async (req, res) => {
 
 
 
-// Hàm để kiểm tra và gửi thông báo về bài viết mới
+// send new posts to the user
 const checkAndNotifyNewPosts = async () => {
-    const newPosts = await Post.find({ createdAt: { $gte: new Date(Date.now() - 600000) } }); // Lấy bài viết mới trong 1 phút qua
+    const newPosts = await Post.find({ createdAt: { $gte: new Date(Date.now() - 600000) } }); 
 
     for (const post of newPosts) {
         await sendNewPostNotification(post);
     }
 };
 
-// Thiết lập interval để gửi thông báo mỗi phút
+//send email after time
 setInterval(checkAndNotifyNewPosts, 60000);

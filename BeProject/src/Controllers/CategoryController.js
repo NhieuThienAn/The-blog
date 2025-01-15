@@ -10,7 +10,7 @@ export const createCategory = async (req, res) => {
     try {
         const category = new Category({ name });
         await category.save();
-        res.status(HttpStatusCode.OK).json(category); // Trả về status 201 Created
+        res.status(HttpStatusCode.OK).json(category); 
     } catch (error) {
         console.log(error);
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message });
@@ -42,7 +42,6 @@ export const updateCategory = async (req, res) => {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'No category found.' });
         }
 
-        // Cập nhật thông tin danh mục
         category.name = name || category.name;
 
         await category.save();
@@ -64,7 +63,7 @@ export const deleteCategory = async (req, res) => {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'No category found.' });
         }
         await Category.findByIdAndDelete(id);
-        res.status(HttpStatusCode.NO_CONTENT).send(); // Trả về status 204 No Content
+        res.status(HttpStatusCode.NO_CONTENT).send();
     } catch (error) {
         res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
     }

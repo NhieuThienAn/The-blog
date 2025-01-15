@@ -78,7 +78,6 @@ const CategoryPosts = ({ categoryId }) => {
                             </Card>
                         ))}
                     </div>
-                    {/* Render buttons only if there are more than 5 posts */}
                     {posts.length > 5 && (
                         <div className="category-button-container" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
                             <Button type="primary" onClick={scrollLeft} icon={<ArrowLeftOutlined />} />

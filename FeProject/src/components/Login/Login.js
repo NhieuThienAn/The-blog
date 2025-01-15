@@ -1,4 +1,3 @@
-// Login.js
 import React, { useState } from 'react';
 import { loginUser, requestPasswordReset, resetPassword } from '../../api/api';
 import { Button, Modal, Input, Form } from "antd";
@@ -17,7 +16,7 @@ const ForgotPassword = ({ visible, onClose, onVerificationCodeReceived }) => {
         try {
             await requestPasswordReset(email);
             toast.success("Kiểm tra email của bạn để nhận mã xác nhận.");
-            onVerificationCodeReceived(email); // Pass email to parent
+            onVerificationCodeReceived(email); 
             onClose();
         } catch (error) {
             toast.error(error.response ? error.response.data.message : "Có lỗi xảy ra. Vui lòng thử lại.");

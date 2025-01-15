@@ -1,16 +1,12 @@
 :root {
     --bg: #f5f5f5;
-    /* Màu nền chung */
     --primary: #1890ff;
-    /* Màu chính */
     --post-columns: 4;
-    /* Biến cho số cột mặc định */
 }
 
 @media (max-width: 1500px) {
     :root {
         --post-columns: 3;
-        /* Đặt số cột thành 3 cho thiết bị nhỏ hơn 1500px */
     }
 }
 
@@ -105,7 +101,6 @@
     text-align: center;
     @media (max-width: 768px) {
         text-align: center;
-        /* Center text on smaller screens */
     }
 }
 
@@ -114,7 +109,6 @@
         position: absolute;
         top: 101%;
         left: 20%;
-        /* Center text on smaller screens */
     }
 }
 
@@ -133,7 +127,6 @@
 
     @media (max-width: 768px) {
         margin: 0;
-        /* Remove margin on small screens */
     }
 }
 
@@ -160,13 +153,11 @@
     @media (max-width: 768px) {
         flex-direction: column;
         flex: wrap;
-        /* Stack posts vertically */
     }
     @media (max-width: 1060px) {
         flex-direction: row;
         flex-wrap: wrap;
         width: 70vw;
-        /* Stack posts vertically */
     }
 }
 
@@ -191,11 +182,9 @@
     transition: 0.2s ease-in-out;
     @media (max-width: 1060px) {
         width: 23vw;
-        /* Stack posts vertically */
     }
     @media (max-width: 760px) {
         width: 28vw;
-        /* Stack posts vertically */
     }
     &:hover {
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -216,14 +205,11 @@
 .post-creation-modal,
 .user-edit-modal {
     width: 90%;
-    /* Make modals responsive */
     max-width: 600px;
-    /* Limit max size */
 }
 
 .input-img {
     display: none;
-    /* Ẩn input file gốc */
 }
 
 .input-label {
@@ -231,7 +217,6 @@
     display: inline-block;
     padding: 8px 10px;
     color: #1890ff;
-    /* Màu chữ */
     width: 7vw;
     border-radius: 4px;
     cursor: pointer;
@@ -243,7 +228,6 @@
 
 .input-label:hover {
     background-color: #40a9ff;
-    /* Màu nền khi hover */
     color: var(--fff);
 }
 
@@ -251,6 +235,5 @@
     border-radius: 12px;
     aspect-ratio: 1/1;
     max-width: 100%;
-    /* Make preview images responsive */
     height: auto;
 }

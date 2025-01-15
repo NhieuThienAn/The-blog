@@ -1,7 +1,7 @@
 import express from 'express';
 import * as postController from '../Controllers/PostController.js';
 import authentication from '../Middleware/authentication.js';
-import upload from '../Middleware/upload.js'; // Thêm dòng này
+import upload from '../Middleware/upload.js'; 
 
 const router = express.Router();
 
@@ -9,11 +9,10 @@ const router = express.Router();
 router.get('/posts/search', postController.getPostsBySearch);
 
 // Create a new post
-router.post('/posts', authentication, upload.single('image'), postController.createPost); // Sửa đổi ở đây
+router.post('/posts', authentication, upload.single('image'), postController.createPost); 
 
 // Get all posts
 router.get('/posts', postController.getAllPosts);
-
 
 //get all posts for admin
 router.get('/admin/posts', authentication, postController.getAllPostsForAdmin);
@@ -22,8 +21,7 @@ router.get('/admin/posts', authentication, postController.getAllPostsForAdmin);
 router.get('/posts/:post_id', postController.getPostById);
 
 // Get posts by category ID
-router.get('/posts/category/:category_id', postController.getPostsByCategory); // Thêm dòng này
-
+router.get('/posts/category/:category_id', postController.getPostsByCategory); 
 
 // Get posts by user ID
 router.get('/posts/user/:user_id', postController.getPostsByUserId);
@@ -47,7 +45,7 @@ router.post('/posts/:id/unlike', authentication, postController.unlikePost);
 // check if a post has been liked by  user ID
 router.get('/posts/:post_id/has-liked', authentication ,postController.hasUserLikedPost);
 
-
+// statistics for a post
 router.get('/admin/post-statistics',authentication, postController.getStatistics);
 
 export default router;

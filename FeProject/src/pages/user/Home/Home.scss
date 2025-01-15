@@ -1,7 +1,7 @@
 .mr50 {
 
     @media (max-width: 900px) {
-        margin: 0 10px; // Reduce margin on smaller screens
+        margin: 0 10px; 
     }
 }
 
@@ -11,6 +11,6 @@
     opacity: 0;
 
     &.visible {
-        opacity: 1; // Make visible when in view
+        opacity: 1; 
     }
 }

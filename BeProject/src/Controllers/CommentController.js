@@ -4,11 +4,11 @@ import { HttpStatusCode } from '../constants/HttpStatusCode.js';
 // Create a new comment
 export const createComment = async (req, res) => {
     const { post_id, content } = req.body;
-    const user_id = req.user.id; 
+    const user_id = req.user.id;
     try {
         const comment = new Comment({ post_id, user_id, content });
         await comment.save();
-        res.status(HttpStatusCode.OK).json(comment); 
+        res.status(HttpStatusCode.OK).json(comment);
     } catch (error) {
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message });
     }
@@ -26,19 +26,19 @@ export const getAllComments = async (req, res) => {
 
 // Get comments by Post ID 
 export const getCommentsByPostId = async (req, res) => {
-    const { post_id } = req.params; 
+    const { post_id } = req.params;
     try {
         const comments = await Comment.find({ post_id })
-        .populate({
-            path: 'user_id', // Lấy thông tin người dùng
-            select: 'username' // Chỉ lấy trường username
-        });
-        // Trả về chuỗi rỗng nếu không có bình luận
+            .populate({
+                path: 'user_id',
+                select: 'username'
+            });
+
         if (!comments.length) {
-            return res.status(HttpStatusCode.OK).json(""); // Trả về chuỗi rỗng
+            return res.status(HttpStatusCode.OK).json(""); 
         }
 
-        res.status(HttpStatusCode.OK).json(comments); // Trả về bình luận nếu có
+        res.status(HttpStatusCode.OK).json(comments); 
     } catch (error) {
         console.log(error);
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message });
@@ -57,7 +57,6 @@ export const updateCommentById = async (req, res) => {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Comment not found.' });
         }
 
-        // Kiểm tra quyền truy cập
         if (req.user.role !== 'admin' && user_id !== comment.user_id.toString()) {
             return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
         }
@@ -74,7 +73,7 @@ export const updateCommentById = async (req, res) => {
 // Delete comments by Post ID
 export const deleteComment = async (req, res) => {
     const { commentId } = req.params;
-    console.log('Params:', req.params); // Debugging line
+    console.log('Params:', req.params);
     const user_id = req.user.id;
 
     try {
@@ -83,8 +82,7 @@ export const deleteComment = async (req, res) => {
         if (!comment) {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Comment not found.' });
         }
-
-        // Check access permissions
+        
         if (req.user.role !== 'admin' && comment.user_id.toString() !== user_id) {
             return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
         }
