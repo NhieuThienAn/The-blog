@@ -1,21 +1,47 @@
 :root {
     --bg: #f5f5f5;
     /* Màu nền chung */
+    --primary: #1890ff;
+    /* Màu chính */
     --post-columns: 4;
     /* Biến cho số cột mặc định */
 }
 
+@media (max-width: 1500px) {
+    :root {
+        --post-columns: 3;
+        /* Đặt số cột thành 3 cho thiết bị nhỏ hơn 1500px */
+    }
+}
+
 @media (max-width: 768px) {
     :root {
+        --post-columns: 2;
+    }
+
+}
+
+@media (max-width: 408px) {
+    :root {
         --post-columns: 1;
-        /* Đặt số cột thành 1 cho thiết bị nhỏ */
     }
 }
 
 .user-profile-layout {
     display: flex;
-    margin: 20px 30px 20px;
+    margin: 20px 30px;
     background-color: white;
+
+    @media (max-width: 1500px) {
+        flex-direction: row;
+        /* Row orientation for wider screens */
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        padding: 20px;
+        /* Add padding for small screens */
+    }
 }
 
 .user-profile-section {
@@ -26,6 +52,23 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     background-color: var(--primary);
     filter: brightness(1.11);
+
+    @media (max-width: 768px) {
+        position: static;
+        /* Change position for smaller screens */
+        width: 50vw;
+        /* Full width */
+        margin: 10px auto 20px;
+        /* Add bottom margin */
+    }
+    @media (max-width: 368px) {
+        position: static;
+        /* Change position for smaller screens */
+        width: 63vw;
+        /* Full width */
+        margin: 10px -10px 20px;
+        /* Add bottom margin */
+    }
 }
 
 .user-profile-details-container {
@@ -35,30 +78,50 @@
     color: white;
     width: 240px;
     margin-bottom: 20px;
-    &-img{
+
+    &-img {
         width: 250px;
         aspect-ratio: 1/1;
     }
 }
 
 .user-profile-avatar-image {
-    width: 200px;
+    width: 10vw;
     aspect-ratio: 1 / 1;
     border-radius: 4%;
     object-fit: cover;
     margin-right: 20px;
     filter: brightness(0.9);
+
+    @media (max-width: 768px) {
+        width: 100px;
+        /* Reduce size for small screens */
+        height: 100px;
+    }
 }
 
 .user-profile-info {
     font-size: 16px;
+    text-align: center;
+    @media (max-width: 768px) {
+        text-align: center;
+        /* Center text on smaller screens */
+    }
+}
+
+.user-profile-update-btn {
+    @media (max-width: 768px) {
+        position: absolute;
+        top: 101%;
+        left: 20%;
+        /* Center text on smaller screens */
+    }
 }
 
 .user-create-post-button {
-    margin: 0px auto 0px;
+    margin: 0 auto;
 
     &-toggle-button {
-        margin: 0 12px;
     }
 }
 
@@ -66,6 +129,12 @@
     flex: auto;
     padding: 10px;
     margin: 0 0 0 300px;
+    width: 100vw;
+
+    @media (max-width: 768px) {
+        margin: 0;
+        /* Remove margin on small screens */
+    }
 }
 
 .user-posts-content {
@@ -87,6 +156,18 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        flex: wrap;
+        /* Stack posts vertically */
+    }
+    @media (max-width: 1060px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 70vw;
+        /* Stack posts vertically */
+    }
 }
 
 .user-post-thumbnail-image {
@@ -108,13 +189,18 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: calc(100% / var(--post-columns) - 48px);
     transition: 0.2s ease-in-out;
-
+    @media (max-width: 1060px) {
+        width: 23vw;
+        /* Stack posts vertically */
+    }
+    @media (max-width: 760px) {
+        width: 28vw;
+        /* Stack posts vertically */
+    }
     &:hover {
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         transform: translateY(-4px);
     }
-
-    /* Tính toán chiều rộng */
 }
 
 .user-post-title-link {
@@ -127,20 +213,25 @@
     }
 }
 
-.post-creation-modal {
-    width: 500px;
-    /* Set a width for the modal */
+.post-creation-modal,
+.user-edit-modal {
+    width: 90%;
+    /* Make modals responsive */
+    max-width: 600px;
+    /* Limit max size */
 }
 
 .input-img {
-    display: none; /* Ẩn input file gốc */
+    display: none;
+    /* Ẩn input file gốc */
 }
 
 .input-label {
     margin: 20px 0 0;
     display: inline-block;
     padding: 8px 10px;
-    color: #1890ff; /* Màu chữ */
+    color: #1890ff;
+    /* Màu chữ */
     width: 7vw;
     border-radius: 4px;
     cursor: pointer;
@@ -151,11 +242,15 @@
 }
 
 .input-label:hover {
-    background-color: #40a9ff; /* Màu nền khi hover */
+    background-color: #40a9ff;
+    /* Màu nền khi hover */
     color: var(--fff);
 }
 
 .input-preview {
     border-radius: 12px;
     aspect-ratio: 1/1;
+    max-width: 100%;
+    /* Make preview images responsive */
+    height: auto;
 }

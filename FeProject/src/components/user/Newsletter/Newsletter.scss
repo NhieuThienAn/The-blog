@@ -1,26 +1,23 @@
 .newsletter-container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    padding: 30px 32px;
-    width: calc(35vw + 1rem);
-    margin: 20px auto;
-    text-align: center;
-
-    h3 {
-        color: #333;
-    }
-
-    .ant-btn {
-        border-radius: 4px;
-        font-weight: bold;
-    }
-
+    padding: 20px;
     .ant-input {
-        border-radius: 4px;
+        width: 100%; // Input takes full width
     }
+    @media (max-width: 900px) {
+        text-align: center;
 
-    .ant-typography {
-        margin-top: 15px;
+        .ant-form {
+            flex-direction: column; // Stack form fields vertically
+            align-items: center;
+
+            .ant-form-item {
+                width: 100%; // Make the form items full width
+                margin-bottom: 10px; // Add some spacing between items
+            }
+
+            .ant-input {
+                width: 100%; // Input takes full width
+            }
+        }
     }
 }

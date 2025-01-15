@@ -13,9 +13,7 @@ router.get('/comments', commentController.getAllComments);
 // Get comments by post ID
 router.get('/posts/:post_id/comments', commentController.getCommentsByPostId);
 
-// Delete comments by Post ID
-router.delete('/posts/:post_id/comments', authentication, commentController.deleteCommentsByPostId);
-
+router.delete('/comments/:commentId', authentication, commentController.deleteComment);
 // Update a comment
 router.put('/comments/:id', authentication, commentController.updateCommentById);
 

@@ -4,7 +4,6 @@ import PostList from '../../../components/user/PostList/PostList';
 import Header from '../../../components/user/Header/Header';
 import Footer from '../../../components/user/Footer/Footer';
 import RecommendPost from '../../../components/user/RecommendPost/RecommendPost';
-import Cookies from 'js-cookie'; // Import thư viện js-cookie
 import LatestPosts from '../../../components/user/LatestPosts/LatestPosts';
 import Newsletter from '../../../components/user/Newsletter/Newsletter';
 import TopUsers from '../../../components/user/TopUsers/TopUsers';
@@ -21,12 +20,6 @@ const Posts = () => {
         '67836f2a1ac3b0da6641ae67', // Category 3
     ];
 
-    // useEffect(() => {
-    //     const token = Cookies.get('token');
-    //     if (!token) {
-    //         navigate('/login');
-    //     }
-    // }, [navigate]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -67,7 +60,7 @@ const Posts = () => {
     }, []);
 
     return (
-        <div className='mr50'>
+        <div className=''>
             <Header />
             <PostList />
             <RecommendPost />
@@ -76,8 +69,8 @@ const Posts = () => {
                 <CategoryPosts key={index} categoryId={categoryId} />
             ))}
 
-            <div style={{ display: 'flex', margin: "0 200px 30px" }}>
-                <div ref={topUsersRef} className="animate-from-left" style={{ flex: 1, marginRight: '10px' }}>
+            <div style={{ display: 'flex', margin: "0 10vw 30px" }}>
+                <div ref={topUsersRef} className="animate-from-left" style={{ flex: 1 }}>
                     <TopUsers />
                 </div>
                 <div ref={newsletterRef} className="animate-from-right" style={{ flex: 1, marginLeft: '10px' }}>

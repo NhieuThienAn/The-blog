@@ -310,27 +310,6 @@ export const unlockUser = async (req, res) => {
     }
 };
 
-export const getTopUsersByLikes = async (req, res) => {
-    try {
-        console.log("Fetching top users by likes...");
-
-        const posts = await Post.aggregate([
-            { $unwind: '$likedBy' },
-            { $group: { _id: '$likedBy', totalLikes: { $sum: 1 } } },
-            { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'userInfo' } },
-            { $unwind: { path: '$userInfo', preserveNullAndEmptyArrays: true } },
-            { $project: { _id: 0, user_id: '$_id', username: '$userInfo.username', email: '$userInfo.email', totalLikes: 1 } },
-            { $sort: { totalLikes: -1 } },
-            { $limit: 3 }
-        ]);
-
-        console.log("Top users fetched:", posts);
-        res.json(posts);
-    } catch (error) {
-        console.error('Error fetching top users:', error);
-        res.status(SERVER_ERROR).json({ error: error.message });
-    }
-};
 
 // Hàm gửi email thông báo bài viết mới
 export const sendNewPostNotification = async (post) => {

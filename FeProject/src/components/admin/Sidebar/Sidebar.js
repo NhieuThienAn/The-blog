@@ -73,7 +73,8 @@ const Sidebar = () => {
         Cookies.remove('email');
         Cookies.remove('avatar_url');
         Cookies.remove('token'); // Xóa token nếu cần
-        navigate('/login');
+        Cookies.remove('role'); 
+        navigate('/posts');
     };
 
     const toggleSidebar = () => {
@@ -84,7 +85,7 @@ const Sidebar = () => {
         name: Cookies.get('username') || 'Người dùng',
         role: 'Quản trị viên',
         email: Cookies.get('email') || 'Chưa có email',
-        avatar: 'https://via.placeholder.com/50',
+        avatar: 'http://localhost:3001/uploads/1735806104615.jpg',
     };
 
     const items = useMemo(() => [
@@ -103,7 +104,6 @@ const Sidebar = () => {
                 <div className="user-details">
                     <h3 className="user-name">{user.name}</h3>
                     <p className="user-role">{user.role}</p>
-                    <p className="user-email">{user.email}</p>
                 </div>
             </div>
             <Menu

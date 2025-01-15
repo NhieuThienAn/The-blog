@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getUserStatistics, getPostStatistics } from '../../../api/api'; // Import API
-import Sidebar from '../../admin/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import { Card, Col, Row, Typography, Alert, Button, Table } from 'antd'; // Import Ant Design components
 import { Bar, Pie } from '@ant-design/charts'; // Import Bar and Pie charts
 import Cookies from 'js-cookie';
@@ -96,7 +96,7 @@ const StatisticsManagement = () => {
         // Set header style to bold
         const headerCellStyle = { font: { bold: true } };
         const range = XLSX.utils.decode_range(worksheet['!ref']);
-        
+
         for (let col = range.s.c; col <= range.e.c; col++) {
             const cellAddress = XLSX.utils.encode_col(col) + 1; // Row 1 for headers
             if (worksheet[cellAddress]) {
@@ -156,79 +156,79 @@ const StatisticsManagement = () => {
                 <Button type="primary" onClick={exportToExcel} style={{ marginBottom: '16px' }}>
                     Xuất Excel
                 </Button>
-                <Button 
-                    type="default" 
-                    onClick={() => setShowTable(!showTable)} 
+                <Button
+                    type="default"
+                    onClick={() => setShowTable(!showTable)}
                     style={{ marginBottom: '16px', marginLeft: '8px' }}
                 >
                     {showTable ? 'Ẩn Thống kê' : 'Hiện Thống kê'}
                 </Button>
                 {showTable && (
-                    <Table 
-                        dataSource={tableData} 
-                        columns={columns} 
-                        pagination={false} 
-                        bordered 
+                    <Table
+                        dataSource={tableData}
+                        columns={columns}
+                        pagination={false}
+                        bordered
                     />
                 )}
                 <div className='margin-top'>
 
-                <Row gutter={16}>
-                    <Col span={12}>
-                        <Card title="Thống kê Người dùng">
-                            <Bar 
-                                data={topUsersData} 
-                                xField="username" 
-                                yField="postCount" 
-                                title="Top người dùng có nhiều bài viết nhất"
-                                label={{ 
-                                    position: 'top',
-                                    style: { fill: '#000000' } 
-                                }}
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Card title="Thống kê Người dùng">
+                                <Bar
+                                    data={topUsersData}
+                                    xField="username"
+                                    yField="postCount"
+                                    title="Top người dùng có nhiều bài viết nhất"
+                                    label={{
+                                        position: 'top',
+                                        style: { fill: '#000000' }
+                                    }}
                                 />
-                        </Card>
-                    </Col>
-                    <Col span={12}>
-                        <Card title="Thống kê Bài viết theo Trạng thái">
-                            <Pie 
-                                data={postStatusData} 
-                                angleField="count" 
-                                colorField="status"
-                                title="Số lượng bài viết theo trạng thái"
-                                label={{ 
-                                    content: '{name}: {percentage}',
-                                }}
+                            </Card>
+                        </Col>
+                        <Col span={12}>
+                            <Card title="Thống kê Bài viết theo Trạng thái">
+                                <Pie
+                                    data={postStatusData}
+                                    angleField="count"
+                                    colorField="status"
+                                    title="Số lượng bài viết theo trạng thái"
+                                    label={{
+                                        content: '{name}: {percentage}',
+                                    }}
                                 />
-                        </Card>
-                    </Col>
-                </Row>
-                <Row gutter={16}>
-                    <Col span={12}>
-                        <Card title="Số lượng Bài viết theo Danh mục">
-                            <Bar 
-                                data={postsByCategoryData} 
-                                xField="categoryName" 
-                                yField="count" 
-                                title="Bài viết theo danh mục"
-                                label={{ 
-                                    position: 'top',
-                                    style: { fill: '#000000' } 
-                                }}
-                            />
-                        </Card>
-                    </Col>
-                    <Col span={12}>
-                        <Card title="Thông tin Người dùng">
-                            <ul>
-                                <li>Tổng số người dùng: {userStats?.totalUsers}</li>
-                                <li>Tổng số bài viết: {userStats?.totalPosts}</li>
-                                <li>Số người dùng đã đăng ký nhận thông báo: {userStats?.subscribedUsersCount}</li>
-                            </ul>
-                        </Card>
-                    </Col>
-                </Row>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Card title="Số lượng Bài viết theo Danh mục">
+                                <Bar
+                                    data={postsByCategoryData}
+                                    xField="categoryName"
+                                    yField="count"
+                                    title="Bài viết theo danh mục"
+                                    label={{
+                                        position: 'top',
+                                        style: { fill: '#000000' }
+                                    }}
+                                />
+                            </Card>
+                        </Col>
+                        <Col span={12}>
+                            <Card title="Thông tin Người dùng">
+                                <ul>
+                                    <li>Tổng số người dùng: {userStats?.totalUsers}</li>
+                                    <li>Tổng số bài viết: {userStats?.totalPosts}</li>
+                                    <li>Số người dùng đã đăng ký nhận thông báo: {userStats?.subscribedUsersCount}</li>
+                                </ul>
+                            </Card>
+                        </Col>
+                    </Row>
+                </div>
             </div>
-                                </div>
         </div>
     );
 };

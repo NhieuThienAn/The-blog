@@ -72,25 +72,24 @@ export const updateCommentById = async (req, res) => {
 };
 
 // Delete comments by Post ID
-export const deleteCommentsByPostId = async (req, res) => {
-    const { post_id } = req.params; // Lấy post_id từ tham số route
-    const user_id = req.user.id; // Lấy user_id từ middleware xác thực
+export const deleteComment = async (req, res) => {
+    const { commentId } = req.params;
+    console.log('Params:', req.params); // Debugging line
+    const user_id = req.user.id;
 
     try {
-        const comments = await Comment.find({ post_id });
+        const comment = await Comment.findById(commentId);
 
-        // Kiểm tra xem có bình luận nào không
-        if (!comments.length) {
-            return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'No comments found for this post.' });
+        if (!comment) {
+            return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Comment not found.' });
         }
 
-        // Kiểm tra quyền truy cập
-        if (req.user.role !== 'admin' && !comments.every(comment => comment.user_id.toString() === user_id)) {
+        // Check access permissions
+        if (req.user.role !== 'admin' && comment.user_id.toString() !== user_id) {
             return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
         }
 
-        // Xóa tất cả bình luận
-        await Comment.deleteMany({ post_id });
+        await Comment.findByIdAndDelete(commentId);
         res.status(HttpStatusCode.OK).send();
     } catch (error) {
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message });

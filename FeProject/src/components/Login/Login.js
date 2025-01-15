@@ -1,20 +1,112 @@
+// Login.js
 import React, { useState } from 'react';
 import { loginUser, requestPasswordReset, resetPassword } from '../../api/api';
-import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
 import { Button, Modal, Input, Form } from "antd";
-import { startTokenRefresh } from '../TokenService';
 import Cookies from 'js-cookie'; 
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 import './Login.scss';
 
-const Login = ({ visible, onClose }) => {
+const ForgotPassword = ({ visible, onClose, onVerificationCodeReceived }) => {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [showForgotPassword, setShowForgotPassword] = useState(false);
-    const [newPassword, setNewPassword] = useState('');
+
+    const handleForgotPassword = async () => {
+        setLoading(true);
+        try {
+            await requestPasswordReset(email);
+            toast.success("Kiểm tra email của bạn để nhận mã xác nhận.");
+            onVerificationCodeReceived(email); // Pass email to parent
+            onClose();
+        } catch (error) {
+            toast.error(error.response ? error.response.data.message : "Có lỗi xảy ra. Vui lòng thử lại.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <Modal
+            title="Quên Mật Khẩu"
+            visible={visible}
+            onCancel={onClose}
+            footer={null}
+            width={400}
+        >
+            <Input
+                type="email"
+                placeholder="Nhập email của bạn"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <Button
+                loading={loading}
+                type="primary"
+                onClick={handleForgotPassword}
+                style={{ width: '100%', marginTop: '10px' }}
+            >
+                Gửi Yêu Cầu
+            </Button>
+        </Modal>
+    );
+};
+
+const ResetPassword = ({ visible, onClose, email }) => {
     const [verificationCode, setVerificationCode] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleResetPassword = async () => {
+        setLoading(true);
+        try {
+            await resetPassword({ verificationCode, newPassword });
+            toast.success("Mật khẩu đã được đặt lại thành công.");
+            onClose();
+        } catch (error) {
+            toast.error(error.response ? error.response.data.message : "Có lỗi xảy ra. Vui lòng thử lại.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <Modal
+            title="Đặt Lại Mật Khẩu"
+            visible={visible}
+            onCancel={onClose}
+            footer={null}
+            width={400}
+        >
+            <Input
+                placeholder="Mã xác nhận"
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+                style={{ marginBottom: '10px' }}
+            />
+            <Input.Password
+                placeholder="Mật khẩu mới"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                style={{ marginBottom: '10px' }}
+            />
+            <Button
+                loading={loading}
+                type="primary"
+                onClick={handleResetPassword}
+                style={{ width: '100%' }}
+            >
+                Đặt lại mật khẩu
+            </Button>
+        </Modal>
+    );
+};
+
+const Login = ({ visible, onClose, onLoginSuccess }) => {
+    const [loading, setLoading] = useState(false);
+    const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
+    const [resetPasswordVisible, setResetPasswordVisible] = useState(false);
+    const [email, setEmail] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (values) => {
@@ -23,66 +115,38 @@ const Login = ({ visible, onClose }) => {
 
         try {
             const response = await loginUser({ email, password });
-            const { token, username, user_id, role, avatar_url } = response.data;
-            console.log("Login Response:", response.data);
-            // Lưu trữ thông tin người dùng trong cookies
+            const { token, username, user_id, avatar_url, role } = response.data;
+
             Cookies.set('username', username, { expires: 7 });
             Cookies.set('avatar_url', avatar_url, { expires: 7 });
             Cookies.set('token', token, { expires: 7 });
             Cookies.set('user_id', user_id, { expires: 7 });
             Cookies.set('role', role, { expires: 7 });
 
-            startTokenRefresh();
-            setTimeout(() => {
-                if (role === 'admin') {
-                    navigate('/admin/posts');
-                } else {
-                    navigate('/posts');
-                }
-            }, 100);
+            onLoginSuccess({ username, avatar_url, email });
+            toast.success(`Đăng nhập thành công! \n\n Chào mừng bạn, ${username}!`);
+
+            if (role === "admin") {
+                navigate('/admin/posts');
+            }
+            onClose();
         } catch (error) {
             console.error("Login error:", error);
-            toast.error(error.response ? error.response.data.message : "Đã xảy ra lỗi, vui lòng thử lại sau.");
+            toast.error(error.response ? error.response.data.message : "Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin.");
         } finally {
             setLoading(false);
         }
     };
 
-    const handleForgotPassword = async () => {
-        try {
-            await requestPasswordReset(email);
-            toast.success('Mã xác nhận đã được gửi đến email của bạn.');
-        } catch (error) {
-            toast.error(error.response ? error.response.data.message : "Đã xảy ra lỗi, vui lòng thử lại sau.");
-        }
-    };
-
-    const handleResetPassword = async () => {
-        if (!verificationCode || !newPassword) {
-            toast.error('Vui lòng điền đầy đủ mã xác nhận và mật khẩu mới.');
-            return;
-        }
-
-        try {
-            await resetPassword({ verificationCode, newPassword });
-            toast.success('Mật khẩu đã được đặt lại thành công.');
-            setShowForgotPassword(false);
-        } catch (error) {
-            toast.error(error.response ? error.response.data.message : "Đã xảy ra lỗi, vui lòng thử lại sau.");
-        }
-    };
-
     return (
-        <Modal
-            title="Đăng Nhập"
-            visible={visible}
-            onCancel={onClose}
-            footer={null}
-            width={400}
-        >
-            <ToastContainer />
-            <div className="login-form">
-                <h2 className="login-title">Đăng nhập</h2>
+        <>
+            <Modal
+                title="Đăng Nhập"
+                visible={visible}
+                onCancel={onClose}
+                footer={null}
+                width={400}
+            >
                 <Form onFinish={handleSubmit}>
                     <Form.Item
                         name="email"
@@ -91,8 +155,6 @@ const Login = ({ visible, onClose }) => {
                         <Input
                             type="email"
                             placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </Form.Item>
                     <Form.Item
@@ -101,81 +163,44 @@ const Login = ({ visible, onClose }) => {
                     >
                         <Input.Password
                             placeholder="Mật khẩu"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </Form.Item>
-                    <Button type="link" onClick={() => setShowForgotPassword(true)}>
-                        Quên mật khẩu?
-                    </Button>
                     <Button
                         loading={loading}
                         htmlType='submit'
                         type="primary"
                         style={{ width: '100%' }}
-                        onClick={onClose}
                     >
                         Đăng nhập
                     </Button>
-                </Form>
-                <a className='login-toregister' onClick={onClose}>
-                    Bạn chưa có tài khoản? Đăng ký
-                </a>
-            </div>
-
-            <Modal
-                title="Quên Mật Khẩu"
-                open={showForgotPassword}
-                onCancel={() => setShowForgotPassword(false)}
-                footer={null}
-            >
-                <Form onFinish={handleForgotPassword}>
-                    <Form.Item
-                        name="email"
-                        rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
+                    <Button
+                        type="link"
+                        onClick={() => {
+                            setForgotPasswordVisible(true);
+                            setEmail('');
+                        }}
+                        style={{ marginTop: '10px', width: '100%' }}
                     >
-                        <Input
-                            type="text"
-                            placeholder="Nhập email của bạn"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" style={{ width: '100%' }} onClick={handleForgotPassword}>
-                            Gửi mã xác nhận
-                        </Button>
-                    </Form.Item>
-
-                    <Form.Item
-                        name="verificationCode"
-                        rules={[{ required: true, message: 'Vui lòng nhập mã xác nhận!' }]}
-                    >
-                        <Input
-                            type="text"
-                            placeholder="Nhập mã xác nhận"
-                            value={verificationCode}
-                            onChange={(e) => setVerificationCode(e.target.value)}
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="newPassword"
-                        rules={[{ required: true, message: 'Vui lòng nhập mật khẩu mới!' }]}
-                    >
-                        <Input.Password
-                            placeholder="Nhập mật khẩu mới"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" style={{ width: '100%' }} onClick={handleResetPassword}>
-                            Đặt lại mật khẩu
-                        </Button>
-                    </Form.Item>
+                        Quên mật khẩu?
+                    </Button>
                 </Form>
             </Modal>
-        </Modal>
+
+            <ForgotPassword 
+                visible={forgotPasswordVisible} 
+                onClose={() => setForgotPasswordVisible(false)} 
+                onVerificationCodeReceived={(email) => {
+                    setEmail(email);
+                    setResetPasswordVisible(true);
+                }} 
+            />
+
+            <ResetPassword 
+                visible={resetPasswordVisible} 
+                onClose={() => setResetPasswordVisible(false)} 
+                email={email} 
+            />
+        </>
     );
 };
 

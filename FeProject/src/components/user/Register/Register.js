@@ -107,7 +107,7 @@ const UserForm = ({ visible, onClose }) => {
             </Button>
           </Form.Item>
         </Form>
-        <a className='register-toregister' onClick={() => navigate('/login')}>
+        <a className='register-toregister'>
           Bạn đã có tài khoản?
         </a>
         <ToastContainer />

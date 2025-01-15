@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Input, Modal, notification } from 'antd';
 import { getAllCategories, deleteCategory, createCategory, updateCategory } from '../../../api/api';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../admin/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import './CategoryManagement.scss';
 
 const CategoryManagement = () => {

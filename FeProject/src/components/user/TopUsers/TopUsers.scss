@@ -1,5 +1,5 @@
 .top-users-container {
-    width: 23vw;
+    width: 100%;
     margin: 16px; // Adjust as needed
 
 }
@@ -50,5 +50,29 @@
 
     &:hover {
         border: 3px dotted #007bff; // Optional: border around the avatar
+    }
+}
+
+
+.top-users-container {
+    padding: 20px;
+
+    .top-users-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .top-users-item {
+        display: flex;
+        align-items: center;
+
+        @media (max-width: 900px) {
+            flex-direction: column;
+            align-items: flex-start;
+            width: 60%;
+            .top-users-avatar {
+                margin-bottom: 10px;
+            }
+        }
     }
 }

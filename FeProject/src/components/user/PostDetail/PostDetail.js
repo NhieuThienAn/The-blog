@@ -5,9 +5,8 @@ import {
     getCommentsByPostId,
     likePost,
     unlikePost,
-    hasUserLikedPost, // Nhập hàm kiểm tra tình trạng like
+    hasUserLikedPost,
     deleteComment,
-    updateComment,
 } from '../../../api/api';
 import CommentForm from '../CommentForm/CommentForm';
 import {
@@ -19,14 +18,15 @@ import {
     Alert,
     Image,
     Modal,
-    Input,
     Row,
     Col,
     Card,
 } from 'antd';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPinterest, FaReddit } from 'react-icons/fa';
-import './PostDetail.css';
-import Cookies from 'js-cookie'; // Import thư viện js-cookie
+import { FaFacebook, FaTwitter, FaPinterest, FaReddit } from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify'; // Import ToastContainer 
+import Cookies from 'js-cookie';
+
+import './PostDetail.scss';
 
 const { Title, Paragraph } = Typography;
 
@@ -37,17 +37,17 @@ const PostDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [liked, setLiked] = useState(false);
-    const [editingComment, setEditingComment] = useState(null);
-    const [newCommentContent, setNewCommentContent] = useState('');
     const [isShareModalVisible, setShareModalVisible] = useState(false);
+    
+    // Get the current user's ID from cookies
+    const userId = Cookies.get('user_id');
 
     useEffect(() => {
         const fetchPostAndComments = async () => {
             try {
                 const postResponse = await getPostById(postId);
                 setPost(postResponse.data);
-                console.log(postResponse.data);
-
+                
                 const token = Cookies.get('token');
                 const likeResponse = await hasUserLikedPost(postId, token);
                 setLiked(likeResponse.hasLiked);
@@ -83,33 +83,28 @@ const PostDetail = () => {
         }
     };
 
-    const handleDeleteComment = async (commentId) => {
-        const token = Cookies.get('token');
-        try {
-            await deleteComment(commentId, token);
-            setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
-        } catch (error) {
-            console.error("Error deleting comment:", error);
-        }
-    };
+    const handleDeleteComment = (commentId,content) => {
+        const confirmDelete = () => {
+            const token = Cookies.get('token');
+            deleteComment(commentId, token)
+                .then(() => {
+                    setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
+                    toast.success("Bình luận đã được xóa thành công.");
+                })
+                .catch((error) => {
+                    console.error("Error deleting comment:", error);
+                    toast.error("Có lỗi xảy ra khi xóa bình luận.");
+                });
+        };
 
-    const handleEditComment = async () => {
-        const token = Cookies.get('token');
-        try {
-            const updatedComment = await updateComment(editingComment.id, newCommentContent, token);
-            setComments((prevComments) =>
-                prevComments.map(comment => (comment.id === updatedComment.id ? updatedComment : comment))
-            );
-            setEditingComment(null);
-            setNewCommentContent('');
-        } catch (error) {
-            console.error("Error updating comment:", error);
-        }
-    };
-
-    const openEditModal = (comment) => {
-        setEditingComment(comment);
-        setNewCommentContent(comment.content);
+        Modal.confirm({
+            title: 'Bạn có muốn xóa bình luận này ',
+            content: content,
+            onOk: confirmDelete,
+            onCancel() {
+                console.log('Xóa bình luận bị hủy.');
+            },
+        });
     };
 
     const handleLike = async () => {
@@ -117,7 +112,7 @@ const PostDetail = () => {
         try {
             await likePost(postId, token);
             setLiked(true);
-            setPost(prevPost => ({ ...prevPost, likes: prevPost.likes + 1 })); // Cập nhật số lượt like trên bài viết
+            setPost(prevPost => ({ ...prevPost, likes: prevPost.likes + 1 }));
         } catch (error) {
             console.error('Error liking the post:', error);
         }
@@ -128,7 +123,7 @@ const PostDetail = () => {
         try {
             await unlikePost(postId, token);
             setLiked(false);
-            setPost(prevPost => ({ ...prevPost, likes: prevPost.likes - 1 })); // Cập nhật số lượt like trên bài viết
+            setPost(prevPost => ({ ...prevPost, likes: prevPost.likes - 1 }));
         } catch (error) {
             console.error('Error unliking the post:', error);
         }
@@ -196,10 +191,7 @@ const PostDetail = () => {
 
     if (loading) return <Spin style={{ width: "97vw", padding: "31vh", marginBottom: "100vh" }} size='large' tip="Loading..." />;
     if (error) return <Alert message={error} type="error" />;
-
-    if (!post) {
-        return <Alert message="Post not found." type="warning" />;
-    }
+    if (!post) return <Alert message="Post not found." type="warning" />;
 
     return (
         <div style={{ padding: '20px' }}>
@@ -207,17 +199,16 @@ const PostDetail = () => {
                 <Title level={1}>{post.title}</Title>
                 <div className='post-detail-content'>
                     <div className='post-detail-img'>
-                        <Image src={`http://localhost:3001/${post.image_url}`} alt={post.title} />
+                        <Image style={{ width: "35vw" }} src={`http://localhost:3001/${post.image_url}`} alt={post.title} />
                     </div>
 
-                    <Paragraph style={{ marginTop: '20px' }}>{post.content}</Paragraph>
+                    <Paragraph className='post-detail-text'>{post.content}</Paragraph>
                 </div>
                 <Paragraph>
                     <strong>Tác giả:</strong> {post.user_id ? post.user_id.username : 'Unknown User'}
                 </Paragraph>
                 <Paragraph>
                     <strong>Số lượt like:</strong> {post.likes || 0}
-
                 </Paragraph>
                 <Paragraph>
                     <strong>Danh mục:</strong> {post.category_id ? post.category_id.name : 'Chưa có danh mục'}
@@ -246,15 +237,17 @@ const PostDetail = () => {
                             renderItem={comment => {
                                 if (!comment) return null;
                                 const username = comment.user_id ? comment.user_id.username : 'Unknown User';
+                                const isUserComment = comment.user_id && comment.user_id._id === userId; // Check if the comment belongs to the logged-in user
                                 return (
-                                    <List.Item key={comment.id}>
+                                    <List.Item key={comment._id}>
                                         <List.Item.Meta
                                             avatar={<Avatar>{username.charAt(0)}</Avatar>}
                                             title={username}
                                             description={comment.content}
                                         />
-                                        <Button onClick={() => openEditModal(comment)} type="link">Edit</Button>
-                                        <Button onClick={() => handleDeleteComment(comment.id)} type="link" danger>Delete</Button>
+                                        {isUserComment && ( // Conditionally render the Delete button
+                                            <Button onClick={() => handleDeleteComment(comment._id,comment.content)} type="link" danger>Delete</Button>
+                                        )}
                                     </List.Item>
                                 );
                             }}
@@ -283,17 +276,7 @@ const PostDetail = () => {
                     Chia sẻ qua Reddit
                 </Button>
             </Modal>
-            <Modal
-                title="Chỉnh sửa bình luận"
-                visible={!!editingComment}
-                onOk={handleEditComment}
-                onCancel={() => setEditingComment(null)}
-            >
-                <Input
-                    value={newCommentContent}
-                    onChange={(e) => setNewCommentContent(e.target.value)}
-                />
-            </Modal>
+            <ToastContainer /> {/* Include ToastContainer for notifications */}
         </div>
     );
 };

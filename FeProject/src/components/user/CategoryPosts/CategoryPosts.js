@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getPostsByCategory, getAllCategories } from '../../../api/api'; // Chắc chắn getAllCategories đã được import
+import { getPostsByCategory, getAllCategories } from '../../../api/api';
 import Loading from '../Loading/Loading';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { Card, Button, Typography, Empty } from 'antd';
@@ -20,15 +20,10 @@ const CategoryPosts = ({ categoryId }) => {
         const fetchPosts = async () => {
             setLoading(true);
             try {
-                // Lấy danh sách các danh mục
                 const categoryResponse = await getAllCategories();
                 const categories = categoryResponse.data;
-
-                // Tìm danh mục tương ứng với categoryId
                 const currentCategory = categories.find(category => category._id === categoryId);
                 setCategoryName(currentCategory ? currentCategory.name : 'Danh mục không xác định');
-
-                // Lấy bài viết theo danh mục
                 const response = await getPostsByCategory(categoryId);
                 setPosts(response.data);
             } catch (error) {
@@ -83,10 +78,13 @@ const CategoryPosts = ({ categoryId }) => {
                             </Card>
                         ))}
                     </div>
-                    <div className="category-button-container" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
-                        <Button color="primary" variant="solid" onClick={scrollLeft} icon={<ArrowLeftOutlined />} />
-                        <Button color="primary" variant="solid" onClick={scrollRight} icon={<ArrowRightOutlined />} />
-                    </div>
+                    {/* Render buttons only if there are more than 5 posts */}
+                    {posts.length > 5 && (
+                        <div className="category-button-container" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+                            <Button type="primary" onClick={scrollLeft} icon={<ArrowLeftOutlined />} />
+                            <Button type="primary" onClick={scrollRight} icon={<ArrowRightOutlined />} />
+                        </div>
+                    )}
                 </>
             )}
         </div>

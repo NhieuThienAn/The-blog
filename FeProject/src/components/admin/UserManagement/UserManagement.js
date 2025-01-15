@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllUsers, lockUser, unlockUser } from '../../../api/api';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../admin/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import { Modal, Table, Button } from 'antd';
 import './UserManagement.scss';
 import Cookies from 'js-cookie';

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Input, Modal, notification } from 'antd';
 import { getAllTags, deleteTag, createTag, updateTag } from '../../../api/api';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../admin/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import './TagManagement.scss';
 
 const TagManagement = () => {

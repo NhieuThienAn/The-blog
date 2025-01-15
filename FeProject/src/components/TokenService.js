@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { refreshToken } from '../api/api';
 
-const REFRESH_INTERVAL = 25 * 60 * 1000; // Refresh every 14 minutes
+const REFRESH_INTERVAL = 23 * 60 * 1000; 
 
 let refreshTimer;
 

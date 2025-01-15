@@ -210,7 +210,7 @@ const UserProfile = () => {
                             <p><strong>Name:</strong> {user.username}</p>
                             <p><strong>Email:</strong> {user.email}</p>
                             <p><strong>Bio:</strong> {truncatedBio}</p>
-                            <Button type="primary" onClick={openEditModal}>Chỉnh sửa thông tin</Button>
+                            <Button className="user-profile-update-btn" type="primary" onClick={openEditModal}>Chỉnh sửa thông tin</Button>
                         </div>
                     </div>
                 )}
