@@ -12,9 +12,9 @@ const AllPostList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [columns, setColumns] = useState(4); // Default columns
+    const [columns, setColumns] = useState(4); 
     const [currentPage, setCurrentPage] = useState(1);
-    const postsPerPage = 6; // Số bài viết trên mỗi trang
+    const postsPerPage = 6; 
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -35,7 +35,7 @@ const AllPostList = () => {
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
-        setCurrentPage(1); // Reset trang khi tìm kiếm
+        setCurrentPage(1); 
     };
 
     const handleColumnChange = (value) => {
@@ -51,7 +51,6 @@ const AllPostList = () => {
         post.content.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Tính toán bài viết hiển thị trên trang hiện tại
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);

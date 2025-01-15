@@ -1,61 +1,45 @@
 .category-post-list-container {
     padding: 20px;
-    background-color: #f9f9f9; // Màu nền nhẹ
-    border-radius: 8px; // Bo tròn góc
-    width: 84vw;
-    margin: 0 6.3vw;
-}
+    width: 88vw;
+    margin: 0 5vw;
 
-.category-post-list-title {
-    margin-bottom: 20px;
-    text-align: left;
-    font-size: 17px;
-    font-weight: bolder;
-    color: #333; // Màu chữ tiêu đề
-}
+    .category-post-list-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-.category-post-layout {
-    display: flex;
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
+    .category-post-layout {
+        display: flex;
+        overflow-x: hidden;
+        padding: 10px;
+        scroll-behavior: smooth;
 
-.category-post-item {
-    position: relative;
-    margin: 10px;
-    transition: transform 0.3s; // Hiệu ứng chuyển động
-}
+        &::-webkit-scrollbar {
+            display: none; 
+        }
 
-.category-post-item:hover {
-    transform: scale(1.05); // Phóng to khi hover
-}
+        @media (max-width: 1400px) {
+            flex-wrap: wrap;
+        }
 
-.category-button-container {
-    display: flex;
-    justify-content: center; // Căn giữa các nút
-    margin-top: 10px;
-}
+        @media (max-width: 900px) {
+            flex-direction: column;
+            align-items: center;
+            .ant-card {
+                width: 100vw;
+                margin: 10px 0;
+            }
+        }
+    }
 
-.category-view-more-button {
-    background-color: #1890ff; // Màu nền cho nút
-    color: white; // Màu chữ
-    border: none; // Bỏ viền
-    padding: 10px 20px; // Padding cho nút
-    border-radius: 4px; // Bo tròn góc
-    cursor: pointer; // Con trỏ khi di chuột vào
-    transition: background-color 0.3s; // Hiệu ứng chuyển màu
-}
+    .category-button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
 
-.category-view-more-button:hover {
-    background-color: #40a9ff; // Màu nền khi hover
-}
-
-.category-post-image {
-    border-radius: 8px; // Bo tròn góc cho hình ảnh
-    object-fit: cover; // Giữ tỷ lệ cho hình ảnh
-    height: 200px; // Chiều cao cố định
-}
-
-.ant-card {
-    border-radius: 8px; // Bo tròn góc cho thẻ
+        button {
+            flex: 0.03; 
+            margin: 0 5px; 
+        }
+    }
 }

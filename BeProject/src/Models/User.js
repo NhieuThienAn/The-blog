@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema({
     verificationCodeExpires: { type: Date }
 });
 
-// Cập nhật trường `updated_at` khi mật khẩu được thay đổi
 userSchema.pre('save', function (next) {
     const user = this;
     if (!user.isModified('password_hash')) return next();

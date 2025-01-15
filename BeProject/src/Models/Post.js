@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
-    image_url: { type: String, required: false }, // Trường hình ảnh
+    image_url: { type: String, required: false }, 
     status: { type: String, enum: ['draft', 'published'], default: 'draft' },
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
     likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],

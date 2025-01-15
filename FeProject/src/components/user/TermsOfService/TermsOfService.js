@@ -1,5 +1,3 @@
-// src/components/TermsOfService.js
-
 import React from 'react';
 import { Layout, Typography, Space, Divider } from 'antd';
 
@@ -20,7 +18,7 @@ const TermsOfService = () => {
 
                 <Title level={3}>1. Giới thiệu</Title>
                 <Paragraph>
-                    Trang web của chúng tôi cung cấp thông tin và dịch vụ liên quan đến [mô tả ngắn về dịch vụ của bạn]. 
+                    Trang web của chúng tôi cung cấp thông tin bằng các bài viết .... 
                 </Paragraph>
 
                 <Divider />

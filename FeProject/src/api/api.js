@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 
 const API_URL = 'http://localhost:3001/api';
 
-// Utility function to get headers with authorization
 const getAuthHeaders = () => {
   const token = Cookies.get('token');
   return {
@@ -11,16 +10,16 @@ const getAuthHeaders = () => {
   };
 };
 
-// Refresh token function
+// Refresh token
 export const refreshToken = async () => {
   try {
     const response = await axios.post(`${API_URL}/refresh-token`, { token: Cookies.get('token') });
     const newToken = response.data.token;
-    Cookies.set('token', newToken); // Store the new token
-    return newToken; // Return the new token
+    Cookies.set('token', newToken); 
+    return newToken; 
   } catch (error) {
     console.error('Failed to refresh token:', error);
-    throw error; // Rethrow the error for handling in interceptor
+    throw error; 
   }
 };
 
@@ -124,6 +123,7 @@ export const updateTag = async (tagId, updatedData) => {
   const response = await axios.put(`${API_URL}/tags/${tagId}`, updatedData, { headers: getAuthHeaders() });
   return response.data;
 };
+
 // Subscribe for new posts
 export const subscribeToNewsletter = (email) => axios.post(`${API_URL}/subscribe`, { email });
 

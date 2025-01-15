@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllPostsForAdmin } from '../../../api/api';
-import Sidebar from '../../admin/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import { Button, Pagination } from 'antd';
 import Loading from '../Loading/Loading';
 import './PostManagement.scss';
-import Cookies from 'js-cookie'; // Import thư viện js-cookie
+import Cookies from 'js-cookie'; 
 
 const PostManagement = () => {
     const navigate = useNavigate();
@@ -14,8 +14,8 @@ const PostManagement = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [showDrafts, setShowDrafts] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(8); // Số bài viết hiển thị trên mỗi trang
-    const role = Cookies.get('role');  
+    const [postsPerPage] = useState(8); 
+    const role = Cookies.get('role');
     const token = Cookies.get('token');
 
     if (role === 'user') {
@@ -47,7 +47,7 @@ const PostManagement = () => {
 
     const filteredPosts = posts.filter(post =>
         post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.content.toLowerCase().includes(searchTerm.toLowerCase()) 
+        post.content.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     if (error) {
@@ -58,12 +58,10 @@ const PostManagement = () => {
         return <Loading />;
     }
 
-    // Filter posts based on the showDrafts state
-    const displayedPosts = showDrafts ? 
-        filteredPosts.filter(post => post.status === 'draft') : 
+    const displayedPosts = showDrafts ?
+        filteredPosts.filter(post => post.status === 'draft') :
         filteredPosts.filter(post => post.status !== 'draft');
 
-    // Phân trang
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = displayedPosts.slice(indexOfFirstPost, indexOfLastPost);
@@ -85,7 +83,7 @@ const PostManagement = () => {
                     <Button
                         type={showDrafts ? "dashed" : "primary"}
                         onClick={() => setShowDrafts(false)}
-                        style={{marginRight: 30}}
+                        style={{ marginRight: 30 }}
                     >
                         Hiện Bài Viết Đã Xuất Bản
                     </Button>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPostById, updatePost, deletePost } from '../../../api/api';
 import { Typography, Input, Button, Spin, Alert, Card, Image, Modal, message } from 'antd';
-import Cookies from 'js-cookie'; // Import thư viện js-cookie
+import Cookies from 'js-cookie'; 
 
 import './FixPostDetail.scss';
 
@@ -81,7 +81,7 @@ const FixPostDetail = () => {
     };
 
     const handleDeleteImage = () => {
-        setImageFile(null); // Xóa hình ảnh khỏi trạng thái
+        setImageFile(null); 
     };
 
     if (loading) return <Spin tip="Loading..." />;

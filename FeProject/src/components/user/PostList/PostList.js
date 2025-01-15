@@ -48,7 +48,6 @@ const PostList = () => {
             <div className="main-post">
               <img src={`http://localhost:3001/${posts[0].image_url}`} alt="Post Thumbnail" className="post-image" />
               <Link to={`/posts/${posts[0]._id}`} className="post-title">{posts[0].title}</Link>
-              {/* Hiển thị danh mục ở đây */}
               <p className="post-content">{posts[0].content.length > 50 ? `${posts[0].content.substring(0, 90)}...` : posts[0].content}</p>
             </div>
             <div className="sidebar-posts">
@@ -57,7 +56,6 @@ const PostList = () => {
                   <li className="post-item" key={post._id}>
                     <img src={`http://localhost:3001/${post.image_url}`} alt="Post Thumbnail" className="post-image" />
                     <Link to={`/posts/${post._id}`} className="post-title">{post.title}</Link>
-                    {/* Hiển thị danh mục cho các bài viết phụ */}
                     <p className="post-content">{post.content.length > 50 ? `${post.content.substring(0, 90)}...` : post.content}</p>
                   </li>
                 ))}

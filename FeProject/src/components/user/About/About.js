@@ -1,9 +1,7 @@
-// src/components/About/About.js
-
 import React from 'react';
 import { Typography, List, Image } from 'antd';
 import './About.scss';
-import AboutImage from '../../../assets/images/hinh-nen-may-tinh-4k-don-gian-ma-dep-chill.jpg'; // Cập nhật đường dẫn
+import AboutImage from '../../../assets/images/hinh-nen-may-tinh-4k-don-gian-ma-dep-chill.jpg'; 
 
 const { Title, Paragraph } = Typography;
 

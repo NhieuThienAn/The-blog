@@ -5,15 +5,15 @@ import authentication from '../Middleware/authentication.js';
 const router = express.Router();
 
 // Create a new category
-router.post('/categories', authentication, categoryController.createCategory); // Tạo mới danh mục
+router.post('/categories', authentication, categoryController.createCategory); 
 
 // Get all categories
-router.get('/categories', categoryController.getAllCategories); // Lấy tất cả danh mục
+router.get('/categories', categoryController.getAllCategories); 
 
 // Update a category by ID
-router.put('/categories/:id', authentication, categoryController.updateCategory); // Cập nhật danh mục
+router.put('/categories/:id', authentication, categoryController.updateCategory); 
 
 // Delete a category by ID
-router.delete('/categories/:id', authentication, categoryController.deleteCategory); // Xóa danh mục
+router.delete('/categories/:id', authentication, categoryController.deleteCategory); 
 
 export default router;

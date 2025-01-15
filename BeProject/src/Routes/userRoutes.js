@@ -3,7 +3,7 @@
 import express from 'express';
 import * as userController from '../Controllers/UserController.js';
 import authentication from '../Middleware/authentication.js';
-import upload from '../Middleware/upload.js'; // Thêm dòng này
+import upload from '../Middleware/upload.js'; 
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.post('/register', upload.single('avatar'), userController.register);
 router.post('/login', userController.login);
 
 // Refresh token
-router.post('/refresh-token',userController.refreshToken); // New route for refreshing token
+router.post('/refresh-token',userController.refreshToken); 
 
 // Get all users
 router.get('/users', userController.getAllUsers);
@@ -35,10 +35,10 @@ router.post('/forgot-password', userController.requestPasswordReset);
 router.post('/reset', userController.resetPassword);
 
 // Lock user
-router.patch('/users/:id/lock', authentication, userController.lockUser); // Route để khóa người dùng
+router.patch('/users/:id/lock', authentication, userController.lockUser);
 
 // Unlock user
-router.patch('/users/:id/unlock', authentication, userController.unlockUser); // Route để mở khóa người dùng
+router.patch('/users/:id/unlock', authentication, userController.unlockUser); 
 
 // Get top users by likes
 //router.get('/users/top-likes', userController.getTopUsersByLikes);

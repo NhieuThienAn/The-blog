@@ -30,11 +30,11 @@ const UserProfile = () => {
 
     const userId = Cookies.get('user_id');
     const token = Cookies.get('token');
-    const intervalRef = React.useRef(null); // Sử dụng ref để giữ interval
+    const intervalRef = React.useRef(null); 
 
     useEffect(() => {
         const fetchData = async () => {
-            if (isModalVisible || isEditModalVisible) return; // Dừng cập nhật khi mở modal
+            if (isModalVisible || isEditModalVisible) return; 
 
             try {
                 const [userResponse, postsResponse, categoriesResponse, tagsResponse] = await Promise.all([
@@ -60,11 +60,11 @@ const UserProfile = () => {
             }
         };
 
-        fetchData(); // Lần đầu tiên gọi dữ liệu
+        fetchData(); 
 
-        intervalRef.current = setInterval(fetchData, 3000); // Thiết lập interval
-        return () => clearInterval(intervalRef.current); // Dọn dẹp interval khi unmount
-    }, [userId, isModalVisible, isEditModalVisible]); // Thêm isModalVisible và isEditModalVisible làm dependency
+        intervalRef.current = setInterval(fetchData, 3000); 
+        return () => clearInterval(intervalRef.current);
+    }, [userId, isModalVisible, isEditModalVisible]); 
 
     const openModal = () => {
         setIsModalVisible(true);
@@ -72,8 +72,8 @@ const UserProfile = () => {
 
     const closeModal = () => {
         setIsModalVisible(false);
-        setImageFile(null); // Reset hình ảnh khi đóng modal
-        setPreviewImage(null); // Reset preview khi đóng modal
+        setImageFile(null); 
+        setPreviewImage(null); 
     };
 
     const openEditModal = () => {
@@ -88,8 +88,8 @@ const UserProfile = () => {
 
     const closeEditModal = () => {
         setIsEditModalVisible(false);
-        setAvatarFile(null); // Reset avatar khi đóng modal
-        setPreviewAvatar(null); // Reset preview avatar khi đóng modal
+        setAvatarFile(null); 
+        setPreviewAvatar(null); 
     };
 
     const handleTagChange = (value) => {
@@ -100,7 +100,7 @@ const UserProfile = () => {
         const file = event.target.files[0];
         if (file) {
             setImageFile(file);
-            setPreviewImage(URL.createObjectURL(file)); // Tạo URL cho hình ảnh xem trước
+            setPreviewImage(URL.createObjectURL(file)); 
         }
     };
 
@@ -108,7 +108,7 @@ const UserProfile = () => {
         const file = event.target.files[0];
         if (file) {
             setAvatarFile(file);
-            setPreviewAvatar(URL.createObjectURL(file)); // Tạo URL cho avatar xem trước
+            setPreviewAvatar(URL.createObjectURL(file)); 
         }
     };
 
@@ -210,7 +210,7 @@ const UserProfile = () => {
                             <p><strong>Name:</strong> {user.username}</p>
                             <p><strong>Email:</strong> {user.email}</p>
                             <p><strong>Bio:</strong> {truncatedBio}</p>
-                            <Button type="primary" onClick={openEditModal}>Chỉnh sửa thông tin</Button>
+                            <Button className="user-profile-update-btn" type="primary" onClick={openEditModal}>Chỉnh sửa thông tin</Button>
                         </div>
                     </div>
                 )}

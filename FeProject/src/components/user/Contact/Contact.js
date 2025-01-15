@@ -1,5 +1,3 @@
-// src/components/Contact.js
-
 import React from 'react';
 import { Layout, Typography, Form, Input, Button, Space, message } from 'antd';
 

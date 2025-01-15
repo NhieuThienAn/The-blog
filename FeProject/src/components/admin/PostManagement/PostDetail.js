@@ -1,4 +1,4 @@
-import Sidebar from '../../admin/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getPostById, updatePostForAdmin, deletePost } from '../../../api/api';

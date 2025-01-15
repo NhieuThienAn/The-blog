@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Input, Modal, notification } from 'antd';
 import { getAllCategories, deleteCategory, createCategory, updateCategory } from '../../../api/api';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../admin/Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import './CategoryManagement.scss';
 
 const CategoryManagement = () => {
@@ -10,8 +10,8 @@ const CategoryManagement = () => {
     const [newCategory, setNewCategory] = useState('');
     const [editingCategory, setEditingCategory] = useState(null);
     const [editingCategoryName, setEditingCategoryName] = useState('');
-    const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
-    const [pageSize] = useState(10); // Số danh mục mỗi trang
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize] = useState(10);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -85,7 +85,6 @@ const CategoryManagement = () => {
         },
     ];
 
-    // Tính toán danh sách danh mục cho trang hiện tại
     const paginatedCategories = categories.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
     return (

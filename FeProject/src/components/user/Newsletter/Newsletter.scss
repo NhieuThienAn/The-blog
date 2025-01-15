@@ -1,26 +1,23 @@
 .newsletter-container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    padding: 30px 32px;
-    width: calc(35vw + 1rem);
-    margin: 20px auto;
-    text-align: center;
-
-    h3 {
-        color: #333;
-    }
-
-    .ant-btn {
-        border-radius: 4px;
-        font-weight: bold;
-    }
-
+    padding: 20px;
     .ant-input {
-        border-radius: 4px;
+        width: 100%; 
     }
+    @media (max-width: 900px) {
+        text-align: center;
 
-    .ant-typography {
-        margin-top: 15px;
+        .ant-form {
+            flex-direction: column;
+            align-items: center;
+
+            .ant-form-item {
+                width: 100%; 
+                margin-bottom: 10px; 
+            }
+
+            .ant-input {
+                width: 100%; 
+            }
+        }
     }
 }

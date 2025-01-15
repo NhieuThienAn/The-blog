@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { List, Avatar, Spin, Typography, Alert } from 'antd';
-import { getTopUsersByPosts } from '../../../api/api'; // Adjust the path as needed
+import { getTopUsersByPosts } from '../../../api/api'; 
 import './TopUsers.scss';
 
 const { Title } = Typography;

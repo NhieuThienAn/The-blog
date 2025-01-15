@@ -1,5 +1,3 @@
-// src/components/FAQ.js
-
 import React from 'react';
 import { Layout, Typography, Collapse, Space } from 'antd';
 
@@ -50,7 +48,7 @@ const FAQ = () => {
 
                     <Panel header="6. Có phí nào khi đăng bài không?" key="6">
                         <Paragraph>
-                            Không, việc đăng bài trên blog của chúng tôi là miễn phí. Tuy nhiên, một số tính năng nâng cao có thể yêu cầu phí.
+                            Không, việc đăng bài trên blog của chúng tôi là miễn phí.
                         </Paragraph>
                     </Panel>
 
@@ -68,7 +66,7 @@ const FAQ = () => {
 
                     <Panel header="9. Làm thế nào để tôi liên hệ với bộ phận hỗ trợ?" key="9">
                         <Paragraph>
-                            Bạn có thể liên hệ với bộ phận hỗ trợ qua email tại [email@example.com] hoặc thông qua mẫu liên hệ trên trang web.
+                            Bạn có thể liên hệ với bộ phận hỗ trợ qua email tại hhyu03096@gmail.com hoặc thông qua mẫu liên hệ trên trang web.
                         </Paragraph>
                     </Panel>
 

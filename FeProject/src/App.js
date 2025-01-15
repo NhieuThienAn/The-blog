@@ -1,7 +1,8 @@
 import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { startTokenRefresh } from './components/TokenService';
-// Lazy load pages
+import Cookies from 'js-cookie';
+
 const CategoriesManagement = lazy(() => import('./pages/admin/CategoriesManagement'));
 const PostManagement = lazy(() => import('./pages/admin/PostManagement'));
 const UserManagement = lazy(() => import('./pages/admin/UserManagement'));
@@ -27,9 +28,11 @@ const App = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-
-  // Define routes in an array for better scalability and readability
+  const token = Cookies.get('token');
+  if(token) {
+    startTokenRefresh();
+  }  
+  
   const userRoutes = [
     { path: '/posts', element: <Posts /> },
     { path: '/posts/:postId', element: <PostDetail /> },
@@ -58,7 +61,6 @@ const App = () => {
     <Router>
       <Suspense fallback={<Loading />}>
         <Routes>
-          {/* Redirect from the root to /posts */}
           <Route path="/" element={<Navigate to="/posts" />} />
 
           {/* User Routes */}

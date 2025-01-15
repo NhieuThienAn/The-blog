@@ -1,7 +1,7 @@
 import multer from 'multer';
 import path from 'path';
 
-// Định nghĩa nơi lưu trữ tệp
+// Nơi lưu trữ tệp
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/'); // Thư mục lưu trữ
@@ -11,7 +11,6 @@ const storage = multer.diskStorage({
     }
 });
 
-// Khởi tạo middleware multer
 const upload = multer({ storage });
 
 export default upload;

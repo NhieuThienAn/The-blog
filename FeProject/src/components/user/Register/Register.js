@@ -29,7 +29,7 @@ const UserForm = ({ visible, onClose }) => {
       console.log(response.data);
       navigate('/posts');
       toast.success("Đăng ký thành công!");
-      onClose(); // Đóng modal khi đăng ký thành công
+      onClose(); 
     } catch (error) {
       if (error.response && error.response.data) {
         console.error(error.response.data);
@@ -42,8 +42,8 @@ const UserForm = ({ visible, onClose }) => {
   };
 
   const handleFileChange = (file) => {
-    setAvatar(file); // Lưu tệp hình ảnh vào state
-    return false; // Ngăn chặn tự động upload
+    setAvatar(file); 
+    return false;
   };
 
   return (
@@ -107,7 +107,7 @@ const UserForm = ({ visible, onClose }) => {
             </Button>
           </Form.Item>
         </Form>
-        <a className='register-toregister' onClick={() => navigate('/login')}>
+        <a className='register-toregister'>
           Bạn đã có tài khoản?
         </a>
         <ToastContainer />

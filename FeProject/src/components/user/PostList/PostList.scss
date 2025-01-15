@@ -30,7 +30,7 @@ $font-stack: Arial, sans-serif;
 
         @media (min-width: 1024px) {
             flex-direction: row;
-            flex-wrap: wrap; // Allow wrapping for a two-column layout
+            flex-wrap: wrap;
         }
 
         .main-post {
@@ -38,11 +38,11 @@ $font-stack: Arial, sans-serif;
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
-            animation: appearDownToTop 1.2s ease-out forwards; // Hiệu ứng cho bài viết chính
+            animation: appearDownToTop 1.2s ease-out forwards; 
 
             .post-image {
                 margin: 12px auto 0px;
-                width: 97%; // Full width for main post image
+                width: 97%; 
                 border-radius: 1%;
                 height: auto;
                 display: block;
@@ -51,7 +51,7 @@ $font-stack: Arial, sans-serif;
             .post-title {
                 display: block;
                 padding: 10px 15px;
-                font-size: 2em; // Adjusted for better visibility
+                font-size: 2em;
                 color: $primary-color;
                 text-decoration: none;
                 transition: color 0.3s;
@@ -65,15 +65,15 @@ $font-stack: Arial, sans-serif;
                 margin: 0;
                 padding: 0 15px;
                 color: $text-color;
-                font-size: 1.2em; // Adjusted for better readability
+                font-size: 1.2em;
                 line-height: 1.5;
             }
         }
 
         .sidebar-posts {
-            flex: 0.34; // Adjusted for two columns
+            flex: 0.34; 
             display: flex;
-            flex-wrap: wrap; // Allow items to wrap into columns
+            flex-wrap: wrap; 
 
             ul.post-list {
                 list-style: none;
@@ -81,22 +81,21 @@ $font-stack: Arial, sans-serif;
                 margin: 0;
                 display: flex;
                 height: fit-content;
-                flex-wrap: wrap; // Allow items to wrap
+                flex-wrap: wrap;
                 gap: 12px;
 
                 .post-item {
                     display: flex;
                     flex-direction: column;
-                    width: calc(50% - 13px); // Two columns with a gap
+                    width: calc(50% - 13px); 
                     background-color: white;
                     border-radius: 8px;
                     overflow: hidden;
                     transition: box-shadow 0.3s;
                     padding: 0 auto 10px;
-                    opacity: 0; // Ẩn bài viết ban đầu
-                    animation: appearDownToTop 1.2s ease-out forwards; // Hiệu ứng cho mỗi bài viết
+                    opacity: 0;
+                    animation: appearDownToTop 1.2s ease-out forwards;
 
-                    // Thêm delay cho từng bài viết
                     &:nth-child(1) {
                         animation-delay: 0.2s;
                     }
@@ -113,14 +112,13 @@ $font-stack: Arial, sans-serif;
                         animation-delay: 1s;
                     }
 
-                    // Tiếp tục thêm nếu cần
 
                     &:hover {
                         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
                     }
 
                     .post-image {
-                        width: 95%; // Full width for sidebar images
+                        width: 95%;
                         margin: 8px auto 8px;
                         border-radius: 3%;
                         height: auto;

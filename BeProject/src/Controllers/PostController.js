@@ -1,20 +1,19 @@
 import Post from '../Models/Post.js';
 import { HttpStatusCode } from '../constants/HttpStatusCode.js';
 import Tag from '../Models/Tag.js';
-import mongoose from 'mongoose'; // Ensure you import mongoose at the top of your file
+import mongoose from 'mongoose'; 
 import { sendNewPostNotification } from './UserController.js';
+
 // Create a new post
 export const createPost = async (req, res) => {
     const { category_id, title, content, slug, status, tags = [], user_id } = req.body;
 
-    console.log("Request Body:", req.body); // Log the request body
 
-    // Title validation
     if (title.length > 100) {
         return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'Title must not exceed 40 characters.' });
     }
 
-    const image_url = req.file ? req.file.path : null; // Get image path from multer
+    const image_url = req.file ? req.file.path : null;
     if (!Array.isArray(tags)) {
         return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'Tags must be an array.' });
     }
@@ -30,7 +29,7 @@ export const createPost = async (req, res) => {
         
         const post = new Post({ user_id, category_id, title, content, slug, image_url, status, tags: validTagIds });
         await post.save();
-        //await sendNewPostNotification(post); // Gọi hàm gửi email thông báo
+
         res.status(HttpStatusCode.OK).json(post);
     } catch (error) {
         console.error("Error creating post:", error);
@@ -38,17 +37,15 @@ export const createPost = async (req, res) => {
     }
 };
 
-
 // Get all posts
 export const getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find({ status: 'published' }) // Lấy các bài viết có trạng thái published
-            .limit(20); // Giới hạn số lượng bài viết trả về
+        const posts = await Post.find({ status: 'published' }) 
+            .limit(20); 
 
-        // Chuyển đổi Mongoose Document thành Object và thêm trường image_url
         const postsWithImages = posts.map(post => ({
-            ...post.toObject(), // Chuyển đổi Mongoose Document thành Object
-            image_url: post.image_url // Đảm bảo trả về trường image_url
+            ...post.toObject(), 
+            image_url: post.image_url 
         }));
 
         res.status(HttpStatusCode.OK).json(postsWithImages);
@@ -59,19 +56,19 @@ export const getAllPosts = async (req, res) => {
 
 export const getAllPostsForAdmin = async (req, res) => {
     try {
-        const posts = await Post.find() // Lấy các bài viết có trạng thái published
-            .populate('tags') // Lấy thông tin tag
+        const posts = await Post.find() 
+            .populate('tags') 
             .populate({
-                path: 'category_id', // Lấy thông tin danh mục
-                select: 'name' // Chỉ lấy trường name
+                path: 'category_id', 
+                select: 'name' 
             })
             .populate({
-                path: 'user_id', // Lấy thông tin người dùng
-                select: 'username' // Chỉ lấy trường username
+                path: 'user_id', 
+                select: 'username' 
             });
         const postsWithImages = posts.map(post => ({
-            ...post.toObject(), // Chuyển đổi Mongoose Document thành Object
-            image_url: post.image_url // Đảm bảo trả về trường image_url
+            ...post.toObject(),
+            image_url: post.image_url 
         }));
 
         res.status(HttpStatusCode.OK).json(postsWithImages);
@@ -82,16 +79,16 @@ export const getAllPostsForAdmin = async (req, res) => {
 
 //get posts by id
 export const getPostById = async (req, res) => {
-    const { post_id } = req.params; // Sửa thành post_id
+    const { post_id } = req.params; 
     try {
         const post = await Post.findById(post_id).populate('tags')
             .populate({
-                path: 'category_id', // Lấy thông tin danh mục
-                select: 'name' // Chỉ lấy trường name
+                path: 'category_id', 
+                select: 'name' 
             })
             .populate({
-                path: 'user_id', // Lấy thông tin người dùng
-                select: 'username' // Chỉ lấy trường username
+                path: 'user_id', 
+                select: 'username' 
             });;
         if (!post) {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found.' });
@@ -109,18 +106,14 @@ export const updatePostForAdmin = async (req, res) => {
     const user_id = req.user.id;
 
     try {
-        // Check if the post exists
         const foundPost = await Post.findById(postId);
         if (!foundPost) {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found.' });
         }
-
-        // Check access permissions
         if (req.user.role !== 'admin' && user_id !== foundPost.user_id.toString()) {
             return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
         }
 
-        // Ensure tags is an array and process them
         const processedTags = Array.isArray(tags) 
             ? tags.map(tag => {
                 if (mongoose.Types.ObjectId.isValid(tag)) {
@@ -130,7 +123,6 @@ export const updatePostForAdmin = async (req, res) => {
             })
             : [];
 
-        // Update the post
         const updatedPost = await Post.findByIdAndUpdate(
             postId,
             {
@@ -148,7 +140,6 @@ export const updatePostForAdmin = async (req, res) => {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found or not updated.' });
         }
 
-        // Send notification if the post is published
         if (status === 'published' && foundPost.status !== 'published') {
             await sendNewPostNotification(updatedPost);
         }
@@ -160,25 +151,21 @@ export const updatePostForAdmin = async (req, res) => {
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message || 'An error occurred while updating the post.' });
     }
 };
+
 export const updatePost = async (req, res) => {
     const { postId } = req.params;
     const { title, content, slug, status, tags } = req.body;
     const user_id = req.user.id;
 
     try {
-        // Check if the post exists
         const foundPost = await Post.findById(postId);
         if (!foundPost) {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found.' });
         }
-
-        // Check access permissions
         if (req.user.role !== 'admin' && user_id !== foundPost.user_id.toString()) {
             return res.status(HttpStatusCode.FORBIDDEN).json({ message: 'Access denied.' });
         }
-        const image_url = req.file ? req.file.path : null; // Get image path from multer
-        console.log("Image URL before update:", image_url);
-        // Ensure tags is an array and process them
+        const image_url = req.file ? req.file.path : null; 
         const processedTags = Array.isArray(tags) 
             ? tags.map(tag => {
                 if (mongoose.Types.ObjectId.isValid(tag)) {
@@ -188,7 +175,6 @@ export const updatePost = async (req, res) => {
             })
             : [];
 
-        // Update the post
         const updatedPost = await Post.findByIdAndUpdate(
             postId,
             {
@@ -206,7 +192,6 @@ export const updatePost = async (req, res) => {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found or not updated.' });
         }
 
-        // Send notification if the post is published
         if (status === 'published' && foundPost.status !== 'published') {
             await sendNewPostNotification(updatedPost);
         }
@@ -219,6 +204,7 @@ export const updatePost = async (req, res) => {
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: error.message || 'An error occurred while updating the post.' });
     }
 };
+
 // Delete a post
 export const deletePost = async (req, res) => {
     const { postId } = req.params;
@@ -294,12 +280,12 @@ export const unlikePost = async (req, res) => {
     }
 };
 
-/// Get posts by user ID
+// Get posts by user ID
 export const getPostsByUserId = async (req, res) => {
-    const { user_id } = req.params; // Lấy user_id từ tham số URL
+    const { user_id } = req.params;
 
     try {
-        const posts = await Post.find({ user_id }) // Tìm tất cả bài viết của user_id
+        const posts = await Post.find({ user_id }) 
             .populate('tags')
             .populate({
                 path: 'category_id',
@@ -310,7 +296,6 @@ export const getPostsByUserId = async (req, res) => {
                 select: 'username'
             });
 
-        // Nếu không có bài viết, trả về mảng rỗng
         res.status(HttpStatusCode.OK).json(posts || []);
     } catch (error) {
         res.status(HttpStatusCode.SERVER_ERROR).json({ error: error.message });
@@ -319,22 +304,19 @@ export const getPostsByUserId = async (req, res) => {
 
 // Tìm kiếm bài viết
 export const getPostsBySearch = async (req, res) => {
-    const { query } = req.query; // Lấy giá trị từ query string
+    const { query } = req.query; 
     console.log("Query parameter:", query);
 
-    // Kiểm tra xem query có tồn tại không
     if (!query || query.trim() === '') {
         return res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'Query parameter cannot be empty.' });
     }
 
     try {
-        // Tìm kiếm bài viết theo tiêu đề, nội dung hoặc tên người dùng
         const posts = await Post.find()
             .populate('tags')
             .populate({ path: 'category_id', select: 'name' })
             .populate({ path: 'user_id', select: 'username' });
 
-        // Lọc bài viết theo tiêu đề, nội dung và tên người dùng
         const filteredPosts = posts.filter(post =>
             post.title.toLowerCase().includes(query.toLowerCase()) ||
             post.content.toLowerCase().includes(query.toLowerCase()) ||
@@ -355,10 +337,10 @@ export const getPostsBySearch = async (req, res) => {
 
 // Get posts by category ID
 export const getPostsByCategory = async (req, res) => {
-    const { category_id } = req.params; // Lấy category_id từ tham số URL
+    const { category_id } = req.params; 
     console.log("getPostsByCategory", category_id);
     try {
-        const posts = await Post.find({ category_id, status: 'published' }) // Tìm tất cả bài viết thuộc category_id và có trạng thái published
+        const posts = await Post.find({ category_id, status: 'published' }) 
             .populate('tags')
             .populate({
                 path: 'user_id',
@@ -379,8 +361,8 @@ export const getPostsByCategory = async (req, res) => {
 
 // Check if user has liked a post
 export const hasUserLikedPost = async (req, res) => {
-    const { post_id } = req.params; // Lấy post_id từ tham số URL
-    const userId = req.user.id; // Lấy user_id từ thông tin người dùng đã xác thực
+    const { post_id } = req.params; 
+    const userId = req.user.id; 
 
     try {
         const post = await Post.findById(post_id);
@@ -389,7 +371,7 @@ export const hasUserLikedPost = async (req, res) => {
             return res.status(HttpStatusCode.NOT_FOUND).json({ message: 'Post not found.' });
         }
 
-        const hasLiked = post.likedBy.includes(userId); // Kiểm tra xem user_id có trong likedBy hay không
+        const hasLiked = post.likedBy.includes(userId);
 
         res.status(HttpStatusCode.OK).json({ hasLiked });
     } catch (error) {
@@ -402,18 +384,14 @@ export const hasUserLikedPost = async (req, res) => {
 // Get statistics for admin
 export const getStatistics = async (req, res) => {
     try {
-        // Tổng số bài viết
         const totalPosts = await Post.countDocuments();
 
-        // Tổng số bài viết đã xuất bản
         const totalPublishedPosts = await Post.countDocuments({ status: 'published' });
 
-        // Số lượng bài viết theo trạng thái
         const postsByStatus = await Post.aggregate([
             { $group: { _id: "$status", count: { $sum: 1 } } }
         ]);
 
-        // Số lượng bài viết theo từng tác giả
         const postsByAuthor = await Post.aggregate([
             { $group: { _id: "$user_id", count: { $sum: 1 } } },
             { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'authorInfo' } },
@@ -421,7 +399,6 @@ export const getStatistics = async (req, res) => {
             { $project: { username: '$authorInfo.username', count: 1 } }
         ]);
 
-        // Số lượng bài viết theo danh mục
         const postsByCategory = await Post.aggregate([
             { $group: { _id: "$category_id", count: { $sum: 1 } } },
             { $lookup: { from: 'categories', localField: '_id', foreignField: '_id', as: 'categoryInfo' } },
@@ -429,7 +406,6 @@ export const getStatistics = async (req, res) => {
             { $project: { categoryName: '$categoryInfo.name', count: 1 } }
         ]);
 
-        // Gộp tất cả thông tin thống kê
         const statistics = {
             totalPosts,
             totalPublishedPosts,

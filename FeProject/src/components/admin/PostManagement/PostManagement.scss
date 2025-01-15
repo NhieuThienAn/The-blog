@@ -4,11 +4,11 @@ $post-item-border-color: #ddd;
 $post-item-hover-bg: #f9f9f9;
 $error-color: #d9534f;
 
-$columns: 4; // Biến số cột, bạn có thể thay đổi giá trị này
+$columns: 4;
 
 .post-management-container {
     display: flex;
-    margin-left: 260px; // Khoảng cách cho sidebar
+    margin-left: 260px; 
     width: calc(97vw - 250px);
 
     .content {

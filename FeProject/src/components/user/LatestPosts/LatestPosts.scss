@@ -25,22 +25,22 @@ $font-stack: Arial, sans-serif;
 
     .latest-posts-layout {
         display: flex;
-        overflow-x: hidden; // Ẩn thanh cuộn ngang
-        padding: 10px 0; // Padding cho khu vực cuộn
-        gap: 40px; // Khoảng cách giữa các bài viết
+        overflow-x: hidden; 
+        padding: 10px 0; 
+        gap: 40px; 
         margin: 0 20px;
         overflow-y: hidden; 
         .latest-post-item {
-            flex: 0 0 auto; // Không co giãn, giữ kích thước cố định
-            width: 240px; // Chiều rộng cố định cho mỗi bài viết
+            flex: 0 0 auto; 
+            width: 240px; 
             background-color: $background;
             border-radius: 8px;
             overflow: hidden;
             transition: box-shadow 0.3s;
-            opacity: 0; // Ẩn bài viết ban đầu
-            transform: translateY(1950px); // Đẩy xuống dưới
-            transition: opacity 1s ease-out, transform 2s ease; // Hiệu ứng chuyển tiếp
-            animation: appearDownToTop 1.9s linear forwards; // Hiệu ứng cho bài viết chính
+            opacity: 0; 
+            transform: translateY(1950px); 
+            transition: opacity 1s ease-out, transform 2s ease; 
+            animation: appearDownToTop 1.9s linear forwards; 
             &:nth-child(1) {
                 animation-delay: 1s;
             }
@@ -67,8 +67,8 @@ $font-stack: Arial, sans-serif;
             }
 
             .latest-post-image {
-                width: 100%; // Full width for images
-                object-fit: cover; // Đảm bảo hình ảnh không bị méo
+                width: 100%; 
+                object-fit: cover; 
             }
 
             .latest-post-title {

@@ -31,12 +31,12 @@ body {
 
         &-icon {
             position: fixed;
-            font-size: 250%; // Thay đổi kích thước biểu tượng tại đây
+            font-size: 250%; 
             margin: 0;
             padding: 0;
             left: 1.4%;
             top: 2%;
-            color: var(--fff); // Thay đổi màu sắc nếu cần
+            color: var(--fff); 
             cursor: pointer;
 
             &::after {
@@ -117,7 +117,7 @@ body {
     .user {
         &-basic-information {
             display: flex;
-            align-items: center; // Căn giữa các phần tử
+            align-items: center; 
         }
 
         &-name {
@@ -135,7 +135,7 @@ body {
 
         &-details {
             display: flex;
-            flex-direction: column; // Đặt username trên user-email
+            flex-direction: column; 
         }
 
         &-posts {
@@ -243,8 +243,8 @@ body {
 
 @media screen and (max-width: 768px) {
     .header {
-        flex-direction: column; // Đổi hướng flex cho màn hình nhỏ
-        align-items: center; // Căn giữa
+        flex-direction: column; 
+        align-items: center;
     }
 
 
@@ -253,13 +253,13 @@ body {
     }
 
     .nav {
-        flex-direction: column; // Chuyển thành dạng cột
-        align-items: center; // Căn giữa
+        flex-direction: column; 
+        align-items: center;
     }
 
     .nav-link {
-        font-size: 120%; // Giảm kích thước font cho màn hình nhỏ
-        margin: 0.5rem 0; // Đặt khoảng cách cho các link
+        font-size: 120%; 
+        margin: 0.5rem 0;
     }
     .user-container-nonlog{
         position: absolute;
@@ -283,7 +283,7 @@ body {
 
 @media screen and (max-width: 900px) {
     .header {
-        align-items: center; // Căn giữa
+        align-items: center; 
     }
 
 
@@ -292,7 +292,7 @@ body {
     }
 
     .nav-link {
-        font-size: 110%; // Giảm kích thước font cho màn hình nhỏ
+        font-size: 110%; 
     }
     .user-container-nonlog{
         position: absolute;

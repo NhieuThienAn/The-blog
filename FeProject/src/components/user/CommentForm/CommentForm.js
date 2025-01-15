@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createComment } from '../../../api/api';
 import { Input, Button, notification, Card, Form } from 'antd';
-import Cookies from 'js-cookie'; // Import thư viện js-cookie
+import Cookies from 'js-cookie'; 
 
 const { TextArea } = Input;
 
@@ -22,12 +22,12 @@ const CommentForm = ({ postId, onCommentAdded }) => {
             return;
         }
 
-        const token = Cookies.get('token'); // Lấy token từ cookie
+        const token = Cookies.get('token'); 
         try {
             const newComment = await createComment({ post_id: postId, content: values.content }, token);
             setContent('');
 
-            // Gọi hàm để cập nhật bình luận mới
+    
             if (onCommentAdded) {
                 onCommentAdded(newComment.data);
             }
@@ -40,7 +40,7 @@ const CommentForm = ({ postId, onCommentAdded }) => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault(); // Ngăn chặn hành vi mặc định của phím Enter
+            e.preventDefault(); 
         }
     };
 

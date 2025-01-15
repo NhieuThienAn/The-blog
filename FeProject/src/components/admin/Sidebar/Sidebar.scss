@@ -1,54 +1,54 @@
 .sidebar {
-    height: 100vh; // Chiếm hết chiều cao của viewport
-    position: fixed; // Để sidebar cố định
+    height: 100vh; 
+    position: fixed; 
     top: 0;
     left: 0;
-    background-color: #001529; // Màu nền
-    display: flex; // Sử dụng Flexbox
-    flex-direction: column; // Sắp xếp theo chiều dọc
-    transition: width 0.3s; // Hiệu ứng chuyển tiếp khi thay đổi kích thước
-    width: 266px; // Kích thước mặc định
+    background-color: #001529; 
+    display: flex; 
+    flex-direction: column; 
+    transition: width 0.3s; 
+    width: 266px; 
 
     &.collapsed {
-        width: 77px; // Kích thước khi thu nhỏ
+        width: 77px; 
     }
 
     .user-info {
-        display: flex; // Flexbox để căn chỉnh avatar và thông tin
-        align-items: center; // Căn giữa theo chiều dọc
-        padding: 16px; // Padding cho không gian
-        background-color: #001529; // Màu nền giống với sidebar
+        display: flex; 
+        align-items: center; 
+        padding: 16px;
+        background-color: #001529; 
 
         .avatar {
-            width: 50px; // Kích thước hình đại diện
-            height: 50px; // Kích thước hình đại diện
-            border-radius: 50%; // Để hình tròn
-            margin-right: 10px; // Giãn cách với thông tin
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%;
+            margin-right: 10px; 
         }
 
         .user-details {
-            color: #fff; // Màu chữ trắng
+            color: #fff; 
 
             .user-name {
-                margin: 0; // Bỏ margin
-                font-size: 16px; // Kích thước font cho tên
+                margin: 0;
+                font-size: 16px; 
             }
 
             .user-role,
             .user-email {
-                margin: 0; // Bỏ margin
-                font-size: 14px; // Kích thước font cho vai trò và email
-                opacity: 0.7; // Màu nhạt hơn
+                margin: 0;
+                font-size: 14px;
+                opacity: 0.7; 
             }
         }
     }
 
     .menu {
-        flex: 1; // Để menu chiếm hết không gian còn lại
-        padding: 0; // Bỏ padding
+        flex: 1; 
+        padding: 0;
 
         .ant-menu-item {
-            font-size: 19px; // Tăng kích thước font chữ
+            font-size: 19px;
 
             &:last-child {
                 opacity: 0.9;
@@ -66,7 +66,7 @@
             }
 
             .anticon {
-                font-size: 24px; // Tăng kích thước biểu tượng
+                font-size: 24px; 
             }
         }
     }
@@ -79,8 +79,8 @@
         cursor: pointer;
         padding: 8px;
         font-size: 120%;
-        margin: 10px; // Giãn cách với cạnh dưới
-        transition: background-color 0.3s; // Hiệu ứng chuyển tiếp cho nút
+        margin: 10px; 
+        transition: background-color 0.3s; 
 
         &:hover {
             background-color: #0056b3;
